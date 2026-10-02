@@ -1,0 +1,52 @@
+cve,cvss,host,service,port,title,solution,first_seen
+CVE-2023-38802,7.5,FW01,frr,179,FRRouting BGP daemon denial of service,Upgrade the OPNsense FRR plugin to the fixed release.,2026-09-05
+,5.9,FW01,tls,443,Weak SSL/TLS cipher suites accepted (RC4/3DES),Disable RC4 and 3DES cipher suites; prefer TLS 1.2 or 1.3.,2026-09-21
+,0.0,FW01,http,443,OPNsense firmware is out of date: vendor security advisories not applied,"Back up the configuration, then update FW01 to the current OPNsense release.",2026-08-03
+CVE-2020-1472,10.0,DC01,netlogon,0,Netlogon elevation of privilege (Zerologon),Apply the August 2020 update and enforce secure channel.,2026-08-12
+CVE-2024-38063,9.8,DC01,ipv6,0,Windows TCP/IP IPv6 remote code execution,Apply the August 2024 cumulative update.,2026-08-17
+CVE-2022-30190,7.8,DC01,msdt,0,Windows Support Diagnostic Tool remote code execution (Follina),Apply the June 2022 update and disable the MSDT URL protocol.,2026-08-02
+CVE-2016-2183,7.5,DC01,tls,443,"TLS/SSL weak cipher suite (SWEET32, 3DES)",Disable 3DES cipher suites and reissue the certificate.,2026-08-14
+,5.3,DC01,smb,445,SMB signing is not required (relay and tampering risk),Require SMB signing by Group Policy on servers and workstations.,2026-09-03
+CVE-2020-1472,10.0,DC02,netlogon,0,Netlogon elevation of privilege (Zerologon),Apply the August 2020 update and enforce secure channel.,2026-08-03
+CVE-2024-38063,9.8,DC02,ipv6,0,Windows TCP/IP IPv6 remote code execution,Apply the August 2024 cumulative update.,2026-09-02
+CVE-2022-30190,7.8,DC02,msdt,0,Windows Support Diagnostic Tool remote code execution (Follina),Apply the June 2022 update and disable the MSDT URL protocol.,2026-08-08
+CVE-2016-2183,7.5,DC02,tls,443,"TLS/SSL weak cipher suite (SWEET32, 3DES)",Disable 3DES cipher suites and reissue the certificate.,2026-08-19
+,5.3,DC02,smb,445,SMB signing is not required (relay and tampering risk),Require SMB signing by Group Policy on servers and workstations.,2026-09-02
+CVE-2017-0144,8.1,FS01,smb,445,Microsoft SMBv1 remote code execution (EternalBlue),Disable SMBv1 and apply security update MS17-010.,2026-08-02
+CVE-2024-38063,9.8,FS01,ipv6,0,Windows TCP/IP IPv6 remote code execution,Apply the August 2024 cumulative update.,2026-08-10
+CVE-2022-30190,7.8,FS01,msdt,0,Windows Support Diagnostic Tool remote code execution (Follina),Apply the June 2022 update and disable the MSDT URL protocol.,2026-09-05
+CVE-2016-2183,7.5,FS01,tls,443,"TLS/SSL weak cipher suite (SWEET32, 3DES)",Disable 3DES cipher suites and reissue the certificate.,2026-08-19
+,5.3,FS01,smb,445,SMB signing is not required (relay and tampering risk),Require SMB signing by Group Policy on servers and workstations.,2026-09-18
+CVE-2021-44228,10.0,LNX01,http,8080,Apache Log4j2 JNDI remote code execution (Log4Shell),Upgrade log4j-core to 2.17.1 or later and restart the application.,2026-08-04
+CVE-2023-46604,10.0,LNX01,activemq,61616,Apache ActiveMQ OpenWire remote code execution,Upgrade ActiveMQ to 5.18.3 or later.,2026-08-12
+CVE-2023-38408,9.8,LNX01,ssh,22,OpenSSH ssh-agent PKCS#11 remote code execution,Upgrade OpenSSH and disable SSH agent forwarding.,2026-08-18
+CVE-2024-6387,8.1,LNX01,ssh,22,OpenSSH unauthenticated remote code execution (regreSSHion),Upgrade OpenSSH to 9.8p1 or later.,2026-08-19
+CVE-2023-4911,7.8,LNX01,glibc,0,glibc ld.so buffer overflow (Looney Tunables),Upgrade the distribution glibc package.,2026-08-20
+CVE-2022-0778,7.5,LNX01,openssl,443,OpenSSL BN_mod_sqrt infinite loop (denial of service),Upgrade OpenSSL to 1.1.1n or 3.0.2 or later.,2026-08-16
+CVE-2018-15473,5.3,LNX01,ssh,22,OpenSSH username enumeration,Upgrade OpenSSH to 7.7 or later.,2026-09-25
+CVE-2021-44228,10.0,LNX01,http,8080,Apache Log4j2 JNDI remote code execution (Log4Shell),Upgrade log4j-core to 2.17.1 or later and restart the application.,2026-09-15
+CVE-2023-38408,9.8,LNX01,ssh,22,OpenSSH ssh-agent PKCS#11 remote code execution,Upgrade OpenSSH and disable SSH agent forwarding.,2026-09-12
+CVE-2017-0144,8.1,WS01,smb,445,Microsoft SMBv1 remote code execution (EternalBlue),Disable SMBv1 and apply security update MS17-010.,2026-09-08
+CVE-2022-30190,7.8,WS01,msdt,0,Windows Support Diagnostic Tool remote code execution (Follina),Apply the June 2022 update and disable the MSDT URL protocol.,2026-08-23
+CVE-2022-37969,7.8,WS01,clfs,0,Windows Common Log File System driver elevation of privilege,Apply the September 2022 cumulative update.,2026-08-03
+CVE-2016-2183,7.5,WS01,tls,443,"TLS/SSL weak cipher suite (SWEET32, 3DES)",Disable 3DES cipher suites and reissue the certificate.,2026-09-17
+,0.0,WS01,windows-defender,0,Microsoft Defender definitions are out of date,Update definitions and confirm the WSUS/policy update path.,2026-09-11
+CVE-2019-0708,9.8,WS02,rdp,3389,Remote Desktop Services remote code execution (BlueKeep),Apply the RDP security update and require Network Level Authentication.,2026-09-10
+CVE-2023-23397,9.8,WS02,outlook,0,Microsoft Outlook privilege elevation via calendar reminder,Apply the March 2023 update and block outbound SMB from workstations.,2026-08-04
+CVE-2024-38063,9.8,WS02,ipv6,0,Windows TCP/IP IPv6 remote code execution,Apply the August 2024 cumulative update.,2026-09-06
+CVE-2023-21768,7.8,WS02,afd,0,Windows Ancillary Function Driver for WinSock elevation of privilege,Apply the January 2023 cumulative update.,2026-09-05
+CVE-2016-2183,7.5,WS02,tls,443,"TLS/SSL weak cipher suite (SWEET32, 3DES)",Disable 3DES cipher suites and reissue the certificate.,2026-09-14
+,5.3,WS02,smb,445,SMB signing is not required (relay and tampering risk),Require SMB signing by Group Policy on servers and workstations.,2026-08-22
+CVE-2023-4911,7.8,OPS01,glibc,0,glibc ld.so buffer overflow (Looney Tunables),Upgrade the distribution glibc package.,2026-08-25
+CVE-2022-0778,7.5,OPS01,openssl,443,OpenSSL BN_mod_sqrt infinite loop (denial of service),Upgrade OpenSSL to 1.1.1n or 3.0.2 or later.,2026-09-11
+CVE-2018-15473,5.3,OPS01,ssh,22,OpenSSH username enumeration,Upgrade OpenSSH to 7.7 or later.,2026-09-20
+,5.9,OPS01,tls,443,Weak SSL/TLS cipher suites accepted (RC4/3DES),Disable RC4 and 3DES cipher suites; prefer TLS 1.2 or 1.3.,2026-09-19
+CVE-2023-38408,9.8,SIEM01,ssh,22,OpenSSH ssh-agent PKCS#11 remote code execution,Upgrade OpenSSH and disable SSH agent forwarding.,2026-09-03
+CVE-2023-4911,7.8,SIEM01,glibc,0,glibc ld.so buffer overflow (Looney Tunables),Upgrade the distribution glibc package.,2026-08-09
+CVE-2022-0778,7.5,SIEM01,openssl,443,OpenSSL BN_mod_sqrt infinite loop (denial of service),Upgrade OpenSSL to 1.1.1n or 3.0.2 or later.,2026-09-23
+CVE-2018-15473,5.3,SIEM01,ssh,22,OpenSSH username enumeration,Upgrade OpenSSH to 7.7 or later.,2026-08-02
+CVE-2023-4911,7.8,BKP01,glibc,0,glibc ld.so buffer overflow (Looney Tunables),Upgrade the distribution glibc package.,2026-09-21
+CVE-2024-6387,8.1,BKP01,ssh,22,OpenSSH unauthenticated remote code execution (regreSSHion),Upgrade OpenSSH to 9.8p1 or later.,2026-09-10
+CVE-2022-0778,7.5,BKP01,openssl,443,OpenSSL BN_mod_sqrt infinite loop (denial of service),Upgrade OpenSSL to 1.1.1n or 3.0.2 or later.,2026-09-22
+CVE-2018-15473,5.3,BKP01,ssh,22,OpenSSH username enumeration,Upgrade OpenSSH to 7.7 or later.,2026-09-01
+,0.0,BKP01,ssh,22,Backup software version is out of date (upstream bug fixes not applied),Upgrade restic/MinIO to the current release in the maintenance window.,2026-09-12

@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>IT Service Desk, Asset Inventory (CMDB) and Documentation Hub | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="A real ITSM platform: asset discovery, SLAs, knowledge base, vendors and config-as-code"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p09/"><meta property="og:title" content="IT Service Desk, Asset Inventory (CMDB) and Documentation Hub | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="A real ITSM platform: asset discovery, SLAs, knowledge base, vendors and config-as-code"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p09/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#3 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>IT Service Desk, Asset Inventory (CMDB) and Documentation Hub</h1><p style="font-size:1.1rem;">A real ITSM platform: asset discovery, SLAs, knowledge base, vendors and config-as-code</p><p><span class="tag">IT Support</span><span class="tag">System Administration</span><span class="tag">GLPI</span><span class="tag">ITSM</span><span class="tag">CMDB</span><span class="tag">Asset Discovery</span><span class="tag">SLAs</span><span class="tag">Service Catalogue</span><span class="tag">BookStack</span><span class="tag">PHP/MySQL</span><span class="tag">Uptime Kuma</span><span class="tag">Git config-as-code</span><span class="tag">Vendor Management</span><span class="tag">PowerShell</span><span class="tag">Python</span></p></header><img src="/projects/p09-service-desk-cmdb/p09-architecture.svg" alt="IT Service Desk, Asset Inventory (CMDB) and Documentation Hub — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>At Halden, support requests arrive by email, Teams, WhatsApp and by people walking up to the desk.
+Nothing is tracked, so nobody knows the workload, what keeps breaking, or whether a user waits an
+hour or a week. The asset spreadsheet is out of date, and the firewall support contract expired
+unnoticed because no one owned the renewal. For a small business this is not just untidy: many SMBs
+still track IT assets on spreadsheets or not at all, and outdated records lead to overspending and to
+unmanaged devices sitting on the network (<code>docs/plan/00-research-and-selection.md</code>, finding 9). CIS
+Controls 1 and 2 — asset and software inventory — are the first two safeguards an SMB is measured
+against. (Market context and the job-ad evidence behind this project are in
+<code>docs/plan/00-research-and-selection.md</code>.)</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>GLPI (PHP + MariaDB) on one Ubuntu host</strong>, deployed with Docker Compose and authenticating to
+Active Directory over LDAPS, with group mapping so IT staff are Technicians and everyone else is
+Self-Service.</li>
+<li><strong>A service catalogue</strong> of nine services with request forms, approval routes and target times,
+defined once in <code>configs/glpi-service-catalogue.json</code> and applied to GLPI by a script.</li>
+<li><strong>Priority-based SLAs on a business calendar</strong> (Mon–Fri 08:00–18:00): P1 15 minutes to own and
+4 hours to resolve, through to P4 at one and five business days, with automatic escalation to L2 at
+75% of the resolution target.</li>
+<li><strong>An L1 → L2 → vendor escalation matrix</strong> with a handoff template, so a ticket carries everything
+the next tier needs.</li>
+<li><strong>Agent-based asset discovery</strong>, reconciled weekly against DHCP leases and a network sweep —
+target <strong>0 unknown-on-network</strong> — plus a drift check against AD, DNS and DHCP reservations.</li>
+<li><strong>A vendor, contract and licence register</strong> (fictional suppliers) with renewal alerts at 90 and 30
+days and a licence right-sizing view.</li>
+<li><strong>BookStack as the documentation hub</strong> for the as-built docs, runbooks and diagrams of the earlier
+projects, with an owner and a review date on every page.</li>
+<li><strong>Uptime Kuma</strong> for monitoring, installed here so the backup project (P8) has a heartbeat to call
+after a successful restore test.</li>
+<li><strong>Config-as-code with drift detection</strong>: a nightly export of GPO, AD, DHCP, DNS, firewall and NPS
+configuration to a private Git repository, and a check that raises an “unauthorised change” ticket
+when a changed file has no approved change record.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P9 service desk architecture" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p09-architecture.DEwsJf8K_Z4lz9b.svg"></p>
+<p>OPS01 runs five containers — GLPI and its database, Uptime Kuma, and BookStack and its database. The
+P1 estate feeds it (DHCP leases, AD objects, agent inventory, SNMP), P7 alerts and the P8 restore
+test create tickets automatically, and configuration flows the other way into a private Git
+repository every night. The lab is never exposed to the internet: the interfaces bind to loopback
+until the internal certificate from the network project exists.</p>
+<p>The piece that makes the CMDB trustworthy is the reconciliation classifier — three sources, one
+verdict per device:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="color:#E1E4E8">$status </span><span style="color:#F97583">=</span><span style="color:#F97583"> if</span><span style="color:#E1E4E8"> ($onNet </span><span style="color:#F97583">-and</span><span style="color:#F97583"> -not</span><span style="color:#E1E4E8"> $inGlpi) { </span><span style="color:#9ECBFF">'Unknown-OnNetwork'</span><span style="color:#E1E4E8"> }   </span><span style="color:#6A737D"># on the network, not in the CMDB</span></span>
+<span class="line"><span style="color:#F97583">          elseif</span><span style="color:#E1E4E8"> ($inGlpi </span><span style="color:#F97583">-and</span><span style="color:#F97583"> -not</span><span style="color:#E1E4E8"> ($onNet </span><span style="color:#F97583">-or</span><span style="color:#E1E4E8"> $inDhcp)) { </span><span style="color:#9ECBFF">'Stale-InGlpi'</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#F97583">          else</span><span style="color:#E1E4E8"> { </span><span style="color:#9ECBFF">'Matched'</span><span style="color:#E1E4E8"> }</span></span></code></pre>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit (scripts, configuration, documentation and business artifacts) is
+complete and lab execution has not started, so every metric is stated as “not measured” rather than
+filled with a plausible-looking number. Real results are added to the project README with a file in
+<code>evidence/public/</code> as the source for each one.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Devices discovered automatically by the GLPI Agent</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Reconciliation: unknown-on-network devices (target 0)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SLA compliance — time to own and time to resolve</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Unauthorised configuration changes detected</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="business-side">Business side</h2>
+<p>The technical platform is only half of an IT support project; the other half is what the business
+agrees and receives:</p>
+<ul>
+<li><strong>Service catalogue</strong> — what IT offers, who may request it, who approves it and how long it should
+take. Access to business data is approved by the data owner, not by IT.</li>
+<li><strong>SLA policy</strong> — the priority matrix, the business-hours calendar and the response and resolution
+targets, written so a target means the same thing to the desk and to the business.</li>
+<li><strong>Escalation matrix</strong> — the L1/L2/vendor routes with a handoff template, so information is not lost
+between people.</li>
+<li><strong>Vendor management procedure</strong> — how a case is raised and tracked, time-bound vendor access, and
+an annual review that includes security questions.</li>
+<li><strong>One-page executive brief</strong> and <strong>KPI/reporting definitions</strong> — what will be reported each month,
+how each measure is calculated, and an explicit statement that no figure is published until it has
+been measured.</li>
+<li><strong>Change record</strong> — risk, impact, test plan and backout, feeding the governance work in P10.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>Write the catalogue before touching the tool.</strong> The service list, the priorities and the
+escalation routes are business decisions; configuring GLPI first would have meant inventing them in
+the software, which is how catalogues turn into sixty categories nobody uses.</li>
+<li><strong>An SLA without a business-hours calendar is a promise you cannot keep.</strong> Making the calendar
+explicit — and covering the weekend and holiday rollover with unit tests — is what turns “8 hours”
+into something the desk can actually be measured against.</li>
+<li><strong>An asset register is only true on the day it is reconciled.</strong> Automating the three-source
+comparison and treating “0 unknown-on-network” as a test result, not an import, is the difference
+between a CMDB and another spreadsheet.</li>
+<li><strong>Config-as-code is only a control with a change record beside it.</strong> A nightly diff that flags
+everything is noise; the value is checking the diff against approved change records, and I would
+wire that check in from the first commit next time.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p09-service-desk-cmdb/p09-change-record.pdf">Change Record</a></li><li><a href="/projects/p09-service-desk-cmdb/p09-escalation-matrix.pdf">Escalation Matrix</a></li><li><a href="/projects/p09-service-desk-cmdb/p09-itsm-brief.pdf">Itsm Brief</a></li><li><a href="/projects/p09-service-desk-cmdb/p09-kpi-reporting.pdf">Kpi Reporting</a></li><li><a href="/projects/p09-service-desk-cmdb/p09-service-catalogue.pdf">Service Catalogue</a></li><li><a href="/projects/p09-service-desk-cmdb/p09-sla-policy.pdf">Sla Policy</a></li><li><a href="/projects/p09-service-desk-cmdb/p09-vendor-management.pdf">Vendor Management</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p09-service-desk-cmdb">projects/p09-service-desk-cmdb/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). Tickets, assets, suppliers and contracts are synthetic. This page shows a working build kit that is being executed in the lab phase by phase — the results table stays empty and no number appears here until it has actually been measured.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

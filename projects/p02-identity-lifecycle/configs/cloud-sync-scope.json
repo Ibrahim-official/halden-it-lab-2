@@ -1,0 +1,30 @@
+{
+  "_comment": "Entra Cloud Sync scope for Halden (P2, lab only). Read by 05-Prepare-HybridIdentity.ps1 and used by the Cloud Sync agent configuration on FS01. Only OU=Users,OU=Halden is in scope. _Admin and ServiceAccounts are excluded so that privileged and service identities never leave the on-premises directory: admin accounts stay cloud-only and service accounts stay on-prem. This is standard Tier 0 hygiene. Paths are relative to the domain DN ad.halden.internal.",
+  "agentHost": "FS01",
+  "syncEnabled": true,
+  "scopes": [
+    {
+      "name": "HaldenUsers",
+      "type": "OrganizationalUnit",
+      "path": "OU=Users,OU=Halden",
+      "action": "include"
+    },
+    {
+      "name": "HaldenAdminOutOfScope",
+      "type": "OrganizationalUnit",
+      "path": "OU=_Admin",
+      "action": "exclude"
+    },
+    {
+      "name": "HaldenServiceAccountsOutOfScope",
+      "type": "OrganizationalUnit",
+      "path": "OU=ServiceAccounts,OU=Halden",
+      "action": "exclude"
+    }
+  ],
+  "syncRules": {
+    "userPrincipalName": "Use the tenant's verified or onmicrosoft.com UPN suffix; never sync the .internal UPN as a routable address.",
+    "scopedObjects": "Users only. Groups and devices are not in scope in this project.",
+    "softDelete": "Cloud deletions are soft-deleted for 30 days."
+  }
+}

@@ -1,0 +1,109 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="p07-attack-coverage" name="P7 ATT&amp;CK coverage (mapped)">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Halden P7 — ATT&amp;CK detection coverage (mapped, not yet validated)" style="text;html=1;fontSize=20;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1000" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Every cell is derived from data/attack-mapping.csv, which follows configs/local_rules.xml. Validation is empty until an approved lab run." style="text;html=1;fontSize=12;align=left;fontColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="1100" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="Legend: teal = a rule exists (mapped) · grey = no dedicated rule · every cell's validation is ☐ empty until measured" style="text;html=1;fontSize=11;align=left;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="40" y="84" width="1120" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="col-init" value="Initial Access" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="52" y="130" width="132" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="col-exec" value="Execution" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="202" y="130" width="252" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="col-persist" value="Persistence" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="482" y="130" width="112" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="col-privesc" value="Privilege Escalation" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="622" y="130" width="112" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="col-evasion" value="Defence Evasion" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="762" y="130" width="112" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="col-cred" value="Credential Access" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="902" y="130" width="112" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="col-disc" value="Discovery" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1042" y="130" width="112" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="col-impact" value="Impact" style="text;html=1;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1042" y="140" width="112" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t1133" value="T1133&#xa;External Remote Svcs&#xa;D12 · rule 100113&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="52" y="180" width="132" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1059001" value="T1059.001&#xa;PowerShell&#xa;D6 · rule 100106&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="202" y="180" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1053005" value="T1053.005&#xa;Scheduled Task&#xa;D9b · rule 100110&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="322" y="180" width="132" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1204002" value="T1204.002&#xa;User Execution: Malicious File&#xa;D13 · rule 100114 (Defender / ASR block)&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="202" y="270" width="252" height="76" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t1098" value="T1098&#xa;Account Manipulation&#xa;D1 · rule 100100&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="482" y="180" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1543003" value="T1543.003&#xa;Windows Service&#xa;D9 · rule 100109&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="482" y="270" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1078" value="T1078&#xa;Valid Accounts&#xa;D10 · rule 100111&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="482" y="360" width="112" height="76" as="geometry" />
+        </mxCell>
+
+        <mxCell id="privesc-none" value="No dedicated rule&#xa;(identity rules cover the common paths)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e2e8f0;strokeColor=#cbd5e1;fontSize=10;fontColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="622" y="180" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1070001" value="T1070.001&#xa;Clear Event Logs&#xa;D8 · rule 100108&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="762" y="180" width="112" height="76" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t1003001" value="T1003.001&#xa;LSASS Memory&#xa;D5 · rule 100104&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="902" y="180" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1003006" value="T1003.006&#xa;DCSync&#xa;D11 · rule 100105&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="902" y="270" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1110003" value="T1110.003&#xa;Password Spray&#xa;D4 · rule 100112&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="902" y="360" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1558003" value="T1558.003&#xa;Kerberoasting&#xa;D2 · rule 100102&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="902" y="450" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1558004" value="T1558.004&#xa;AS-REP Roasting&#xa;D3 · rule 100103&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="902" y="540" width="112" height="76" as="geometry" />
+        </mxCell>
+
+        <mxCell id="disc-none" value="No dedicated rule&#xa;(Sysmon gives the raw data)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e2e8f0;strokeColor=#cbd5e1;fontSize=10;fontColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="1042" y="180" width="112" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="t1490" value="T1490&#xa;Inhibit Recovery&#xa;D7 · rule 100107&#xa;Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1042" y="270" width="112" height="76" as="geometry" />
+        </mxCell>
+
+        <mxCell id="availability" value="Availability checks — deliberately NOT ATT&amp;CK&#xa;D14 backup job failed (100115) · D15 agent stopped reporting (100116)&#xa;Forcing availability into a technique would be dishonest. Validated ☐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c2410c;strokeWidth=2;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="52" y="450" width="432" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tally" value="Our detections concentrate on the stages a small business is most often hit: initial access, credential access and impact. 14 techniques mapped across 16 custom rules." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="502" y="450" width="240" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="foot" value="The heat map shows where a rule exists, not that it has fired — validation is measured separately and recorded in configs/detection-coverage-matrix.csv. Halden Distribution Ltd. is a fictional company; every technique was exercised only in an authorised, snapshotted lab test." style="text;html=1;fontSize=9;align=left;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="40" y="620" width="1120" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

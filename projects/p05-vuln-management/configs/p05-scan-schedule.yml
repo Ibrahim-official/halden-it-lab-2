@@ -1,0 +1,38 @@
+# p05-scan-schedule.yml — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the weekly authenticated scan schedule and scan configuration for Greenbone CE.
+#         One recurring task per target set, Sunday 02:00, "Full and fast". A monthly "verify"
+#         task re-runs the same targets after the patch cycle to prove closure.
+# Where:  created on the scanner host LNX01 by scripts/03-schedule-scan.sh via gvm-cli. Targets come
+#         from configs/p05-scan-scope.txt and are lab-range-validated before they are created.
+# Status: designed values only. No scan has run and no schedule has fired (AGENTS.md rule R2).
+# Scope:  LAB ONLY (AGENTS.md rule R1).
+
+version: 1
+timezone: "Asia/Karachi"           # the owner's local time; on a UTC host adjust to the host clock
+
+scan_config: "Full and fast"       # Greenbone's recommended broad config, port and service aware
+scan_config_note: >-
+  "Full and fast" is a starting point, not a compromise: it is quick enough to run weekly across a
+  small lab and broad enough to catch missing patches. Authenticated scans (SSH and SMB credentials)
+  find roughly 5-10x more than unauthenticated ones, which is why every target set uses a credential.
+
+schedules:
+  - name: "P5 weekly authenticated scan"
+    target_sets: [servers, network, workstations]
+    recurrence: weekly
+    day: Sunday
+    time: "02:00"
+    duration_hint: "1-2 h for a ten-host lab"
+    enabled: true
+    purpose: Feed the prioritizer with fresh findings every Monday morning.
+
+  - name: "P5 monthly patch-cycle verification"
+    target_sets: [servers, workstations]
+    recurrence: monthly
+    day: Saturday
+    time: "23:00"
+    after: "the monthly patch cycle"
+    enabled: true
+    purpose: >-
+      Re-scan after patching so a ticket can only be closed once the scanner shows the finding is
+      gone (scripts/07-verify-closure.sh). "Closed without a rescan" is not allowed.

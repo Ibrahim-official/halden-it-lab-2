@@ -1,0 +1,15 @@
+# p03-tiering-model.csv — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the privileged-access tiering model that scripts/07-Set-AdminTiering.ps1 applies to
+#         the ad.halden.internal domain — which tier owns which systems, the admin account
+#         naming pattern, the logon restrictions and the group used for delegated rights.
+# Where:  DC01/DC02 (Tier 0), member servers FS01/LNX01/CA01 (Tier 1), workstations
+#         WS01/WS02 (Tier 2) on 192.168.10.0/24. Consumed by PowerShell (import the rows
+#         after dropping lines beginning with '#') and by data/gen_account_inventory.py.
+# Status: designed values only. Nothing in this file has been applied to the lab, and no
+#         control has been measured yet (AGENTS.md rule R2).
+# Gate:   scripts/00-Test-AssessmentGate.ps1 must confirm the owner's written authorisation
+#         before any script that reads this file makes a change.
+Tier,Scope,Systems,AdminAccountPattern,AdminGroup,CanLogOnTo,DenyLogOnGroups,ProtectedUsers,Notes
+0,Domain and identity infrastructure,DC01 and DC02 and the AD database and GPOs and Entra Connect (P2),adm-t0-{first.last},G_Tier0_Admins,DCs and the Tier 0 PAW (WS02) only,G_Tier1_Admins;G_Tier2_Admins,yes,A Tier 0 compromise is a domain compromise; the only Tier 0 login targets are the DCs and the PAW
+1,Member servers and applications,FS01 (files) and LNX01 (app) and CA01 (P6),adm-t1-{first.last},G_Tier1_Admins,Member servers only,G_Tier0_Admins;G_Tier2_Admins,yes,Servers and the applications on them; kept separate from workstation administration
+2,Workstations and user support,WS01 and WS02 and helpdesk work on user objects,adm-t2-{first.last},G_Tier2_Admins,Workstations only,G_Tier0_Admins;G_Tier1_Admins,yes,Helpdesk resets passwords and unlocks accounts by delegation on user OUs - not by Domain Admin

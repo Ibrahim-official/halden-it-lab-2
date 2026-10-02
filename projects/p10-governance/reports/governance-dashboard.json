@@ -1,0 +1,515 @@
+{
+  "generated": "2026-10-02",
+  "halden_is_fictional": true,
+  "lab_executed": false,
+  "headline": "Build kits complete, lab execution pending. Tiles marked 'repository' are measured from this repository today; tiles marked 'not measured' need a lab run.",
+  "cis_ig1": {
+    "safeguard_count": 56,
+    "scored_before": 0,
+    "scored_after": 0,
+    "percent_implemented": null,
+    "note": "not scored yet - the assessment has not been run",
+    "controls": [
+      {
+        "control_id": "1",
+        "safeguards": 2
+      },
+      {
+        "control_id": "2",
+        "safeguards": 3
+      },
+      {
+        "control_id": "3",
+        "safeguards": 6
+      },
+      {
+        "control_id": "4",
+        "safeguards": 7
+      },
+      {
+        "control_id": "5",
+        "safeguards": 4
+      },
+      {
+        "control_id": "6",
+        "safeguards": 5
+      },
+      {
+        "control_id": "7",
+        "safeguards": 4
+      },
+      {
+        "control_id": "8",
+        "safeguards": 3
+      },
+      {
+        "control_id": "9",
+        "safeguards": 2
+      },
+      {
+        "control_id": "10",
+        "safeguards": 3
+      },
+      {
+        "control_id": "11",
+        "safeguards": 4
+      },
+      {
+        "control_id": "12",
+        "safeguards": 1
+      },
+      {
+        "control_id": "14",
+        "safeguards": 8
+      },
+      {
+        "control_id": "15",
+        "safeguards": 1
+      },
+      {
+        "control_id": "17",
+        "safeguards": 3
+      }
+    ]
+  },
+  "changes": {
+    "total": 1,
+    "by_type": {
+      "normal": 1
+    },
+    "awaiting_approval": 1,
+    "success_rate": "not measured",
+    "emergency_share": "not measured (register too small to be meaningful)"
+  },
+  "policies": {
+    "total": 10,
+    "approved": 0,
+    "acknowledged": "not measured",
+    "items": [
+      {
+        "policy_id": "IT-POL-01",
+        "title": "Information Security Policy",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-02",
+        "title": "Acceptable Use Policy",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-03",
+        "title": "Access Control and Identity Standard",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-04",
+        "title": "Privileged Access Standard",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-05",
+        "title": "Endpoint Security Standard",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-06",
+        "title": "Patch and Vulnerability Management Policy",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-07",
+        "title": "Network and Remote Access Standard",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-08",
+        "title": "Logging Monitoring and Incident Response Policy",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-09",
+        "title": "Backup and Recovery Policy",
+        "approved": false
+      },
+      {
+        "policy_id": "IT-POL-10",
+        "title": "Change and Asset Management Policy",
+        "approved": false
+      }
+    ]
+  },
+  "risks": {
+    "open_risks": 0,
+    "note": "register empty until real risks are assessed; methodology in business/p10-risk-register.md",
+    "heatmap": []
+  },
+  "tiles": [
+    {
+      "id": "KPI-27",
+      "label": "Projects with measured results",
+      "value": 0,
+      "unit": "",
+      "target": "10 of 10",
+      "rag": "red",
+      "provenance": "repository",
+      "source": "projects/*/README.md (## Results tables)",
+      "note": "0 of 10 projects have any measured result yet: 10 have a results table whose rows read 'not measured' and 0 do not have the table written yet. This is expected before lab execution."
+    },
+    {
+      "id": "KPI-34",
+      "label": "Projects whose README still says 'not measured'",
+      "value": 10,
+      "unit": "",
+      "target": "0",
+      "rag": "red",
+      "provenance": "repository",
+      "source": "projects/*/README.md (## Results tables)",
+      "note": "p01-core-infrastructure, p02-identity-lifecycle, p03-ad-security, p04-endpoint-hardening, p05-vuln-management, p06-network-segmentation, p07-siem-incident-response, p08-backup-dr, p09-service-desk-cmdb, p10-governance"
+    },
+    {
+      "id": "KPI-28",
+      "label": "Projects by showcase status",
+      "value": {
+        "done": 0,
+        "in-progress": 10,
+        "planned": 0
+      },
+      "unit": "",
+      "target": "",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "projects/*/showcase.md frontmatter (status)",
+      "note": "done: none; in-progress: 10; planned: 0"
+    },
+    {
+      "id": "KPI-35",
+      "label": "Projects carrying the Definition-of-Done template",
+      "value": 10,
+      "unit": "",
+      "target": "10",
+      "rag": "green",
+      "provenance": "repository",
+      "source": "projects/*/README.md",
+      "note": "0 project(s) still use the placeholder README (write-up pending): none"
+    },
+    {
+      "id": "KPI-29",
+      "label": "Acceptance tests not yet run",
+      "value": 95,
+      "unit": "",
+      "target": "0",
+      "rag": "red",
+      "provenance": "repository",
+      "source": "projects/*/README.md (## Acceptance tests tables)",
+      "note": "of 97 acceptance-test rows found across the projects; 0 project(s) have not written their acceptance-test table yet and are not counted"
+    },
+    {
+      "id": "KPI-25",
+      "label": "Open Definition-of-Done items",
+      "value": 8,
+      "unit": "",
+      "target": "0",
+      "rag": "red",
+      "provenance": "repository",
+      "source": "PROGRESS.md (Definition of Done table)",
+      "note": "Run the phases in the lab and record each success criterion with a source file; Fill the acceptance-test tables with real results; Capture evidence into `evidence/raw/`, sanitize into `evidence/public/` \u2026"
+    },
+    {
+      "id": "KPI-30",
+      "label": "Business artifacts authored (Markdown)",
+      "value": 61,
+      "unit": "",
+      "target": "",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "projects/*/business/*.md",
+      "note": "PDFs are generated centrally from these Markdown sources"
+    },
+    {
+      "id": "KPI-31",
+      "label": "Automation scripts committed",
+      "value": 146,
+      "unit": "",
+      "target": "",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "projects/*/scripts/**/*.{ps1,sh,py}",
+      "note": "9 of 10 projects ship a Python test suite in scripts/tests/"
+    },
+    {
+      "id": "KPI-22",
+      "label": "CIS IG1 implementation %",
+      "value": "not measured",
+      "unit": "%",
+      "target": "trend up",
+      "rag": "not measured",
+      "provenance": "repository",
+      "source": "data/cis-ig1-safeguards.csv (after_status column)",
+      "note": "0 of 56 safeguards scored - the assessment has not been run yet, so no percentage is reported"
+    },
+    {
+      "id": "KPI-23",
+      "label": "Safeguards with evidence present",
+      "value": 16,
+      "unit": "",
+      "target": "56",
+      "rag": "red",
+      "provenance": "repository",
+      "source": "configs/cis-ig1-evidence-map.csv vs the repository",
+      "note": "40 of 56 expected evidence artifacts are not in the repository yet (the lab has not been executed)"
+    },
+    {
+      "id": "KPI-18",
+      "label": "Changes recorded",
+      "value": 1,
+      "unit": "",
+      "target": "",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "data/change-log.csv",
+      "note": "by type: {'normal': 1}"
+    },
+    {
+      "id": "KPI-19",
+      "label": "Emergency change share",
+      "value": 0.0,
+      "unit": "%",
+      "target": "<= 10%",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "data/change-log.csv",
+      "note": "no emergency changes recorded yet"
+    },
+    {
+      "id": "KPI-32",
+      "label": "Changes awaiting approval (unsigned)",
+      "value": 1,
+      "unit": "",
+      "target": "0",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "data/change-log.csv (approver column empty)",
+      "note": "0 is expected here: nothing has been approved yet in the lab"
+    },
+    {
+      "id": "KPI-33",
+      "label": "Age of the oldest open change",
+      "value": 3,
+      "unit": "days",
+      "target": "",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "data/change-log.csv (date_raised column)",
+      "note": "CHG-2026-001 raised 3 days ago"
+    },
+    {
+      "id": "KPI-26",
+      "label": "Policies approved %",
+      "value": 0.0,
+      "unit": "%",
+      "target": "100%",
+      "rag": "red",
+      "provenance": "repository",
+      "source": "data/policy-register.csv",
+      "note": "0 of 10 policies carry an approval date (approval blocks are unsigned on purpose)"
+    },
+    {
+      "id": "KPI-24",
+      "label": "Actions closed on time %",
+      "value": null,
+      "unit": "%",
+      "target": ">= 90%",
+      "rag": "not measured",
+      "provenance": "repository",
+      "source": "data/action-tracker.csv",
+      "note": "no actions recorded yet - the tracker is empty until the projects' reviews produce actions"
+    },
+    {
+      "id": "KPI-36",
+      "label": "Open actions in the tracker",
+      "value": 0,
+      "unit": "",
+      "target": "0",
+      "rag": "informational",
+      "provenance": "repository",
+      "source": "data/action-tracker.csv",
+      "note": "0 action(s) recorded in total (tracker is empty until reviews happen)"
+    },
+    {
+      "id": "KPI-01",
+      "label": "MFA coverage",
+      "value": "not measured",
+      "unit": "",
+      "target": "100%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P2 MFA coverage report / Entra sign-in report",
+      "note": "needs the lab: P2 Phase 5"
+    },
+    {
+      "id": "KPI-02",
+      "label": "Leavers revoked within SLA",
+      "value": "not measured",
+      "unit": "",
+      "target": "100%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P2 JML audit log",
+      "note": "needs the lab: P2 Phase 3"
+    },
+    {
+      "id": "KPI-03",
+      "label": "Stale enabled accounts",
+      "value": "not measured",
+      "unit": "",
+      "target": "0",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P2 hygiene report",
+      "note": "needs the lab: P2 Phase 4"
+    },
+    {
+      "id": "KPI-04",
+      "label": "PingCastle risk score",
+      "value": "not measured",
+      "unit": "",
+      "target": "<= 20",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P3 PingCastle monthly report",
+      "note": "needs the lab: P3 Phase 6"
+    },
+    {
+      "id": "KPI-05",
+      "label": "Endpoint compliance",
+      "value": "not measured",
+      "unit": "",
+      "target": ">= 95%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P4 compliance report",
+      "note": "needs the lab: P4 Phase 5"
+    },
+    {
+      "id": "KPI-06",
+      "label": "Unsupported OS devices",
+      "value": "not measured",
+      "unit": "",
+      "target": "0",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P4 readiness report / P9 CMDB",
+      "note": "needs the lab: P4 Phase 1"
+    },
+    {
+      "id": "KPI-07",
+      "label": "Patch compliance within 14 days",
+      "value": "not measured",
+      "unit": "",
+      "target": ">= 95%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P5 / WSUS compliance report",
+      "note": "needs the lab: P5 Phase 4"
+    },
+    {
+      "id": "KPI-08",
+      "label": "Open KEV vulnerabilities",
+      "value": "not measured",
+      "unit": "",
+      "target": "0",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P5 prioritizer dashboard",
+      "note": "needs the lab: P5 Phase 3"
+    },
+    {
+      "id": "KPI-09",
+      "label": "Findings overdue by tier",
+      "value": "not measured",
+      "unit": "",
+      "target": "0",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P5 prioritizer dashboard",
+      "note": "needs the lab: P5 Phase 3"
+    },
+    {
+      "id": "KPI-11",
+      "label": "High-severity alerts",
+      "value": "not measured",
+      "unit": "",
+      "target": "trend",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P7 Wazuh dashboard",
+      "note": "needs the lab: P7 Phase 4"
+    },
+    {
+      "id": "KPI-13",
+      "label": "MTTD / MTTR",
+      "value": "not measured",
+      "unit": "",
+      "target": "trend down",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P7 IR register",
+      "note": "needs the lab: P7 Phase 6"
+    },
+    {
+      "id": "KPI-14",
+      "label": "Uptime of critical services",
+      "value": "not measured",
+      "unit": "",
+      "target": ">= 99.5%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "Uptime Kuma (P9)",
+      "note": "needs the lab: P9 Phase 4"
+    },
+    {
+      "id": "KPI-15",
+      "label": "Restore tests passed",
+      "value": "not measured",
+      "unit": "",
+      "target": "100%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P8 restore-test history",
+      "note": "needs the lab: P8 Phase 3"
+    },
+    {
+      "id": "KPI-16",
+      "label": "SLA compliance",
+      "value": "not measured",
+      "unit": "",
+      "target": ">= 90%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P9 GLPI reporting",
+      "note": "needs the lab: P9 Phase 3"
+    },
+    {
+      "id": "KPI-20",
+      "label": "Change success rate",
+      "value": "not measured",
+      "unit": "",
+      "target": ">= 95%",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "change log + P9 incidents",
+      "note": "needs the lab: P10 Phase 2 review"
+    },
+    {
+      "id": "KPI-21",
+      "label": "Unauthorised changes detected",
+      "value": "not measured",
+      "unit": "",
+      "target": "0",
+      "rag": "not-measured",
+      "provenance": "not-measured",
+      "source": "P9 config-as-code drift report",
+      "note": "needs the lab: P9 Phase 6"
+    }
+  ]
+}

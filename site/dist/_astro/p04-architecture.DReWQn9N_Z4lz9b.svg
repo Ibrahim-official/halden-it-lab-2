@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p4Title p4Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p4Title">Halden Distribution P4 endpoint hardening architecture</title>
+  <desc id="p4Desc">A policy flow diagram: the Microsoft Security Baseline and Halden overrides are imported into Group Policy objects and applied to Windows endpoints, which are hardened by four control areas (attack surface reduction, BitLocker, Windows LAPS and network, credential and logging protections). Endpoints report into an automated daily compliance check that produces an HTML and CSV report, and the Windows 11 readiness assessment runs alongside it over a synthetic device fleet.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="40" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P4 endpoint hardening and Windows 11 readiness</text>
+  <text x="40" y="63" font-size="13" fill="#475569">Isolated home lab · domain ad.halden.internal · Windows 11 Enterprise clients WS01 (policy test) and WS02 (Tier 0 PAW) · depends on P1 (GPO) and P3 (LAPS, tiering)</text>
+
+  <!-- Policy source column -->
+  <rect x="40" y="96" width="250" height="132" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="165" y="122" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">Baseline source</text>
+  <text x="165" y="145" font-size="11.5" fill="#334155" text-anchor="middle">Microsoft Security Baseline</text>
+  <text x="165" y="163" font-size="11.5" fill="#334155" text-anchor="middle">(Security Compliance Toolkit)</text>
+  <text x="165" y="186" font-size="11.5" fill="#475569" text-anchor="middle">CIS finding list scores the</text>
+  <text x="165" y="203" font-size="11.5" fill="#475569" text-anchor="middle">before and after (HardeningKitty)</text>
+  <text x="165" y="220" font-size="11" fill="#64748b" text-anchor="middle">vendor backups never edited</text>
+
+  <line x1="290" y1="162" x2="340" y2="162" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="340,162 332,158 332,166" fill="#0f766e"/>
+
+  <!-- GPO / Intune column -->
+  <rect x="340" y="96" width="250" height="132" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="465" y="122" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">Policy delivery</text>
+  <text x="465" y="145" font-size="11.5" fill="#334155" text-anchor="middle">WKS - MSFT Baseline Computer - v1</text>
+  <text x="465" y="163" font-size="11.5" fill="#334155" text-anchor="middle">WKS - Halden Overrides - v1</text>
+  <text x="465" y="181" font-size="11.5" fill="#334155" text-anchor="middle">WKS - Windows Hardening - v1</text>
+  <text x="465" y="203" font-size="11.5" fill="#475569" text-anchor="middle">Pilot OU 3 days → Workstations OU</text>
+  <text x="465" y="220" font-size="11" fill="#64748b" text-anchor="middle">Intune would replace this with a paid licence</text>
+
+  <line x1="590" y1="162" x2="640" y2="162" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="640,162 632,158 632,166" fill="#0f766e"/>
+
+  <!-- Endpoints column -->
+  <rect x="640" y="96" width="230" height="132" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="755" y="122" font-size="14" font-weight="700" fill="#0f172a" text-anchor="middle">Endpoints</text>
+  <text x="755" y="145" font-size="11.5" fill="#334155" text-anchor="middle">WS01 — user workstation</text>
+  <text x="755" y="163" font-size="11.5" fill="#334155" text-anchor="middle">WS02 — Tier 0 PAW</text>
+  <text x="755" y="181" font-size="11.5" fill="#334155" text-anchor="middle">Windows 11 Enterprise</text>
+  <text x="755" y="203" font-size="11.5" fill="#475569" text-anchor="middle">one Windows 10 VM upgraded</text>
+  <text x="755" y="220" font-size="11" fill="#64748b" text-anchor="middle">group policy every refresh</text>
+
+  <!-- Control areas panel -->
+  <rect x="40" y="256" width="1120" height="188" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="60" y="282" font-size="13.5" font-weight="700" fill="#0f172a">Four control areas applied to every endpoint</text>
+
+  <!-- ASR -->
+  <rect x="60" y="296" width="262" height="130" rx="8" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="191" y="320" font-size="13" font-weight="700" fill="#0f766e" text-anchor="middle">1 · Attack Surface Reduction</text>
+  <text x="76" y="344" font-size="11.5" fill="#134e4a">16 Defender ASR rules (GUIDs in</text>
+  <text x="76" y="361" font-size="11.5" fill="#134e4a">configs/asr-rules.yaml).</text>
+  <text x="76" y="383" font-size="11.5" font-weight="600" fill="#134e4a">Audit mode first, 7 days minimum,</text>
+  <text x="76" y="400" font-size="11.5" font-weight="600" fill="#134e4a">then Block — enforced in the script.</text>
+  <text x="76" y="419" font-size="11" fill="#475569">event 1122 audited · 1121 blocked</text>
+
+  <!-- BitLocker -->
+  <rect x="338" y="296" width="262" height="130" rx="8" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="469" y="320" font-size="13" font-weight="700" fill="#0f766e" text-anchor="middle">2 · BitLocker</text>
+  <text x="354" y="344" font-size="11.5" fill="#134e4a">XTS-AES 256, TPM-only startup.</text>
+  <text x="354" y="361" font-size="11.5" fill="#134e4a">Recovery password + key protector.</text>
+  <text x="354" y="383" font-size="11.5" font-weight="600" fill="#134e4a">Escrow to Active Directory BEFORE</text>
+  <text x="354" y="400" font-size="11.5" font-weight="600" fill="#134e4a">encryption — enforced in the script.</text>
+  <text x="354" y="419" font-size="11" fill="#475569">keys stay in the vault, never published</text>
+
+  <!-- LAPS -->
+  <rect x="616" y="296" width="262" height="130" rx="8" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="747" y="320" font-size="13" font-weight="700" fill="#0f766e" text-anchor="middle">3 · Windows LAPS</text>
+  <text x="632" y="344" font-size="11.5" fill="#134e4a">Consumes the P3 deployment: unique</text>
+  <text x="632" y="361" font-size="11.5" fill="#134e4a">local admin password per device.</text>
+  <text x="632" y="383" font-size="11.5" font-weight="600" fill="#134e4a">Only the update time is read by IT.</text>
+  <text x="632" y="400" font-size="11.5" fill="#134e4a">Local Administrators = LAPS account</text>
+  <text x="632" y="417" font-size="11.5" fill="#134e4a">+ G_Tier2_Admins only.</text>
+
+  <!-- Firewall/credential/logging -->
+  <rect x="894" y="296" width="246" height="130" rx="8" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="1017" y="320" font-size="13" font-weight="700" fill="#0f766e" text-anchor="middle">4 · Network, credentials, logs</text>
+  <text x="910" y="344" font-size="11.5" fill="#134e4a">Firewall on, inbound block; RDP/WinRM</text>
+  <text x="910" y="361" font-size="11.5" fill="#134e4a">from the management subnet only (P6).</text>
+  <text x="910" y="383" font-size="11.5" fill="#134e4a">Credential Guard + LSA protection.</text>
+  <text x="910" y="400" font-size="11.5" fill="#134e4a">PowerShell script block and module</text>
+  <text x="910" y="417" font-size="11.5" fill="#134e4a">logging — consumed by P7.</text>
+
+  <!-- Compliance loop -->
+  <rect x="40" y="466" width="640" height="176" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="60" y="492" font-size="13.5" font-weight="700" fill="#0f766e">Compliance report loop (daily, automated)</text>
+  <text x="60" y="516" font-size="11.5" fill="#334155">Get-EndpointCompliance.ps1 runs nine named checks against each workstation:</text>
+  <text x="60" y="536" font-size="11.5" fill="#475569">C1 OS build · C2 BitLocker · C3 Defender · C4 ASR all blocking · C5 firewall ·</text>
+  <text x="60" y="554" font-size="11.5" fill="#475569">C6 local admins · C7 LAPS age · C8 pending reboot · C9 last patch (link to P5)</text>
+  <rect x="60" y="566" width="600" height="24" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="360" y="583" font-size="11.5" font-weight="600" fill="#0f172a" text-anchor="middle">overall % = checks passed ÷ checks that ran   (a "not checked" result is amber and excluded — never counted as a pass)</text>
+  <text x="60" y="612" font-size="11.5" fill="#334155">Outputs: reports/endpoint-compliance-&lt;date&gt;.html (traffic lights) and .csv (Power BI → P10 monthly KPI)</text>
+  <text x="60" y="631" font-size="11" fill="#64748b">The trend over time is the management story; a single day's percentage is only a snapshot.</text>
+
+  <!-- Readiness -->
+  <rect x="700" y="466" width="460" height="176" rx="8" fill="#fff7ed" stroke="#c2410c"/>
+  <text x="720" y="492" font-size="13.5" font-weight="700" fill="#c2410c">Windows 11 readiness assessment</text>
+  <text x="720" y="516" font-size="11.5" fill="#7c2d12">Rules: TPM 2.0 · Secure Boot · UEFI · supported CPU · 4 GB RAM · 64 GB disk</text>
+  <text x="720" y="538" font-size="11.5" fill="#334155">ready = capable and already on Windows 11</text>
+  <text x="720" y="556" font-size="11.5" fill="#334155">upgrade = capable device still on Windows 10</text>
+  <text x="720" y="574" font-size="11.5" fill="#334155">replace = a hardware requirement is not met</text>
+  <rect x="720" y="586" width="420" height="44" rx="6" fill="#ffedd5" stroke="#c2410c"/>
+  <text x="930" y="604" font-size="11.5" font-weight="700" fill="#7c2d12" text-anchor="middle">The device fleet here is SYNTHETIC — an invented 150-device</text>
+  <text x="930" y="621" font-size="11.5" font-weight="700" fill="#7c2d12" text-anchor="middle">inventory for the fictional company, not a real measurement.</text>
+
+  <!-- Legend -->
+  <rect x="40" y="656" width="180" height="0.1" fill="none"/>
+  <rect x="700" y="652" width="460" height="10" fill="none"/>
+  <g font-size="11" fill="#64748b">
+    <rect x="40" y="658" width="12" height="12" fill="#f0fdfa" stroke="#0f766e"/>
+    <text x="58" y="668">enforced control</text>
+    <rect x="150" y="658" width="12" height="12" fill="#fff7ed" stroke="#c2410c"/>
+    <text x="168" y="668">synthetic-fleet analysis</text>
+    <rect x="330" y="658" width="12" height="12" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="348" y="668">host / policy object</text>
+  </g>
+  <text x="470" y="668" font-size="10.5" fill="#64748b">Halden Distribution Ltd. is a fictional company. Configurations are real; every figure published on the site comes from a real lab run, except the clearly labelled synthetic fleet.</text>
+</svg>

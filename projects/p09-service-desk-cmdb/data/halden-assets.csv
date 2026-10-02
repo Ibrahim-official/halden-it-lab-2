@@ -1,0 +1,114 @@
+AssetTag,Hostname,Type,Manufacturer,Model,Department,AssignedTo,Location,SerialNumber,PurchaseDate,WarrantyEnd,Supplier,CostPKR,OperatingSystem,Status,Synthetic
+HAL-00001,HQ-LT-001,Laptop,HP,EliteBook 640,Finance,user001,HQ - Head Office,EGZD8PCF32,2023-06-06,2029-06-04,Northwind Technology (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00002,HQ-LT-002,Laptop,Dell,Latitude 5540,Operations,user002,HQ - Head Office,QD1DQCJU2K,2023-10-05,2026-10-04,Fabrikam Supplies (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00003,HQ-LT-003,Laptop,Lenovo,ThinkPad T14,HR,user003,HQ - Server Room,GNZGEDP73W,2025-04-13,2031-04-12,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00004,HQ-LT-004,Laptop,HP,EliteBook 640,HR,user004,HQ - Server Room,RFV97X4UEH,2022-05-12,2025-05-11,Fabrikam Supplies (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00005,HQ-LT-005,Laptop,Dell,Latitude 5540,HR,user005,In stock - IT store,CEWXY75EFT,2020-09-14,2025-09-13,Contoso Hardware (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00006,HQ-LT-006,Laptop,Lenovo,ThinkPad T14,Management,user006,Warehouse,4U0YB5YLH7,2019-09-06,2025-09-04,Northwind Technology (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00007,HQ-LT-007,Laptop,HP,EliteBook 640,Finance,user007,In stock - IT store,7FL41TJ3T2,2021-10-11,2026-10-10,Contoso Hardware (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00008,HQ-LT-008,Laptop,HP,EliteBook 640,Finance,user008,HQ - Server Room,KQQA7MSUAK,2020-09-10,2023-09-10,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00009,HQ-LT-009,Laptop,HP,EliteBook 640,Operations,user009,HQ - Server Room,8D51111G61,2025-05-08,2030-05-07,Northwind Technology (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00010,HQ-LT-010,Laptop,Dell,Latitude 5540,Finance,user010,HQ - Head Office,XDGAKGZBEP,2023-12-10,2026-12-09,Fabrikam Supplies (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00011,HQ-LT-011,Laptop,Dell,Latitude 5540,IT,user011,Warehouse,6HH7566VFK,2021-10-30,2026-10-29,Northwind Technology (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00012,HQ-LT-012,Laptop,HP,EliteBook 640,IT,user012,HQ - Server Room,9BP9ZKB9VF,2021-12-20,2026-12-19,Fabrikam Supplies (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00013,HQ-LT-013,Laptop,Lenovo,ThinkPad T14,HR,user013,HQ - Server Room,8XQNR1QN97,2020-11-15,2025-11-14,Contoso Hardware (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00014,HQ-LT-014,Laptop,Dell,Latitude 5540,Management,user014,Warehouse,NY4YZFQGQ6,2022-02-18,2027-02-17,Northwind Technology (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00015,HQ-LT-015,Laptop,Dell,Latitude 5540,Sales,user015,In stock - IT store,YFH0N6M3XF,2025-11-04,2028-11-03,Fabrikam Supplies (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00016,HQ-LT-016,Laptop,HP,EliteBook 640,Sales,user016,HQ - Server Room,LJBK5K6YKJ,2019-12-14,2025-12-12,Northwind Technology (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00017,HQ-LT-017,Laptop,Lenovo,ThinkPad T14,IT,user017,HQ - Server Room,3NPBSPU8RW,2020-02-25,2026-02-23,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00018,HQ-LT-018,Laptop,HP,EliteBook 640,Finance,user018,Warehouse,5928JK98B4,2019-09-07,2025-09-05,Northwind Technology (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00019,HQ-LT-019,Laptop,Dell,Latitude 5540,Finance,user019,In stock - IT store,HDW996GDRN,2020-12-06,2023-12-06,Contoso Hardware (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00020,HQ-LT-020,Laptop,Dell,Latitude 5540,Operations,user020,HQ - Head Office,E4W88NT486,2024-01-27,2030-01-25,Fabrikam Supplies (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00021,HQ-LT-021,Laptop,Lenovo,ThinkPad T14,Operations,user021,HQ - Server Room,4J2H14WER3,2021-11-29,2027-11-28,Northwind Technology (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00022,HQ-LT-022,Laptop,Lenovo,ThinkPad T14,HR,user022,Warehouse,KSJ5QG17LQ,2020-05-16,2023-05-16,Northwind Technology (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00023,HQ-LT-023,Laptop,HP,EliteBook 640,Operations,user023,In stock - IT store,NYWFZBX54B,2023-07-13,2028-07-11,Contoso Hardware (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00024,HQ-LT-024,Laptop,Lenovo,ThinkPad T14,Operations,user024,HQ - Head Office,HQGFSTCMTJ,2022-04-25,2028-04-23,Contoso Hardware (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00025,HQ-LT-025,Laptop,HP,EliteBook 640,Sales,user025,In stock - IT store,WFTDM3ETBF,2020-09-03,2026-09-02,Contoso Hardware (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00026,HQ-LT-026,Laptop,Lenovo,ThinkPad T14,Finance,user026,HQ - Head Office,5AX2TJC9RH,2019-09-30,2024-09-28,Northwind Technology (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00027,HQ-LT-027,Laptop,Dell,Latitude 5540,Finance,user027,Warehouse,9PU48MTYBS,2021-04-06,2026-04-05,Northwind Technology (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00028,HQ-LT-028,Laptop,Dell,Latitude 5540,IT,user028,HQ - Server Room,86R4G3718V,2024-09-02,2030-09-01,Fabrikam Supplies (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00029,HQ-LT-029,Laptop,Dell,Latitude 5540,HR,user029,HQ - Server Room,1YDJAES3LD,2021-03-24,2027-03-23,Northwind Technology (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00030,HQ-LT-030,Laptop,HP,EliteBook 640,Operations,user030,HQ - Server Room,UC5MLT4ASZ,2022-02-28,2028-02-27,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00031,HQ-LT-031,Laptop,HP,EliteBook 640,Finance,user031,HQ - Server Room,YMAX0F6T8N,2019-05-22,2024-05-20,Northwind Technology (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00032,HQ-LT-032,Laptop,Dell,Latitude 5540,Management,user032,HQ - Server Room,1C1BVVQF9K,2021-12-18,2024-12-17,Fabrikam Supplies (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00033,HQ-LT-033,Laptop,Lenovo,ThinkPad T14,Sales,user033,In stock - IT store,KUKC838J98,2022-08-28,2028-08-26,Fabrikam Supplies (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00034,HQ-LT-034,Laptop,Lenovo,ThinkPad T14,Operations,user034,HQ - Head Office,CJZG04DBR7,2021-07-30,2024-07-29,Contoso Hardware (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00035,HQ-LT-035,Laptop,HP,EliteBook 640,Management,user035,HQ - Head Office,9E6SESRPQ5,2024-08-22,2030-08-21,Contoso Hardware (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00036,HQ-LT-036,Laptop,Dell,Latitude 5540,Sales,user036,HQ - Server Room,EKXSVJA6D7,2022-03-22,2025-03-21,Contoso Hardware (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00037,HQ-LT-037,Laptop,Dell,Latitude 5540,IT,user037,In stock - IT store,U9U555HNVF,2021-06-10,2027-06-09,Contoso Hardware (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00038,HQ-LT-038,Laptop,HP,EliteBook 640,Sales,user038,In stock - IT store,T0PPEFK9SZ,2019-11-10,2025-11-08,Northwind Technology (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00039,HQ-LT-039,Laptop,Lenovo,ThinkPad T14,Operations,user039,Warehouse,Q771BLA741,2022-02-19,2025-02-18,Contoso Hardware (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00040,HQ-LT-040,Laptop,Dell,Latitude 5540,Sales,user040,Warehouse,HXAWX1HNAU,2022-11-09,2027-11-08,Contoso Hardware (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00041,HQ-LT-041,Laptop,Dell,Latitude 5540,Sales,user041,HQ - Head Office,Z3TDTGDUKR,2023-05-18,2029-05-16,Contoso Hardware (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00042,HQ-LT-042,Laptop,Lenovo,ThinkPad T14,HR,user042,In stock - IT store,B1PFD24JU7,2021-02-16,2026-02-15,Northwind Technology (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00043,HQ-LT-043,Laptop,Dell,Latitude 5540,Finance,user043,Warehouse,UVSS1RV61H,2024-04-18,2029-04-17,Northwind Technology (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00044,HQ-LT-044,Laptop,Dell,Latitude 5540,Management,user044,In stock - IT store,Q4X43JNRFM,2021-05-01,2027-04-30,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00045,HQ-LT-045,Laptop,Dell,Latitude 5540,HR,user045,Warehouse,NB2029P0TX,2021-09-06,2026-09-05,Northwind Technology (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00046,HQ-WS-046,Desktop,HP,ProDesk 600,Operations,user046,HQ - Server Room,FTR0143VBJ,2023-01-15,2026-01-14,Northwind Technology (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00047,HQ-WS-047,Desktop,HP,ProDesk 600,Operations,user047,HQ - Head Office,1954RGQKK9,2024-06-29,2027-06-29,Fabrikam Supplies (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00048,HQ-WS-048,Desktop,HP,ProDesk 600,Management,user048,HQ - Head Office,JQCVJS93HG,2025-03-08,2028-03-07,Northwind Technology (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00049,HQ-WS-049,Desktop,Dell,OptiPlex 7010,Sales,user049,HQ - Head Office,AV5TWR69RR,2021-12-04,2024-12-03,Northwind Technology (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00050,HQ-WS-050,Desktop,HP,ProDesk 600,Management,user050,In stock - IT store,2FSQ3ZQ7CX,2019-03-31,2022-03-30,Fabrikam Supplies (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00051,HQ-WS-051,Desktop,HP,ProDesk 600,IT,user051,HQ - Head Office,U8EP7NVNQ5,2023-06-12,2026-06-11,Northwind Technology (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00052,HQ-WS-052,Desktop,HP,ProDesk 600,Management,user052,HQ - Server Room,Q72DK1DPBK,2024-07-23,2030-07-22,Contoso Hardware (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00053,HQ-WS-053,Desktop,Dell,OptiPlex 7010,Finance,user053,Warehouse,HFLXNM95CV,2023-05-31,2028-05-29,Fabrikam Supplies (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00054,HQ-WS-054,Desktop,HP,ProDesk 600,HR,user054,HQ - Server Room,GAFTFY2HP0,2022-09-20,2027-09-19,Contoso Hardware (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00055,HQ-WS-055,Desktop,HP,ProDesk 600,Management,user055,In stock - IT store,NZ4NWZ6B2R,2019-07-21,2025-07-19,Fabrikam Supplies (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00056,HQ-WS-056,Desktop,Dell,OptiPlex 7010,Sales,user056,HQ - Head Office,DSNEXZTXCS,2019-05-23,2024-05-21,Fabrikam Supplies (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00057,HQ-WS-057,Desktop,HP,ProDesk 600,HR,user057,HQ - Head Office,BQG650S37J,2022-05-03,2025-05-02,Contoso Hardware (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00058,HQ-WS-058,Desktop,Dell,OptiPlex 7010,IT,user058,HQ - Server Room,RWW5ZF8N1L,2022-05-27,2028-05-25,Northwind Technology (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00059,HQ-WS-059,Desktop,Dell,OptiPlex 7010,IT,user059,Warehouse,L3GESFPG27,2019-05-19,2024-05-17,Fabrikam Supplies (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00060,HQ-WS-060,Desktop,Dell,OptiPlex 7010,Finance,user060,In stock - IT store,RHUUTTZSSN,2020-06-28,2025-06-27,Contoso Hardware (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00061,HQ-WS-061,Desktop,Dell,OptiPlex 7010,Finance,user061,Warehouse,NWE1SR89QG,2021-08-22,2024-08-21,Fabrikam Supplies (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00062,HQ-WS-062,Desktop,Dell,OptiPlex 7010,Management,user062,HQ - Server Room,4ZCUQHDNNE,2019-01-19,2024-01-18,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00063,HQ-WS-063,Desktop,Dell,OptiPlex 7010,Sales,user063,HQ - Head Office,GYPCZXKCPS,2025-10-06,2030-10-05,Northwind Technology (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00064,HQ-WS-064,Desktop,Dell,OptiPlex 7010,Management,user064,Warehouse,MVEPC76E2G,2022-09-02,2027-09-01,Contoso Hardware (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00065,HQ-WS-065,Desktop,Dell,OptiPlex 7010,IT,user065,HQ - Server Room,1T2UV2DVY2,2024-12-27,2027-12-27,Contoso Hardware (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00066,HQ-WS-066,Desktop,HP,ProDesk 600,IT,user066,In stock - IT store,PA3L3HF1Z5,2021-03-18,2026-03-17,Northwind Technology (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00067,HQ-WS-067,Desktop,Dell,OptiPlex 7010,Management,user067,In stock - IT store,FZ8LKYUL9L,2025-03-09,2028-03-08,Northwind Technology (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00068,HQ-WS-068,Desktop,HP,ProDesk 600,Sales,user068,HQ - Server Room,C6WD0FLQ1N,2021-03-19,2026-03-18,Contoso Hardware (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00069,HQ-WS-069,Desktop,Dell,OptiPlex 7010,Management,user069,HQ - Server Room,0YHKRNCCWH,2023-06-26,2029-06-24,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00070,HQ-WS-070,Desktop,HP,ProDesk 600,Operations,user070,In stock - IT store,VR30Z484MB,2022-06-08,2028-06-06,Northwind Technology (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00071,HQ-WS-071,Desktop,HP,ProDesk 600,Sales,user071,In stock - IT store,M61GEJY3ZF,2021-08-21,2026-08-20,Contoso Hardware (fictional),185000,Windows 11 Pro,In use,yes
+HAL-00072,HQ-WS-072,Desktop,Dell,OptiPlex 7010,Management,user072,Warehouse,8FD80JBEHN,2020-06-17,2023-06-17,Northwind Technology (fictional),120000,Windows 11 Pro,In use,yes
+HAL-00073,HQ-WS-073,Desktop,HP,ProDesk 600,Finance,user073,Warehouse,SLWT5KS86P,2021-06-24,2024-06-23,Fabrikam Supplies (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00074,HQ-WS-074,Desktop,Dell,OptiPlex 7010,HR,user074,HQ - Server Room,M1LTW0LSH9,2023-03-05,2026-03-04,Northwind Technology (fictional),420000,Windows 11 Pro,In use,yes
+HAL-00075,HQ-WS-075,Desktop,HP,ProDesk 600,Sales,user075,HQ - Head Office,S1ZS0ZKZXF,2025-03-24,2031-03-23,Contoso Hardware (fictional),65000,Windows 11 Pro,In use,yes
+HAL-00076,HQ-WS-076,Desktop,Dell,OptiPlex 7010,Operations,user076,Warehouse,VWACQKU328,2019-07-17,2024-07-15,Contoso Hardware (fictional),45000,Windows 11 Pro,In use,yes
+HAL-00077,HQ-WS-077,Desktop,Dell,OptiPlex 7010,Sales,user077,HQ - Head Office,BDAYVG9YQ2,2021-07-19,2027-07-18,Fabrikam Supplies (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00078,HQ-WS-078,Desktop,Dell,OptiPlex 7010,Finance,user078,In stock - IT store,LJARK4GEKT,2023-02-09,2029-02-07,Contoso Hardware (fictional),95000,Windows 11 Pro,In use,yes
+HAL-00079,HQ-SRV-079,Server,Dell,PowerEdge R450,Management,,In stock - IT store,97RLACDB1M,2025-04-22,2030-04-21,Northwind Technology (fictional),65000,Windows Server 2025,In use,yes
+HAL-00080,HQ-SRV-080,Server,Dell,PowerEdge R450,Management,,HQ - Server Room,K2N982M8VE,2019-02-20,2025-02-18,Contoso Hardware (fictional),420000,Windows Server 2025,In use,yes
+HAL-00081,HQ-SRV-081,Server,Dell,PowerEdge R450,IT,,HQ - Head Office,035F4MQGSQ,2024-05-11,2030-05-10,Fabrikam Supplies (fictional),45000,Windows Server 2025,In use,yes
+HAL-00082,HQ-SRV-082,Server,Dell,PowerEdge R450,HR,,HQ - Head Office,T39SUPF8AL,2021-12-14,2027-12-13,Contoso Hardware (fictional),65000,Windows Server 2025,In use,yes
+HAL-00083,HQ-SRV-083,Server,Dell,PowerEdge R450,Finance,,In stock - IT store,XR0669AB3Q,2022-08-31,2025-08-30,Fabrikam Supplies (fictional),95000,Windows Server 2025,In use,yes
+HAL-00084,HQ-SRV-084,Server,Dell,PowerEdge R450,Sales,,HQ - Server Room,KCBHGLYKBB,2025-07-25,2028-07-24,Northwind Technology (fictional),65000,Windows Server 2025,In use,yes
+HAL-00085,HQ-PRN-085,Printer,Kyocera,ECOSYS M2540,IT,user085,HQ - Head Office,CEZNE0GRPP,2019-06-24,2025-06-22,Northwind Technology (fictional),45000,,In use,yes
+HAL-00086,HQ-PRN-086,Printer,HP,LaserJet M428,IT,user086,Warehouse,6GJGPUWX3S,2019-12-25,2025-12-23,Northwind Technology (fictional),95000,,In use,yes
+HAL-00087,HQ-PRN-087,Printer,Brother,HL-L6400DW,HR,user087,Warehouse,W86UB2B39G,2019-07-18,2025-07-16,Contoso Hardware (fictional),120000,,In use,yes
+HAL-00088,HQ-PRN-088,Printer,Kyocera,ECOSYS M2540,Management,user088,HQ - Server Room,FUL3A9NUDA,2025-01-12,2031-01-11,Contoso Hardware (fictional),120000,,In use,yes
+HAL-00089,HQ-PRN-089,Printer,HP,LaserJet M428,Sales,user089,Warehouse,8SLUPQ7LHF,2021-01-25,2026-01-24,Contoso Hardware (fictional),420000,,In use,yes
+HAL-00090,HQ-PRN-090,Printer,Kyocera,ECOSYS M2540,Management,user090,HQ - Head Office,11F3BZPVS3,2022-08-30,2027-08-29,Fabrikam Supplies (fictional),185000,,In use,yes
+HAL-00091,HQ-PRN-091,Printer,HP,LaserJet M428,Sales,user091,HQ - Server Room,CYW9K4WL54,2021-08-14,2026-08-13,Fabrikam Supplies (fictional),95000,,In use,yes
+HAL-00092,HQ-PRN-092,Printer,Kyocera,ECOSYS M2540,Finance,user092,In stock - IT store,R8NTVKKRW9,2020-05-31,2025-05-30,Contoso Hardware (fictional),65000,,In use,yes
+HAL-00093,HQ-NET-093,Network,Ubiquiti,USW-48-PoE,HR,,HQ - Head Office,LGN0KKVV3T,2021-02-14,2026-02-13,Northwind Technology (fictional),45000,,In use,yes
+HAL-00094,HQ-NET-094,Network,HPE Aruba,AP-515,Management,,In stock - IT store,5CA13Q8U5B,2022-02-24,2025-02-23,Northwind Technology (fictional),95000,,In use,yes
+HAL-00095,HQ-NET-095,Network,HPE Aruba,AP-515,IT,,HQ - Server Room,32QQMH53WS,2023-07-16,2026-07-15,Fabrikam Supplies (fictional),420000,,In use,yes
+HAL-00096,HQ-NET-096,Network,Ubiquiti,USW-48-PoE,Sales,,HQ - Server Room,S365B29MWA,2021-09-19,2026-09-18,Contoso Hardware (fictional),120000,,In use,yes
+HAL-00097,HQ-NET-097,Network,Ubiquiti,USW-48-PoE,Management,,HQ - Server Room,LN9YG5P68B,2021-10-26,2027-10-25,Fabrikam Supplies (fictional),95000,,In use,yes
+HAL-00098,HQ-NET-098,Network,HPE Aruba,AP-515,HR,,In stock - IT store,PM18HYDST0,2023-08-08,2029-08-06,Contoso Hardware (fictional),45000,,In use,yes
+HAL-00099,HQ-NET-099,Network,Ubiquiti,USW-48-PoE,Management,,Warehouse,SGQV19Q15P,2023-09-11,2028-09-09,Northwind Technology (fictional),65000,,In use,yes
+HAL-00100,HQ-NET-100,Network,Ubiquiti,USW-48-PoE,IT,,HQ - Server Room,KY25UJ6YQT,2021-03-02,2026-03-01,Fabrikam Supplies (fictional),120000,,In use,yes
+HAL-00101,HQ-NET-101,Network,HPE Aruba,AP-515,HR,,HQ - Server Room,6ATYRVW673,2023-10-12,2029-10-10,Fabrikam Supplies (fictional),420000,,In use,yes
+HAL-00102,HQ-PER-102,Peripheral,Logitech,C920 webcam,IT,user102,Warehouse,0DFWJ9YAAP,2023-01-24,2026-01-23,Northwind Technology (fictional),420000,,In stock,yes
+HAL-00103,HQ-PER-103,Peripheral,Jabra,Evolve2 headset,HR,user103,HQ - Server Room,QM4YKP1LFV,2025-10-27,2028-10-26,Northwind Technology (fictional),120000,,In stock,yes
+HAL-00104,HQ-PER-104,Peripheral,Dell,P2422H monitor,Finance,user104,In stock - IT store,HHS2QJ67D6,2024-12-14,2027-12-14,Contoso Hardware (fictional),65000,,In stock,yes
+HAL-00105,HQ-PER-105,Peripheral,Dell,P2422H monitor,Sales,user105,HQ - Server Room,ALW57U5Z32,2021-10-06,2026-10-05,Fabrikam Supplies (fictional),45000,,In stock,yes
+HAL-00106,HQ-PER-106,Peripheral,Logitech,C920 webcam,IT,user106,HQ - Head Office,BCXG867KCP,2023-01-16,2029-01-14,Fabrikam Supplies (fictional),120000,,In stock,yes
+HAL-00107,HQ-PER-107,Peripheral,Dell,P2422H monitor,Finance,user107,Warehouse,X69PU3X3SD,2022-10-18,2025-10-17,Contoso Hardware (fictional),95000,,In stock,yes
+HAL-00108,HQ-PER-108,Peripheral,Jabra,Evolve2 headset,Sales,user108,Warehouse,8YP7HXNWVJ,2023-07-12,2028-07-10,Fabrikam Supplies (fictional),420000,,In stock,yes
+HAL-00109,HQ-PER-109,Peripheral,Logitech,C920 webcam,Management,user109,In stock - IT store,D1VGACN6D8,2023-06-22,2029-06-20,Fabrikam Supplies (fictional),185000,,In stock,yes
+HAL-00110,HQ-PER-110,Peripheral,Jabra,Evolve2 headset,Operations,user110,HQ - Head Office,PC5MGMC2GA,2020-08-25,2026-08-24,Contoso Hardware (fictional),65000,,In stock,yes
+HAL-00111,HQ-PER-111,Peripheral,Jabra,Evolve2 headset,Operations,user111,HQ - Server Room,2CWB3D79CH,2021-11-22,2026-11-21,Contoso Hardware (fictional),185000,,In stock,yes
+HAL-00112,HQ-PER-112,Peripheral,Dell,P2422H monitor,Sales,user112,HQ - Head Office,0K62GF6PKA,2024-01-03,2027-01-02,Contoso Hardware (fictional),45000,,In stock,yes
+HAL-00113,HQ-PER-113,Peripheral,Logitech,C920 webcam,IT,user113,HQ - Server Room,HJ6BTR4MDZ,2020-05-13,2023-05-13,Fabrikam Supplies (fictional),420000,,In stock,yes

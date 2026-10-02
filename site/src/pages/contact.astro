@@ -1,0 +1,28 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const cvEntry = await getEntry('cv', 'cv');
+const cv = cvEntry!.data;
+---
+
+<BaseLayout title="Contact" description="Contact details — email, LinkedIn and GitHub.">
+  <h1>Contact</h1>
+
+  <ul style="list-style:none;padding-left:0;font-size:1.05rem;">
+    <li style="padding:0.4rem 0;">
+      <strong>Email:</strong> <a href={`mailto:${cv.links.email}`}>{cv.links.email}</a>
+    </li>
+    <li style="padding:0.4rem 0;">
+      <strong>LinkedIn:</strong> <a href={cv.links.linkedin}>{cv.links.linkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>
+    </li>
+    <li style="padding:0.4rem 0;">
+      <strong>GitHub:</strong> <a href={cv.links.github}>{cv.links.github.replace(/^https?:\/\/(www\.)?/, '')}</a>
+    </li>
+  </ul>
+
+  <p class="small muted">
+    The phone number is not published on this website (spam and scam risk). It is included in the
+    CV that I send directly to employers.
+  </p>
+</BaseLayout>

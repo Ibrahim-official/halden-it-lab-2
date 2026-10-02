@@ -1,0 +1,21 @@
+# p05-asset-criticality.csv — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the business-criticality and exposure mapping for every lab host. The prioritizer joins
+#         each scan finding to its asset row: "exposure" drives the P0/P1 rules and "criticality"
+#         (1 low, 2 medium, 3 high) feeds the priority score and the CVSS-on-a-critical-asset rule.
+# Where:  consulted by scripts/05-prioritize.py and by the human triage runbooks. In the full
+#         program this data comes from the P9 asset CMDB; until then it is maintained here by hand.
+# Status: designed values only (AGENTS.md rule R2). "internet" means the host is *designed* to face
+#         the WAN/VPN (FW01) or to publish a service through it (LNX01); in the P1 flat lab nothing
+#         is actually reachable from the internet. The synthetic sample in data/ mirrors this file.
+# Scope:  lab hosts only — see LAB-INVENTORY.md.
+host,role,os,exposure,criticality,owner,zone,notes
+FW01,HQ firewall, VPN endpoint and DHCP relay,OPNsense,internet,3,IT,edge,Compromise here is a perimeter breach; firmware is a vendor-advisory item
+DC01,Domain controller, DNS, DHCP primary, PDC emulator,Windows Server 2025,internal,3,IT,servers,Tier 0: authentication and name resolution for the whole company
+DC02,Domain controller, DNS, DHCP failover partner,Windows Server 2025,internal,3,IT,servers,Tier 0: keeps logons working if DC01 is down
+FS01,File server (DFS-N, FSRM, shadow copies),Windows Server 2025,internal,3,IT,servers,Departmental and home data
+LNX01,Linux application server and vulnerability scanner,Ubuntu Server 24.04,internet,2,IT,servers,Publishes the internal app; infection here can reach the servers
+WS01,User workstation (policy and compliance test client),Windows 11 Enterprise,internal,1,Sales,users,Supports one user; rebuildable from the image
+WS02,Admin workstation (Tier 0 PAW),Windows 11 Enterprise,internal,2,IT,users,Privileged access workstation from P3
+OPS01,Tools host (GLPI, BookStack, Uptime Kuma),Ubuntu Server 24.04,internal,1,IT,servers,Service desk and documentation; no business data of its own
+SIEM01,Security monitoring (Wazuh manager and indexer),Ubuntu Server 24.04,internal,2,IT,servers,Detection and log retention
+BKP01,Backup repository,Ubuntu Server 24.04,internal,3,IT,servers,Last line of defence; never domain-joined

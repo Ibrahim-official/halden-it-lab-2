@@ -1,0 +1,14 @@
+# SYNTHETIC AD snapshot — an offline view of the directory for the P2 planner and its unit tests.
+# Applies to: projects/p02-identity-lifecycle/scripts/jml-plan.py (Halden lab only).
+# Shape mirrors what 02-Get-AdSnapshot.ps1 exports from the real lab: EmployeeID,Sam,Department,
+# Title,Enabled,Groups (semicolon-separated sAMAccountNames). This is a hand-written demonstration
+# fixture, not a capture: the live snapshot is written to evidence/raw/ and is never published raw.
+EmployeeID,Sam,Department,Title,Enabled,Groups
+1001,anum.hussain,Management,Managing Director,True,G_Management;G_AllStaff
+1003,salman.rana,Management,Finance Director,True,G_Management;G_AllStaff
+1007,laiba.qureshi,Finance,Accountant,True,G_Finance_Staff;G_AllStaff
+1014,anum.dar,HR,HR Manager,True,G_HR_Staff;G_AllStaff
+1038,anum.rauf,Operations,Operations Manager,True,G_Operations_Staff;G_AllStaff
+1042,mahnoor.malik,Operations,Stock Controller,True,G_Operations_Staff;G_AllStaff
+1082,amna.anwar,IT,Systems Administrator,True,G_IT_Staff;G_IT_LinuxAdmins;G_AllStaff
+1085,mina.hussain,IT,IT Support Officer,True,G_IT_Staff;G_AllStaff

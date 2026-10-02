@@ -1,0 +1,122 @@
+# p05-greenbone-compose.yml — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   a sanitized copy of the Docker Compose definition for the Greenbone Community Edition
+#         scanner stack, as deployed on LNX01 by scripts/00-deploy-scanner.sh. It runs the standard
+#         community containers (vulnerability tests, notus scanner, ospd-openvas, pg-gvm, gvmd and
+#         the web UI). No credentials are stored here: the admin password is generated on the host
+#         at deploy time and kept only in the owner's password manager (AGENTS.md rules R3 / 4.6).
+# Where:  /opt/greenbone/docker-compose.yml on LNX01. Referenced from scripts/00-deploy-scanner.sh.
+# Status: designed configuration only. This stack has NOT been started and no scan has run (rule R2).
+# Scope:  the scanner only ever targets the Halden lab ranges — 192.168.10.0/24, 192.168.20.0/24 and
+#         192.168.30.0/24 (see configs/p05-scan-scope.txt and scripts/lib/labguard.sh).
+#
+# Note: pin the community images and read the upstream docs before running:
+#   https://greenbone.github.io/docs/latest/22.4/container/index.html
+# The values below follow the published community-compose shape; check them against the current
+# upstream file on the day you deploy, because container names and tags change between releases.
+
+services:
+  vulnerability-tests:
+    image: greenbone/vulnerability-tests:stable
+    volumes:
+      - vt_data_vol:/mnt
+
+  notus-data:
+    image: greenbone/notus-data:stable
+    volumes:
+      - notus_data_vol:/mnt
+
+  scap-data:
+    image: greenbone/scap-data:stable
+    volumes:
+      - scap_data_vol:/mnt
+
+  cert-bund-data:
+    image: greenbone/cert-bund-data:stable
+    volumes:
+      - cert_data_vol:/mnt
+
+  dfn-cert-data:
+    image: greenbone/dfn-cert-data:stable
+    volumes:
+      - cert_data_vol:/mnt
+
+  data-objects:
+    image: greenbone/data-objects:stable
+    volumes:
+      - data_objects_vol:/mnt
+
+  report-formats:
+    image: greenbone/report-formats:stable
+    volumes:
+      - data_objects_vol:/mnt
+
+  gpg-data:
+    image: greenbone/gpg-data:stable
+    volumes:
+      - gpg_data_vol:/mnt
+
+  redis-server:
+    image: greenbone/redis-server:stable
+    restart: always
+    volumes:
+      - redis_socket_vol:/run/redis/
+
+  pg-gvm:
+    image: greenbone/pg-gvm:stable
+    restart: always
+    volumes:
+      - psql_data_vol:/var/lib/postgresql
+
+  gvmd:
+    image: greenbone/gvmd:stable
+    restart: always
+    volumes:
+      - gvmd_data_vol:/var/lib/gvm
+      - vt_data_vol:/var/lib/openvas
+      - psql_data_vol:/var/lib/postgresql
+      - gvmd_socket_vol:/run/gvmd
+      - ospd_openvas_socket_vol:/run/ospd
+      - scap_data_vol:/var/lib/gvm/scap-data
+      - cert_data_vol:/var/lib/gvm/cert-data
+      - data_objects_vol:/var/lib/gvm/data-objects/gvmd
+    depends_on:
+      - pg-gvm
+
+  # Bind the scanner to the lab interface only. 127.0.0.1 keeps the management API off the network;
+  # access is by SSH tunnel from the management subnet.
+  ospd-openvas:
+    image: greenbone/ospd-openvas:stable
+    restart: always
+    cap_drop: [ALL]
+    cap_add: [NET_RAW, NET_ADMIN, SYS_PTRACE]
+    volumes:
+      - vt_data_vol:/var/lib/openvas
+      - notus_data_vol:/var/lib/notus
+      - gpg_data_vol:/etc/openvas/gnupg
+      - ospd_openvas_socket_vol:/run/ospd
+    depends_on:
+      - redis-server
+      - notus-data
+
+  gsa:
+    image: greenbone/gsa:stable
+    restart: always
+    ports:
+      - "127.0.0.1:9392:80"     # web UI reachable only through an SSH tunnel, lab-LAN only
+    volumes:
+      - gvmd_socket_vol:/run/gvmd
+    depends_on:
+      - gvmd
+
+volumes:
+  gpg_data_vol:
+  scap_data_vol:
+  cert_data_vol:
+  data_objects_vol:
+  vt_data_vol:
+  notus_data_vol:
+  psql_data_vol:
+  gvmd_data_vol:
+  redis_socket_vol:
+  gvmd_socket_vol:
+  ospd_openvas_socket_vol:

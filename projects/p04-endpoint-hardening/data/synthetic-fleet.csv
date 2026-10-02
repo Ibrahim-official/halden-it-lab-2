@@ -1,0 +1,151 @@
+AssetID,Hostname,Department,Office,DeviceType,Model,CPU,CPUGeneration,RAM_GB,Disk_GB,TPMVersion,SecureBoot,UEFI,OS,OSBuild,DeviceAgeMonths
+HQ-LA-0001,HQ-LAPTOP-0001,Operations,Warehouse,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,77
+HQ-DE-0002,HQ-DESKTOP-0002,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,9
+HQ-LA-0003,HQ-LAPTOP-0003,Management,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,65
+HQ-DE-0004,HQ-DESKTOP-0004,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,65
+HQ-DE-0005,HQ-DESKTOP-0005,Sales,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,6
+HQ-DE-0006,HQ-DESKTOP-0006,Finance,HQ,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,104
+HQ-DE-0007,HQ-DESKTOP-0007,Operations,Warehouse,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,24
+HQ-DE-0008,HQ-DESKTOP-0008,Management,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,30
+HQ-LA-0009,HQ-LAPTOP-0009,Finance,HQ,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,81
+HQ-DE-0010,HQ-DESKTOP-0010,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,30
+HQ-LA-0011,HQ-LAPTOP-0011,Operations,Warehouse,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,9
+HQ-LA-0012,HQ-LAPTOP-0012,Operations,Warehouse,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,14
+HQ-LA-0013,HQ-LAPTOP-0013,Finance,HQ,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,94
+HQ-LA-0014,HQ-LAPTOP-0014,Management,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,8
+HQ-DE-0015,HQ-DESKTOP-0015,HR,HQ,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,25
+HQ-LA-0016,HQ-LAPTOP-0016,Sales,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,72
+HQ-LA-0017,HQ-LAPTOP-0017,Operations,Warehouse,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,74
+HQ-LA-0018,HQ-LAPTOP-0018,IT,HQ,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,74
+HQ-DE-0019,HQ-DESKTOP-0019,Sales,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,89
+HQ-DE-0020,HQ-DESKTOP-0020,Sales,HQ,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,83
+HQ-LA-0021,HQ-LAPTOP-0021,Finance,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,28
+HQ-DE-0022,HQ-DESKTOP-0022,Finance,HQ,Desktop,Dell OptiPlex 3020,Intel Core i5-4590,4,8,256,1.2,No,No,Windows 10,19045,98
+HQ-DE-0023,HQ-DESKTOP-0023,Sales,HQ,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,75
+HQ-DE-0024,HQ-DESKTOP-0024,Sales,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,26
+HQ-LA-0025,HQ-LAPTOP-0025,Operations,Warehouse,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,80
+HQ-DE-0026,HQ-DESKTOP-0026,Finance,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,74
+HQ-DE-0027,HQ-DESKTOP-0027,HR,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,85
+HQ-DE-0028,HQ-DESKTOP-0028,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,24
+HQ-DE-0029,HQ-DESKTOP-0029,Operations,Warehouse,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,101
+HQ-DE-0030,HQ-DESKTOP-0030,Management,HQ,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,26
+HQ-DE-0031,HQ-DESKTOP-0031,Operations,Warehouse,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,13
+HQ-DE-0032,HQ-DESKTOP-0032,Sales,HQ,Desktop,Dell OptiPlex 3070,Intel Core i5-9500T,9,8,256,2.0,Yes,Yes,Windows 10,19045,107
+HQ-DE-0033,HQ-DESKTOP-0033,Management,HQ,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,85
+HQ-LA-0034,HQ-LAPTOP-0034,IT,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,10
+HQ-DE-0035,HQ-DESKTOP-0035,Operations,Warehouse,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,7
+HQ-DE-0036,HQ-DESKTOP-0036,Operations,Warehouse,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,70
+HQ-LA-0037,HQ-LAPTOP-0037,Sales,HQ,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,64
+HQ-LA-0038,HQ-LAPTOP-0038,Sales,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,20
+HQ-DE-0039,HQ-DESKTOP-0039,IT,HQ,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,6
+HQ-LA-0040,HQ-LAPTOP-0040,Operations,Warehouse,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,94
+HQ-DE-0041,HQ-DESKTOP-0041,Finance,HQ,Desktop,Dell OptiPlex 3070,Intel Core i5-9500T,9,8,256,2.0,Yes,Yes,Windows 10,19045,81
+HQ-LA-0042,HQ-LAPTOP-0042,Sales,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,20
+HQ-LA-0043,HQ-LAPTOP-0043,Finance,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,29
+HQ-DE-0044,HQ-DESKTOP-0044,Sales,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,11
+HQ-DE-0045,HQ-DESKTOP-0045,Operations,Warehouse,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,26
+HQ-LA-0046,HQ-LAPTOP-0046,Sales,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,25
+HQ-DE-0047,HQ-DESKTOP-0047,Sales,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,11
+HQ-DE-0048,HQ-DESKTOP-0048,Finance,HQ,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,22
+HQ-LA-0049,HQ-LAPTOP-0049,Sales,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,91
+HQ-LA-0050,HQ-LAPTOP-0050,Management,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,15
+HQ-DE-0051,HQ-DESKTOP-0051,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,24
+HQ-DE-0052,HQ-DESKTOP-0052,Operations,Warehouse,Desktop,Dell OptiPlex 3020,Intel Core i5-4590,4,8,256,1.2,No,No,Windows 10,19045,91
+HQ-LA-0053,HQ-LAPTOP-0053,IT,HQ,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,94
+HQ-DE-0054,HQ-DESKTOP-0054,Operations,Warehouse,Desktop,Dell OptiPlex 3070,Intel Core i5-9500T,9,8,256,2.0,Yes,Yes,Windows 10,19045,90
+HQ-DE-0055,HQ-DESKTOP-0055,Operations,Warehouse,Desktop,Dell OptiPlex 3020,Intel Core i5-4590,4,8,256,1.2,No,No,Windows 10,19045,93
+HQ-DE-0056,HQ-DESKTOP-0056,Sales,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,73
+HQ-LA-0057,HQ-LAPTOP-0057,Finance,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,104
+HQ-DE-0058,HQ-DESKTOP-0058,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,27
+HQ-LA-0059,HQ-LAPTOP-0059,Sales,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,93
+HQ-DE-0060,HQ-DESKTOP-0060,Operations,Warehouse,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,8
+HQ-LA-0061,HQ-LAPTOP-0061,Sales,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,13
+HQ-DE-0062,HQ-DESKTOP-0062,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,105
+HQ-DE-0063,HQ-DESKTOP-0063,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,62
+HQ-DE-0064,HQ-DESKTOP-0064,Operations,Warehouse,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,75
+HQ-DE-0065,HQ-DESKTOP-0065,Sales,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,23
+HQ-LA-0066,HQ-LAPTOP-0066,IT,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,24
+HQ-DE-0067,HQ-DESKTOP-0067,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,90
+HQ-LA-0068,HQ-LAPTOP-0068,Operations,Warehouse,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,66
+HQ-LA-0069,HQ-LAPTOP-0069,Operations,Warehouse,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,86
+HQ-DE-0070,HQ-DESKTOP-0070,Finance,HQ,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,27
+HQ-LA-0071,HQ-LAPTOP-0071,Finance,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,63
+HQ-DE-0072,HQ-DESKTOP-0072,Operations,Warehouse,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,9
+HQ-DE-0073,HQ-DESKTOP-0073,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,20
+HQ-LA-0074,HQ-LAPTOP-0074,Operations,Warehouse,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,20
+HQ-DE-0075,HQ-DESKTOP-0075,Management,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,20
+HQ-LA-0076,HQ-LAPTOP-0076,Management,HQ,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,66
+HQ-LA-0077,HQ-LAPTOP-0077,IT,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,6
+HQ-WA-0078,HQ-WAREHOUSE-0078,Operations,Warehouse,Warehouse terminal,HP t630 Thin Client,AMD GX-420GI,0,4,64,1.2,No,No,Windows 10,19045,75
+HQ-DE-0079,HQ-DESKTOP-0079,Sales,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,12
+HQ-DE-0080,HQ-DESKTOP-0080,Management,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,70
+HQ-LA-0081,HQ-LAPTOP-0081,IT,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,14
+HQ-LA-0082,HQ-LAPTOP-0082,HR,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,78
+HQ-DE-0083,HQ-DESKTOP-0083,IT,HQ,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,23
+HQ-LA-0084,HQ-LAPTOP-0084,Sales,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,72
+HQ-LA-0085,HQ-LAPTOP-0085,IT,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,24
+HQ-DE-0086,HQ-DESKTOP-0086,Operations,Warehouse,Desktop,Dell OptiPlex 3070,Intel Core i5-9500T,9,8,256,2.0,Yes,Yes,Windows 10,19045,80
+HQ-LA-0087,HQ-LAPTOP-0087,Sales,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,22
+HQ-LA-0088,HQ-LAPTOP-0088,Sales,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,63
+HQ-WA-0089,HQ-WAREHOUSE-0089,Operations,Warehouse,Warehouse terminal,HP t630 Thin Client,AMD GX-420GI,0,4,64,1.2,No,No,Windows 10,19045,71
+HQ-LA-0090,HQ-LAPTOP-0090,Operations,Warehouse,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,13
+HQ-DE-0091,HQ-DESKTOP-0091,IT,HQ,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,24
+HQ-DE-0092,HQ-DESKTOP-0092,Sales,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,25
+HQ-LA-0093,HQ-LAPTOP-0093,Finance,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,24
+HQ-DE-0094,HQ-DESKTOP-0094,IT,HQ,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,12
+HQ-LA-0095,HQ-LAPTOP-0095,Operations,Warehouse,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,76
+HQ-DE-0096,HQ-DESKTOP-0096,Finance,HQ,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,15
+HQ-DE-0097,HQ-DESKTOP-0097,Management,HQ,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,8
+HQ-LA-0098,HQ-LAPTOP-0098,Sales,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,24
+HQ-KI-0099,HQ-KIOSK-0099,Shared/Kiosk,Mixed,Kiosk,Lenovo ThinkCentre M700 Tiny,Intel Core i3-6100T,6,4,128,1.2,Yes,Yes,Windows 10,19045,73
+HQ-DE-0100,HQ-DESKTOP-0100,Operations,Warehouse,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,17
+HQ-DE-0101,HQ-DESKTOP-0101,Management,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,83
+HQ-LA-0102,HQ-LAPTOP-0102,Sales,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,23
+HQ-LA-0103,HQ-LAPTOP-0103,Sales,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,101
+HQ-DE-0104,HQ-DESKTOP-0104,Finance,HQ,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,23
+HQ-LA-0105,HQ-LAPTOP-0105,Finance,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,10
+HQ-DE-0106,HQ-DESKTOP-0106,Management,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,29
+HQ-DE-0107,HQ-DESKTOP-0107,Operations,Warehouse,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,25
+HQ-DE-0108,HQ-DESKTOP-0108,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,27
+HQ-DE-0109,HQ-DESKTOP-0109,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,91
+HQ-DE-0110,HQ-DESKTOP-0110,Management,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,7
+HQ-LA-0111,HQ-LAPTOP-0111,Sales,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,14
+HQ-LA-0112,HQ-LAPTOP-0112,Operations,Warehouse,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,10
+HQ-DE-0113,HQ-DESKTOP-0113,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,107
+HQ-DE-0114,HQ-DESKTOP-0114,Finance,HQ,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,23
+HQ-LA-0115,HQ-LAPTOP-0115,Operations,Warehouse,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,28
+HQ-LA-0116,HQ-LAPTOP-0116,Sales,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,83
+HQ-DE-0117,HQ-DESKTOP-0117,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,68
+HQ-LA-0118,HQ-LAPTOP-0118,Sales,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,7
+HQ-LA-0119,HQ-LAPTOP-0119,Operations,Warehouse,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,75
+HQ-LA-0120,HQ-LAPTOP-0120,Operations,Warehouse,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,95
+HQ-DE-0121,HQ-DESKTOP-0121,Sales,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,99
+HQ-DE-0122,HQ-DESKTOP-0122,Management,HQ,Desktop,Dell OptiPlex 3070,Intel Core i5-9500T,9,8,256,2.0,Yes,Yes,Windows 10,19045,75
+HQ-DE-0123,HQ-DESKTOP-0123,IT,HQ,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,71
+HQ-DE-0124,HQ-DESKTOP-0124,Operations,Warehouse,Desktop,HP EliteDesk 800 G3,Intel Core i5-7500,7,8,256,2.0,Yes,Yes,Windows 10,19045,107
+HQ-LA-0125,HQ-LAPTOP-0125,HR,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,86
+HQ-LA-0126,HQ-LAPTOP-0126,Management,HQ,Laptop,Dell Latitude 3400,Intel Core i3-8145U,8,8,128,2.0,Yes,Yes,Windows 10,19045,75
+HQ-DE-0127,HQ-DESKTOP-0127,HR,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,9
+HQ-LA-0128,HQ-LAPTOP-0128,Operations,Warehouse,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,21
+HQ-DE-0129,HQ-DESKTOP-0129,HR,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,20
+HQ-LA-0130,HQ-LAPTOP-0130,HR,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,13
+HQ-DE-0131,HQ-DESKTOP-0131,Finance,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,18
+HQ-LA-0132,HQ-LAPTOP-0132,Management,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,30
+HQ-LA-0133,HQ-LAPTOP-0133,Finance,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,18
+HQ-LA-0134,HQ-LAPTOP-0134,HR,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,81
+HQ-DE-0135,HQ-DESKTOP-0135,Operations,Warehouse,Desktop,Dell OptiPlex 3020,Intel Core i5-4590,4,8,256,1.2,No,No,Windows 10,19045,76
+HQ-DE-0136,HQ-DESKTOP-0136,IT,HQ,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,14
+HQ-LA-0137,HQ-LAPTOP-0137,Sales,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,17
+HQ-DE-0138,HQ-DESKTOP-0138,Operations,Warehouse,Desktop,Dell OptiPlex 3070,Intel Core i5-9500T,9,8,256,2.0,Yes,Yes,Windows 10,19045,98
+HQ-KI-0139,HQ-KIOSK-0139,Shared/Kiosk,Mixed,Kiosk,Lenovo ThinkCentre M700 Tiny,Intel Core i3-6100T,6,4,128,1.2,Yes,Yes,Windows 10,19045,96
+HQ-DE-0140,HQ-DESKTOP-0140,Operations,Warehouse,Desktop,Dell OptiPlex 7010,Intel Core i5-13500,13,16,512,2.0,Yes,Yes,Windows 11,26100,19
+HQ-LA-0141,HQ-LAPTOP-0141,Management,HQ,Laptop,Dell Latitude 5540,Intel Core i5-1335U,13,16,512,2.0,Yes,Yes,Windows 11,26100,23
+HQ-LA-0142,HQ-LAPTOP-0142,IT,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,107
+HQ-LA-0143,HQ-LAPTOP-0143,Sales,HQ,Laptop,HP EliteBook 840 G5,Intel Core i5-8250U,8,8,256,2.0,Yes,Yes,Windows 10,19045,64
+HQ-DE-0144,HQ-DESKTOP-0144,Management,HQ,Desktop,Dell OptiPlex 3020,Intel Core i5-4590,4,8,256,1.2,No,No,Windows 10,19045,99
+HQ-LA-0145,HQ-LAPTOP-0145,HR,HQ,Laptop,HP ProBook 450 G9,Intel Core i5-1235U,12,16,256,2.0,Yes,Yes,Windows 11,22631,29
+HQ-LA-0146,HQ-LAPTOP-0146,Sales,HQ,Laptop,Dell Latitude 5480,Intel Core i5-7300U,7,8,256,2.0,Yes,Yes,Windows 10,19045,102
+HQ-DE-0147,HQ-DESKTOP-0147,Sales,HQ,Desktop,Lenovo ThinkCentre M70q Gen 3,Intel Core i5-12400T,12,8,256,2.0,Yes,Yes,Windows 11,22631,15
+HQ-DE-0148,HQ-DESKTOP-0148,Operations,Warehouse,Desktop,HP EliteDesk 800 G9,Intel Core i7-12700,12,16,512,2.0,Yes,Yes,Windows 11,22631,27
+HQ-DE-0149,HQ-DESKTOP-0149,Finance,HQ,Desktop,Dell OptiPlex 3020,Intel Core i5-4590,4,8,256,1.2,No,No,Windows 10,19045,71
+HQ-DE-0150,HQ-DESKTOP-0150,Operations,Warehouse,Desktop,Lenovo ThinkCentre M720s,Intel Core i3-8100,8,8,256,2.0,Yes,Yes,Windows 10,19045,95

@@ -1,0 +1,95 @@
+# Windows 11 readiness rules and BitLocker design - P4 Phase 6
+#
+# WHAT IT IS
+#   The rules that map a device's hardware facts to a "ready / upgrade / replace" decision, and the
+#   BitLocker design those decisions assume. The same rules are implemented in
+#   data/fleet_rules.py (Python) and scripts/07-Get-Win11Readiness.ps1 (PowerShell) so the
+#   synthetic-fleet analysis, the live inventory and the unit tests cannot disagree.
+#
+# WHERE IT APPLIES
+#   Domain: ad.halden.internal  ·  Live inventory: WS01, WS02
+#   Fleet analysis: data/synthetic-fleet.csv (SYNTHETIC - see the notice below)
+#
+# SYNTHETIC / HONESTY NOTE
+#   The fleet classified by these rules is an INVENTED inventory for the fictional company Halden
+#   Distribution Ltd. Every count derived from it is a synthetic-fleet figure and must be labelled
+#   synthetic. It is a planning exercise, not a measurement of real hardware. The rules themselves
+#   are the real Microsoft Windows 11 requirements.
+
+readiness:
+  # Source: Microsoft Windows 11 system requirements. Confirm against Microsoft Learn each time.
+  requirements:
+    - key: "CPUGeneration"
+      requirement: "Supported 64-bit processor: Intel 8th generation (Coffee Lake) or newer, or AMD Zen+ / Ryzen 2000 or newer"
+      operator: "generation >= 8"
+      failure_reason: "CPU older than Intel 8th generation / AMD Zen+"
+    - key: "TPMVersion"
+      requirement: "TPM 2.0 present and enabled"
+      operator: "version >= 2.0"
+      failure_reason: "TPM 2.0 missing or disabled"
+    - key: "UEFI"
+      requirement: "UEFI firmware mode (not legacy BIOS)"
+      operator: "equals Yes"
+      failure_reason: "Legacy BIOS (no UEFI firmware mode)"
+    - key: "SecureBoot"
+      requirement: "Secure Boot capable and enabled"
+      operator: "equals Yes"
+      failure_reason: "Secure Boot not enabled"
+    - key: "RAM_GB"
+      requirement: "At least 4 GB RAM"
+      operator: ">= 4"
+      failure_reason: "RAM below 4 GB"
+    - key: "Disk_GB"
+      requirement: "At least 64 GB system disk"
+      operator: ">= 64"
+      failure_reason: "System disk below 64 GB"
+
+  decision:
+    # A device fails if ANY requirement is unmet, regardless of the operating system it is running.
+    replace: "Any hardware requirement unmet -> not capable of Windows 11; replace at end of life."
+    upgrade: "All requirements met AND the device still runs Windows 10 -> in-place upgrade."
+    ready: "All requirements met AND the device already runs Windows 11 -> no action."
+    rule_note: >
+      A device is never marked "ready" merely because it reports Windows 11: the hardware check runs
+      first. This stops a machine that was force-upgraded with unsupported hardware from being
+      counted as compliant.
+
+  sizing:
+    # Figures used in the readiness report's cost options. These are PLAN figures, not quotes.
+    in_place_upgrade:
+      labour_minutes_per_device: 90
+      note: "Backup, compatibility check, application test, upgrade, post-checks, rollback window."
+    replace:
+      device_cost_note: "Fill from a current local vendor quote before the report is issued; the report must state the quote date."
+      labour_minutes_per_device: 120
+      note: "Image, join, application install, user hand-over."
+    esu:
+      note: >
+        Microsoft commercial Extended Security Updates for Windows 10 run for at most three years and
+        must be paid for each year; the price rises each year. Treat ESU as a bridge, not a plan.
+        Confirm the current price and eligibility before the recommendation is sent to management.
+
+bitlocker:
+  design:
+    algorithm: "XTS-AES 256"
+    os_volume: "TPM-only startup (no PIN) for standard devices"
+    fixed_drives: "Encrypted with the same algorithm where a fixed data drive exists"
+    used_space_only: false
+    recovery_key_protector: true
+    escrow_target: "Active Directory DS (msFVE-RecoveryInformation under the computer object)"
+    escrow_order_rule: >
+      The escrow policy must be in place BEFORE any volume is encrypted. scripts/04 refuses to run
+      without -EscrowPolicyVerified for exactly this reason.
+  security_rules:
+    - "Recovery keys are NEVER committed to the repository, pasted into chat, or shown in a screenshot."
+    - "Screenshots of the AD escrow check must crop out the recovery password column."
+    - "The helpdesk runbook requires identity verification before a key is released."
+    - "Key retrieval is logged so a social-engineering attempt against the helpdesk is visible."
+  recovery_test:
+    steps:
+      - "manage-bde -forcerecovery C: on the pilot device"
+      - "Reboot into the recovery screen"
+      - "Retrieve the key as a helpdesk user following the identity-verification runbook"
+      - "Unlock and confirm the device boots normally"
+      - "Record the time taken in README.md (measured, not estimated)"
+    acceptance: "Recovery succeeds within the helpdesk's stated target, with the key never leaving the vault."

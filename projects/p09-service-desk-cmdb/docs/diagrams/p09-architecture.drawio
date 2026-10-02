@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" agent="halden-it-lab" version="24.7.17">
+  <diagram id="p9-architecture" name="P9 service desk architecture">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Halden Distribution Ltd — P9 service desk, CMDB and documentation hub&#10;Isolated home lab · OPS01 Ubuntu 24.04, 192.168.10.40 · domain ad.halden.internal" style="text;html=1;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1090" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="estate" value="Managed estate (P1/P2/P8)&#10;Sources that feed discovery and alerts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=12;align=left;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="252" height="404" as="geometry" />
+        </mxCell>
+        <mxCell id="dc" value="DC01 / DC02&#10;AD, DNS, DHCP · LDAP 636 · leases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#cbd5e1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="58" y="168" width="216" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="fs" value="FS01 · LNX01&#10;file, Linux hosts · GLPI Agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#cbd5e1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="58" y="234" width="216" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="ws" value="WS01 / WS02 clients&#10;agent inventory every 24 h · SNMP prints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#cbd5e1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="58" y="300" width="216" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="p8" value="P8 backup / restore test&#10;pings the Kuma heartbeat on success" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#cbd5e1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="58" y="366" width="216" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="p7" value="P7 Wazuh alerts&#10;High alerts become Security tickets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#cbd5e1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="58" y="432" width="216" height="56" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ops01" value="OPS01 — Ubuntu 24.04 · docker compose&#10;5 containers, one host · secrets in a git-ignored .env · HTTPS proxy added in P6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=12;fontColor=#0f766e;align=left;verticalAlign=top;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="332" y="104" width="536" height="404" as="geometry" />
+        </mxCell>
+
+        <mxCell id="glpiGroup" value="Service desk + CMDB (GLPI)&#10;&#10;halden-glpi — GLPI 10 · tickets, SLA, KB, CMDB&#10;halden-glpi-db — MariaDB (backend network only)&#10;&#10;Assets · software · licences · contracts&#10;Categories · priorities · SLAs (TTO/TTR)&#10;L1 to L2 to vendor escalation&#10;Self-service forms · email collector&#10;Knowledge base (10+ articles)&#10;Renewal alerts at 90 / 30 days&#10;&#10;Reconciled weekly vs DHCP + nmap — target: 0 unknown-on-network" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=10.5;align=left;verticalAlign=top;spacing=8;fontStyle=1;fontColor=#134e4a;" vertex="1" parent="1">
+          <mxGeometry x="352" y="168" width="240" height="322" as="geometry" />
+        </mxCell>
+        <mxCell id="kuma" value="halden-kuma — Uptime Kuma&#10;polls DC/FS/GLPI/BookStack&#10;P8 backup heartbeat (PUSH)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="624" y="182" width="212" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="book" value="halden-bookstack&#10;documentation hub · LDAP to AD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="624" y="262" width="212" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="bookdb" value="halden-bookstack-db&#10;MariaDB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="624" y="318" width="212" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="docsNotes" value="Shelves: Infrastructure · Security · Runbooks · Policies · Vendors&#10;Owner + review date on every page&#10;Monthly review reminder script&#10;&#10;Secrets live in the password manager — never in the wiki" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=10.5;align=left;verticalAlign=top;spacing=8;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="624" y="370" width="212" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="dc" target="glpiGroup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="fs" target="glpiGroup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="ws" target="glpiGroup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="p8" target="kuma">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="p7" target="glpiGroup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="git" value="halden-configs — private Git repository (config-as-code)&#10;&#10;Nightly export from DC01/DC02 (GPO, AD, DHCP, DNS, NPS) and from OPNsense/Linux (filtered config): scripts/06 and scripts/07. Commit message &quot;nightly: &lt;date&gt;&quot;.&#10;Drift check (scripts/08): a changed file with no approved change record in GLPI raises an &quot;unauthorised change&quot; High ticket. The diff is half the control; the change record is the other half." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="40" y="524" width="1100" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="ops01" target="git">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend" value="GLPI service desk / CMDB = teal fill · monitoring + documentation = grey fill · managed estate = white outline · teal arrows = data / control flow" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="40" y="646" width="900" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="Lab note: Halden Distribution Ltd. is a fictional company. All tickets, assets, suppliers and contracts shown by this system are synthetic. The configurations are real, and every figure published on the site comes from a real run in this lab." style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="40" y="676" width="1130" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

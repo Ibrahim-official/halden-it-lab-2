@@ -1,0 +1,61 @@
+<mxfile host="app.diagrams.net" agent="halden-it-lab" version="24.7.17">
+  <diagram id="p1-logical" name="P1 logical architecture">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Halden Distribution Ltd — P1 logical architecture&#10;Isolated home lab · flat LAN 192.168.10.0/24 in P1 · domain ad.halden.internal" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1090" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="internet" value="Home LAN / Internet&#10;(never touched by the lab)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="defaultsw" value="Hyper-V Default Switch&#10;(NAT — WAN side of FW01 only)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="100" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fw01" value="FW01 — OPNsense&#10;192.168.10.1 · default gateway&#10;DHCP relay + zones added in P6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="600" y="90" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="internet" target="defaultsw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="defaultsw" target="fw01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="switch" value="Halden-LAN — private Hyper-V switch — 192.168.10.0/24" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=none;fontColor=#ffffff;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="210" width="1040" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=none;strokeColor=#0f766e;strokeWidth=2;" edge="1" parent="1" source="fw01" target="switch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dc01" value="DC01&#10;DC · DNS · DHCP primary&#10;PDC emulator · time source&#10;192.168.10.10" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="280" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dc02" value="DC02&#10;DC · DNS · DHCP partner&#10;global catalog · failover 50/50&#10;192.168.10.11" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="250" y="280" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fs01" value="FS01&#10;file services · DFS-N&#10;ABE · FSRM · shadow copies&#10;192.168.10.20" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="280" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lnx01" value="LNX01&#10;Ubuntu Server 24.04&#10;AD-joined (realmd/SSSD)&#10;192.168.10.30" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="630" y="280" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ws01" value="WS01&#10;Windows 11 Enterprise&#10;Group Policy test client&#10;DHCP 192.168.10.100–200" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="820" y="280" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ws02" value="WS02&#10;Windows 11 Enterprise&#10;second client / PAW (P3)&#10;DHCP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="280" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="agdlp" value="Least privilege by construction (AGDLP)&#10;&#10;Accounts → G_ (Global role) → DL_ (Domain Local resource) → Permission on the ACL&#10;&#10;ACLs contain only DL_ groups, SYSTEM and Administrators — audit target: 0 violations&#10;&#10;A department change becomes one group edit; audits read group names, not thousands of ACEs.&#10;The OU tree mirrors the org chart (Management, Finance, HR, Sales, Operations, IT)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=11;align=left;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="430" width="560" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="roles" value="What each Tier 0 role is responsible for&#10;&#10;Kerberos authentication, LDAP, DNS name resolution, DHCP leases — if these fail, nothing works.&#10;Two DCs with AD-integrated DNS and a DHCP failover pair mean authentication, DNS and DHCP&#10;survive one server being powered off (verified by test, not assumed).&#10;&#10;Sites and subnets: HQ 192.168.10.0/24 and WAREHOUSE 192.168.20.0/24 exist now so P6 has a&#10;site to attach to. Every object above is created by the numbered scripts in scripts/, idempotent&#10;and logged, so the build can be repeated or rebuilt on purpose." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;align=left;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="650" y="430" width="540" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="Hyper-V on Windows 11 Pro (HOST01, 16 GB host RAM). Dynamic memory — DCs/FS01 1–2 GB, LNX01 0.5–1 GB, workstations 2–4 GB. VMs are powered off when not in use.&#10;Halden Distribution Ltd. is a fictional company. The configurations are real and every figure published on the site comes from a real run in this lab." style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="60" y="630" width="1130" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

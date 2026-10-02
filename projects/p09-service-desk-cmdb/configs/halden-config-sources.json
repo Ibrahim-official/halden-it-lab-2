@@ -1,0 +1,20 @@
+{
+  "_comment": "Halden Distribution Ltd. — P9 config-as-code sources. Applies to scripts/06-Export-HaldenConfigs.ps1 (Windows side) and scripts/07-export-configs.sh (Linux/OPNsense side). Each entry names a source config, where it is exported from, and how secrets are handled before it is committed to the halden-configs Git repository. Files that can contain secrets are either filtered or encrypted (git-crypt/SOPS) BEFORE first commit.",
+  "version": "1.0",
+  "repository": "halden-configs (private Git repo hosted on Gitea on OPS01 or a private GitHub repo)",
+  "commit_message_template": "nightly: {date}",
+  "sources": [
+    { "id": "gpo", "source": "GPOs on DC01", "export": "Backup-GPO -All + Get-GPOReport -All -ReportType Xml", "secret_handling": "none required (XML reports contain no passwords)", "side": "windows" },
+    { "id": "ad", "source": "Active Directory structure on DC01", "export": "OUs, groups and privileged-group membership to CSV/JSON", "secret_handling": "none required", "side": "windows" },
+    { "id": "dhcp", "source": "DHCP on DC01", "export": "Export-DhcpServer -File dhcp.xml -Leases:$false", "secret_handling": "failover shared secret is excluded by -Leases:$false and server-scope export; verify before commit", "side": "windows" },
+    { "id": "dns", "source": "DNS zones on DC01", "export": "Export-DnsServerZone / zone files for AD-integrated zones", "secret_handling": "none required", "side": "windows" },
+    { "id": "nps", "source": "NPS on FS01 (P6)", "export": "netsh nps export exportPSK=NO", "secret_handling": "exportPSK=NO removes the shared RADIUS secret", "side": "windows" },
+    { "id": "opnsense", "source": "OPNsense /conf/config.xml", "export": "SSH/API download", "secret_handling": "FILTERED (passwords, hashes, keys removed by scripts/07-export-configs.sh) or encrypted with git-crypt/SOPS; never committed raw", "side": "linux" },
+    { "id": "linux", "source": "Ubuntu hosts (LNX01, OPS01, BKP01, SIEM01)", "export": "/etc/ssh/sshd_config.d, /etc/sudoers.d, ufw status, key package versions", "secret_handling": "sshd host keys and any private keys are never copied", "side": "linux" }
+  ],
+  "drift_detection": {
+    "check": "A changed file whose change date has no matching approved change record in GLPI (P10) raises an 'unauthorised change' High ticket.",
+    "comparison_window_hours": 36,
+    "glpi_change_category": "Requests > Change request"
+  }
+}

@@ -1,0 +1,11 @@
+# p03-findings-register-schema.csv — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the column schema for the P3 findings register. Header row only — it deliberately
+#         contains no findings. Rows are produced by scripts/04-New-FindingsRegister.py from the
+#         normalised output of PingCastle, Purple Knight and BloodHound CE after the assessment
+#         actually runs in the lab, then reviewed by the owner.
+# Where:  the generated register is written to business/p03-findings-register.csv (working copy)
+#         and summarised in business/p03-findings-register.md for the business audience.
+# Rules:  Likelihood and Impact are each 1-5; RiskScore = Likelihood x Impact (1-25);
+#         Priority is P0-P3 from configs/p03-remediation-priority-rules.json. Nothing is
+#         pre-filled: an empty register is the honest state before the lab run (AGENTS.md R2).
+ID,Finding,Tool,Category,Likelihood,Impact,RiskScore,Priority,AffectedObjects,BusinessImpact,Remediation,Effort,Owner,TargetDate,Status,Evidence

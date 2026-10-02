@@ -1,0 +1,127 @@
+# =============================================================================
+# Halden Distribution Ltd. — P9 service desk stack (docker compose)
+# What it is: the container stack for OPS01 that runs the ITSM/CMDB, the
+#             monitoring service and the documentation hub for the fictional
+#             Halden lab.
+# Where it applies: OPS01 (Ubuntu Server 24.04, 192.168.10.40, VLAN 10 SERVERS).
+#                   Deploy to /opt/halden on OPS01 with scripts/01-Deploy-ServiceDeskStack.sh.
+# Components: glpi-db (MariaDB) + glpi (GLPI 10 ITSM/CMDB), kuma (Uptime Kuma,
+#             installed here for P8's backup heartbeat), bookstack-db (MariaDB)
+#             and bookstack (documentation hub).
+# Secrets: NONE in this file. Every credential is an environment reference
+#          (${VAR:?…}) resolved from the git-ignored .env file. Copy
+#          .env.example to .env, fill it in, never commit .env.
+# Lab note: Halden Distribution Ltd. is a fictional company. Monitors, tickets
+#           and assets are synthetic until the lab run produces real evidence.
+# =============================================================================
+name: halden-servicedesk
+
+services:
+  # --- GLPI: IT service desk + CMDB -----------------------------------------
+  glpi-db:
+    image: mariadb:11
+    container_name: halden-glpi-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${GLPI_DB_NAME:?set GLPI_DB_NAME in .env}
+      MARIADB_USER: ${GLPI_DB_USER:?set GLPI_DB_USER in .env}
+      MARIADB_PASSWORD: ${GLPI_DB_PASSWORD:?set GLPI_DB_PASSWORD in .env}
+      MARIADB_ROOT_PASSWORD: ${GLPI_DB_ROOT_PASSWORD:?set GLPI_DB_ROOT_PASSWORD in .env}
+    volumes:
+      - glpi_db:/var/lib/mysql
+    networks: [backend]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  glpi:
+    image: glpi/glpi:10
+    container_name: halden-glpi
+    restart: unless-stopped
+    depends_on:
+      glpi-db:
+        condition: service_healthy
+    environment:
+      GLPI_DB_HOST: glpi-db
+      GLPI_DB_NAME: ${GLPI_DB_NAME}
+      GLPI_DB_USER: ${GLPI_DB_USER}
+      GLPI_DB_PASSWORD: ${GLPI_DB_PASSWORD}
+    volumes:
+      - glpi_data:/var/www/html/glpi
+      - glpi_files:/var/lib/glpi/files
+    ports:
+      - "${GLPI_HTTP_BIND:-127.0.0.1}:8080:80"
+    networks: [backend, frontend]
+
+  # --- Uptime Kuma: monitoring + P8 backup heartbeat ------------------------
+  kuma:
+    image: louislam/uptime-kuma:1
+    container_name: halden-kuma
+    restart: unless-stopped
+    volumes:
+      - kuma_data:/app/data
+    ports:
+      - "${KUMA_HTTP_BIND:-127.0.0.1}:3001:3001"
+    networks: [frontend]
+
+  # --- BookStack: documentation hub -----------------------------------------
+  bookstack-db:
+    image: mariadb:11
+    container_name: halden-bookstack-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${BOOKSTACK_DB_NAME:?set BOOKSTACK_DB_NAME in .env}
+      MARIADB_USER: ${BOOKSTACK_DB_USER:?set BOOKSTACK_DB_USER in .env}
+      MARIADB_PASSWORD: ${BOOKSTACK_DB_PASSWORD:?set BOOKSTACK_DB_PASSWORD in .env}
+      MARIADB_ROOT_PASSWORD: ${BOOKSTACK_DB_ROOT_PASSWORD:?set BOOKSTACK_DB_ROOT_PASSWORD in .env}
+    volumes:
+      - bookstack_db:/var/lib/mysql
+    networks: [backend]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:latest
+    container_name: halden-bookstack
+    restart: unless-stopped
+    depends_on:
+      bookstack-db:
+        condition: service_healthy
+    environment:
+      APP_URL: ${BOOKSTACK_URL:-http://bookstack.halden.internal}
+      APP_KEY: ${BOOKSTACK_APP_KEY:?set BOOKSTACK_APP_KEY in .env}
+      DB_HOST: bookstack-db
+      DB_DATABASE: ${BOOKSTACK_DB_NAME}
+      DB_USERNAME: ${BOOKSTACK_DB_USER}
+      DB_PASSWORD: ${BOOKSTACK_DB_PASSWORD}
+      # LDAP bind to AD is configured in the BookStack UI; the bind password is
+      # entered there and stored in the app database, never in this file.
+      PUID: "1000"
+      PGID: "1000"
+    volumes:
+      - bookstack_data:/config
+    ports:
+      - "${BOOKSTACK_HTTP_BIND:-127.0.0.1}:8080:80"
+    networks: [backend, frontend]
+
+networks:
+  # frontend = reachable through the reverse proxy (HTTPS terminated by the P6
+  #            internal CA certificate); backend = databases only.
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true
+
+volumes:
+  glpi_db:
+  glpi_data:
+  glpi_files:
+  kuma_data:
+  bookstack_db:
+  bookstack_data:

@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Identity Lifecycle and Access Governance: JML Automation, MFA, Conditional Access, Access Reviews | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="Joiner-mover-leaver access automated from an HR file, with MFA enforced for everyone"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p02/"><meta property="og:title" content="Identity Lifecycle and Access Governance: JML Automation, MFA, Conditional Access, Access Reviews | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="Joiner-mover-leaver access automated from an HR file, with MFA enforced for everyone"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p02/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#2 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>Identity Lifecycle and Access Governance: JML Automation, MFA, Conditional Access, Access Reviews</h1><p style="font-size:1.1rem;">Joiner-mover-leaver access automated from an HR file, with MFA enforced for everyone</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">PowerShell</span><span class="tag">Python</span><span class="tag">Active Directory</span><span class="tag">AGDLP</span><span class="tag">Microsoft Entra ID</span><span class="tag">Entra Cloud Sync</span><span class="tag">Conditional Access</span><span class="tag">MFA</span><span class="tag">ScubaGear</span><span class="tag">Access Reviews</span><span class="tag">gMSA delegation</span><span class="tag">Process design (RACI)</span></p></header><img src="/projects/p02-identity-lifecycle/p02-architecture.svg" alt="Identity Lifecycle and Access Governance: JML Automation, MFA, Conditional Access, Access Reviews — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>HR emails IT when someone joins, moves or leaves — sometimes. New starters wait days for the access
+they need, people who change department keep their old permissions, leavers’ accounts stay enabled for
+weeks, there is no MFA, and nobody can say who has access to payroll without sending an email. That is
+a business risk rather than an IT detail: credential abuse is the most common initial access vector in
+reported breaches — around 22% of them in the Verizon 2025 DBIR — and offboarding gaps and orphaned
+accounts are among the most common findings in access audits. Worse, none of it can be <em>proved</em>: with
+nothing recorded, the company cannot demonstrate that a leaver’s access was removed. (Market evidence
+and the job-ad analysis behind this project: <code>docs/plan/00-research-and-selection.md</code>.)</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>An automated joiner-mover-leaver engine</strong> that reconciles Active Directory to the HR source of
+truth, keyed on the employee ID rather than on names that change, collide and get misspelt.</li>
+<li><strong>A role model instead of copying a colleague’s groups.</strong> A role matrix defines what each department
+and job title should have, and it is the only place access is decided.</li>
+<li><strong>A mover path that removes as well as adds</strong> — the old department’s access is stripped in the same
+run that grants the new access, which is what stops permission creep over a career.</li>
+<li><strong>A leaver path in the order that matters</strong>: capture the group memberships to a snapshot first, then
+disable, reset the password, remove the groups, move the account to the disabled area, and revoke
+the cloud sessions — because the snapshot is worthless once the groups are gone.</li>
+<li><strong>Safety controls that make scheduling it defensible</strong>: a dry-run preview that changes nothing, a
+circuit breaker that aborts the run if more than 10% of the export would be disabled at once, a
+protected-accounts list, an append-only audit log, and idempotency so a second run does nothing.</li>
+<li><strong>Least privilege for the automation itself</strong> — it runs as a group managed service account
+delegated rights over two directory areas, verified with <code>dsacls</code>, never as a domain administrator.</li>
+<li><strong>An identity-hygiene report</strong> covering stale accounts, password-exempt accounts, retained disabled
+accounts, privileged-group membership and accounts with no HR record at all.</li>
+<li><strong>Hybrid identity scoped by tier</strong>: AD synced to Microsoft Entra ID with admin and service accounts
+deliberately excluded, so privileged identities never leave the on-premises directory.</li>
+<li><strong>MFA and Conditional Access as version-controlled configuration</strong>: five policies deployed by script,
+created in report-only, reviewed in the sign-in logs and only then enforced, with two monitored
+break-glass accounts created first so the control cannot become a lock-out.</li>
+<li><strong>An offline reference implementation with 34 unit tests</strong>, so the classify, diff and circuit-breaker
+rules can be reviewed and proven without a domain controller in front of you.</li>
+<li><strong>Business artefacts as deliverables</strong>: an executive brief, a joiner-mover-leaver process and RACI
+document written for a non-technical HR reader, a role model for department-head sign-off, a
+quarterly access-review pack with an action tracker, and the MFA rollout comms plan with a helpdesk
+surge plan.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P2 identity lifecycle and access governance architecture" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p02-architecture.ueqKwCfl_Z4lz9b.svg"></p>
+<p>The HR export is the single source of truth. The engine diffs the desired state it describes against
+the live directory and acts on the difference, while every action lands in one append-only audit log;
+identities then sync to Entra ID, where Conditional Access enforces MFA and blocks legacy
+authentication, with break-glass accounts excluded and monitored. The diagram’s third panel puts the
+as-is process beside the to-be process, because the improvement is the deliverable, not the script.</p>
+<p>The rule that separates “helpful automation” from “the thing that disabled the company” is small
+enough to quote:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="color:#6A737D"># Abort the whole run if more than -CircuitBreakerPercent of the accounts in the export</span></span>
+<span class="line"><span style="color:#6A737D"># would be disabled in one go. Nothing has been changed at this point.</span></span>
+<span class="line"><span style="color:#E1E4E8">$threshold   </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> $hr.Count </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> $CircuitBreakerPercent </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 100</span></span>
+<span class="line"><span style="color:#E1E4E8">$tripped     </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ($hr.Count </span><span style="color:#F97583">-gt</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">-and</span><span style="color:#E1E4E8"> ($leaverCount </span><span style="color:#F97583">-gt</span><span style="color:#E1E4E8"> $threshold)</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> ($tripped) { </span><span style="color:#79B8FF">Write-Audit</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8">Action </span><span style="color:#9ECBFF">'CircuitBreakerTripped'</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8">Target $HrFile </span><span style="color:#F97583">-</span><span style="color:#E1E4E8">After $msg; </span><span style="color:#F97583">exit</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8"> }</span></span></code></pre>
+<p>Building the offline Python equivalent was not decoration: it is how I found that comparing one run’s
+leavers against the number of accounts in AD makes a single genuine leaver trip the breaker, because
+the two counts do not share a denominator. The tests now pin that down.</p>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit (scripts, configuration, documentation, business artefacts) is
+complete and the lab execution is in progress. I am deliberately not publishing numbers before they
+exist: the measures below will be filled from real lab runs, each with a file in <code>evidence/public/</code>
+as its source and its measurement method written down in the KPI report.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Joiner lead time (HR record to account ready)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Leaver revocation time (HR record to sessions revoked)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Enabled accounts with no HR record (orphans)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Enabled accounts with no logon in 90+ days</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>MFA coverage (% of users required to use MFA)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>CISA ScubaGear passing checks</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<h2 id="business-side">Business side</h2>
+<p>The technical work in an identity project is only half of it; the other half is the process the
+business has to own:</p>
+<ul>
+<li><strong>Executive brief</strong> — the issue in business language, the change, the cost (nothing) and the four
+things the business must do, including the one HR field that the whole leaver timer depends on.</li>
+<li><strong>Joiner-mover-leaver process and RACI</strong> — who does what, written so a non-technical HR reader can
+follow it, with the SLA agreement between HR and IT stated explicitly and the failure point named
+rather than hidden.</li>
+<li><strong>Role-based access model</strong> — the access each role receives, with a sign-off block for each
+department head. Access is a business decision: IT implements it, the business owns it. The sign-off
+column is deliberately unsigned and is recorded honestly as role-played in a lab.</li>
+<li><strong>Quarterly access-review pack</strong> — one sheet per department showing user, groups, the resources
+those groups actually reach, last logon and manager, with a Keep/Remove/Change column, plus an
+action tracker that follows every decision to closure. “Follow up on action items” is part of the
+job, so the tracker is a deliverable rather than an afterthought.</li>
+<li><strong>MFA rollout comms plan</strong> — the staff email, a one-page Authenticator setup guide, an FAQ covering
+the questions people actually ask, and a helpdesk surge plan, because a rollout where a fifth of
+staff cannot sign in is an outage rather than a security win.</li>
+<li><strong>KPI report</strong> — the before/after template, with the measurement method for every row so a reader
+can check the number instead of trusting it.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>Designing the process first changed the project.</strong> Drawing the as-is flow showed the real problem
+was a missing HR field, not missing automation. An engine that reconciles to a record nobody
+maintains simply fails faster — so the fix started with an SLA and a process, not with PowerShell.</li>
+<li><strong>I would treat “the automation itself” as a security scope from day one.</strong> My first instinct was to
+run the scheduled job as an administrator because it was convenient. Delegating two OUs to a gMSA
+and proving it with <code>dsacls</code> took an hour and removed the single biggest risk in the design.</li>
+<li><strong>A safety control has to be a number.</strong> “Don’t run it on a bad file” is a hope; “abort if more than
+10% of the export would be disabled” is a control. Writing the offline planner is what exposed the
+denominator bug in my first attempt at it.</li>
+<li><strong>Some steps refuse to be scripted, and saying so is part of the work.</strong> The Cloud Sync agent is a
+GUI install. Everything around it is scripted, and the install is a runbook step with a screenshot
+rather than a claim that the whole thing is automated.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p02-identity-lifecycle/p2-access-review-pack.pdf">P2 Access Review Pack</a></li><li><a href="/projects/p02-identity-lifecycle/p2-change-record.pdf">P2 Change Record</a></li><li><a href="/projects/p02-identity-lifecycle/p2-exec-brief.pdf">P2 Exec Brief</a></li><li><a href="/projects/p02-identity-lifecycle/p2-jml-process-and-raci.pdf">P2 Jml Process And Raci</a></li><li><a href="/projects/p02-identity-lifecycle/p2-kpi.pdf">P2 Kpi</a></li><li><a href="/projects/p02-identity-lifecycle/p2-mfa-rollout-comms.pdf">P2 Mfa Rollout Comms</a></li><li><a href="/projects/p02-identity-lifecycle/p2-role-matrix.pdf">P2 Role Matrix</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p02-identity-lifecycle">projects/p02-identity-lifecycle/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). The staff file is synthetic and the business sign-offs are role-played. This page shows a working build kit that is being executed in the lab phase by phase — numbers appear here only once they have actually been measured, and the results table is deliberately empty until then.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p10Title p10Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p10Title">Halden Distribution P10 IT governance loop</title>
+  <desc id="p10Desc">The Halden IT governance loop: business objectives set controls and policy; the nine technical projects (P1 to P9) supply evidence; the evidence is scored in a CIS Controls v8.1 IG1 self-assessment; gaps become risks and roadmap items; change management controls how the environment changes; a KPI dashboard and monthly report turn the results into a management decision; and management review feeds improvement back into the controls. Every stage names its data source, and a footnote states that Halden is fictional.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/>
+    </marker>
+    <marker id="arrowGrey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P10 IT governance loop</text>
+  <text x="40" y="66" font-size="13.5" fill="#475569">The capstone that measures and reports on P1–P9 · CIS Controls v8.1 IG1 (56 safeguards) · change control · monthly KPI report · management review</text>
+
+  <!-- Stage 1: business objectives and controls -->
+  <rect x="40" y="100" width="240" height="150" rx="9" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="160" y="126" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">1. Objectives &amp; controls</text>
+  <text x="60" y="150" font-size="11.5" fill="#334155">Business objectives (grow orders,</text>
+  <text x="60" y="167" font-size="11.5" fill="#334155">pass a supplier questionnaire, renew</text>
+  <text x="60" y="184" font-size="11.5" fill="#334155">insurance without a hike)</text>
+  <text x="60" y="207" font-size="11.5" fill="#475569">Sources: policy pack,</text>
+  <text x="60" y="224" font-size="11.5" fill="#475569">CIS Controls v8.1 IG1,</text>
+  <text x="60" y="241" font-size="11.5" fill="#475569">configs/kpi-definitions.csv</text>
+
+  <line x1="280" y1="175" x2="336" y2="175" stroke="#0f766e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="308" y="166" font-size="10.5" fill="#0f766e" text-anchor="middle">sets</text>
+
+  <!-- Stage 2: evidence from P1-P9 -->
+  <rect x="340" y="100" width="520" height="150" rx="9" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="600" y="126" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">2. Evidence from the nine projects</text>
+  <g font-size="11">
+    <rect x="356" y="140" width="152" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="432" y="159" fill="#0f172a" text-anchor="middle">P1 AD · DNS · DHCP · GPO</text>
+    <rect x="518" y="140" width="152" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="594" y="159" fill="#0f172a" text-anchor="middle">P2 identity · MFA · JML</text>
+    <rect x="680" y="140" width="164" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="762" y="159" fill="#0f172a" text-anchor="middle">P3 AD security · LAPS</text>
+
+    <rect x="356" y="178" width="152" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="432" y="197" fill="#0f172a" text-anchor="middle">P4 endpoint hardening</text>
+    <rect x="518" y="178" width="152" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="594" y="197" fill="#0f172a" text-anchor="middle">P5 patch · vulnerabilities</text>
+    <rect x="680" y="178" width="164" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="762" y="197" fill="#0f172a" text-anchor="middle">P6 network · VPN · Wi-Fi</text>
+
+    <rect x="356" y="216" width="152" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="432" y="235" fill="#0f172a" text-anchor="middle">P7 SIEM · incident response</text>
+    <rect x="518" y="216" width="152" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="594" y="235" fill="#0f172a" text-anchor="middle">P8 backup · DR · restore</text>
+    <rect x="680" y="216" width="164" height="30" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="762" y="235" fill="#0f172a" text-anchor="middle">P9 GLPI · CMDB · docs</text>
+  </g>
+
+  <line x1="860" y1="175" x2="916" y2="175" stroke="#0f766e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="888" y="166" font-size="10.5" fill="#0f766e" text-anchor="middle">evidences</text>
+
+  <!-- Stage 3: CIS IG1 self-assessment -->
+  <rect x="920" y="100" width="240" height="150" rx="9" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+  <text x="1040" y="126" font-size="14" font-weight="700" fill="#134e4a" text-anchor="middle">3. CIS IG1 self-assessment</text>
+  <text x="940" y="152" font-size="11.5" fill="#134e4a">56 safeguards scored 0–3</text>
+  <text x="940" y="171" font-size="11.5" fill="#134e4a">before and after</text>
+  <text x="940" y="196" font-size="11" fill="#0f766e">Rule: a score of 3 needs evidence</text>
+  <text x="940" y="215" font-size="11" fill="#475569">data/cis-ig1-safeguards.csv</text>
+  <text x="940" y="234" font-size="11" fill="#475569">scripts/cis_assessment.py</text>
+
+  <!-- Stage 4: gaps and risk register -->
+  <rect x="920" y="290" width="240" height="130" rx="9" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="1040" y="316" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">4. Gaps &amp; risks</text>
+  <text x="940" y="342" font-size="11.5" fill="#334155">Safeguards below 3 become</text>
+  <text x="940" y="360" font-size="11.5" fill="#334155">register entries and roadmap items</text>
+  <text x="940" y="385" font-size="11" fill="#475569">data/risk-register.csv</text>
+  <text x="940" y="403" font-size="11" fill="#475569">owner = a business owner</text>
+
+  <line x1="1040" y1="250" x2="1040" y2="286" stroke="#0f766e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1092" y="272" font-size="10.5" fill="#0f766e" text-anchor="middle">gaps</text>
+
+  <!-- Stage 5: change management -->
+  <rect x="620" y="290" width="250" height="130" rx="9" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="745" y="316" font-size="14" font-weight="700" fill="#7c3aed" text-anchor="middle">5. Change management</text>
+  <text x="640" y="342" font-size="11.5" fill="#334155">standard · normal · emergency</text>
+  <text x="640" y="360" font-size="11.5" fill="#334155">weekly CAB, rollback required</text>
+  <text x="640" y="385" font-size="11" fill="#7c3aed">data/change-log.csv</text>
+  <text x="640" y="403" font-size="11" fill="#7c3aed">scripts/change_log.py → CAB agenda</text>
+
+  <line x1="916" y1="355" x2="874" y2="355" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowGrey)"/>
+  <text x="895" y="346" font-size="10.5" fill="#7c3aed" text-anchor="middle">fixes</text>
+
+  <!-- Stage 6: KPI dashboard and monthly report -->
+  <rect x="300" y="290" width="270" height="130" rx="9" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="435" y="316" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">6. KPI dashboard &amp; report</text>
+  <text x="320" y="342" font-size="11.5" fill="#334155">Repository-derived KPIs: real today</text>
+  <text x="320" y="360" font-size="11.5" fill="#334155">Lab-measured KPIs: not measured yet</text>
+  <text x="320" y="385" font-size="11" fill="#475569">scripts/collect_kpis.py</text>
+  <text x="320" y="403" font-size="11" fill="#475569">scripts/monthly_report.py</text>
+
+  <line x1="616" y1="355" x2="574" y2="355" stroke="#0f766e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="595" y="346" font-size="10.5" fill="#0f766e" text-anchor="middle">reports</text>
+
+  <!-- Stage 7: management review -->
+  <rect x="40" y="290" width="220" height="130" rx="9" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="150" y="316" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">7. Management review</text>
+  <text x="60" y="342" font-size="11.5" fill="#334155">One page, RAG status,</text>
+  <text x="60" y="360" font-size="11.5" fill="#334155">a decision requested</text>
+  <text x="60" y="385" font-size="11" fill="#475569">business/p10-monthly-it-report.md</text>
+  <text x="60" y="403" font-size="11" fill="#475569">business/p10-state-of-it-talk.md</text>
+
+  <line x1="296" y1="355" x2="262" y2="355" stroke="#0f766e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="279" y="346" font-size="10.5" fill="#0f766e" text-anchor="middle">decides</text>
+
+  <!-- Improvement feedback loop -->
+  <path d="M150,290 C150,255 150,255 150,250" fill="none" stroke="#0f766e" stroke-width="0" />
+  <path d="M150,420 L150,470 L1040,470 L1040,424" fill="none" stroke="#0f766e" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+  <text x="600" y="462" font-size="11.5" font-weight="600" fill="#0f766e" text-anchor="middle">Improvement: decisions become actions, actions become changes, changes update the controls — the loop repeats every month</text>
+
+  <!-- Legend -->
+  <rect x="40" y="496" width="520" height="120" rx="9" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="58" y="520" font-size="13" font-weight="700" fill="#0f172a">Legend</text>
+  <g font-size="11.5" fill="#334155">
+    <line x1="58" y1="540" x2="98" y2="540" stroke="#0f766e" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="108" y="544">Data or control flow between governance stages</text>
+    <line x1="58" y1="562" x2="98" y2="562" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowGrey)"/>
+    <text x="108" y="566">Change-management path (RFC → CAB → implementation)</text>
+    <line x1="58" y1="584" x2="98" y2="584" stroke="#0f766e" stroke-width="2" stroke-dasharray="7 5"/>
+    <text x="108" y="588">Improvement loop back into the controls</text>
+    <rect x="58" y="598" width="40" height="14" rx="3" fill="#f0fdfa" stroke="#0f766e"/>
+    <text x="108" y="610">Measured by this project (also touched by P1–P9)</text>
+  </g>
+
+  <!-- Right note -->
+  <rect x="580" y="496" width="580" height="120" rx="9" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="598" y="520" font-size="13" font-weight="700" fill="#0f172a">Where the numbers come from</text>
+  <g font-size="11.5" fill="#334155">
+    <text x="598" y="544">Repository-derived KPIs are computed by reading this repository (project readiness,</text>
+    <text x="598" y="562">evidence coverage, change and policy counts) — real measurements of the repository.</text>
+    <text x="598" y="580">Lab-measured KPIs (MFA coverage, patch compliance, restore tests) stay "not measured"</text>
+    <text x="598" y="598">until the lab has actually been executed. No number on this page is estimated.</text>
+  </g>
+
+  <!-- Footnote -->
+  <text x="40" y="646" font-size="11" fill="#64748b">Halden Distribution Ltd. is a fictional 85-user company used for a home-lab portfolio. The configurations, scripts and evidence are real; the business roles are simulated. No live system is exposed on the internet — the website shows evidence, not access.</text>
+  <text x="40" y="668" font-size="11" fill="#64748b">CIS Controls v8.1 IG1 = 56 safeguards across 15 controls (1–12, 14, 15, 17); controls 13, 16 and 18 have no IG1 safeguards. The official CIS document is authoritative for wording.</text>
+</svg>

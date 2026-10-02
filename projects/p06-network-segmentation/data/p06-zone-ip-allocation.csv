@@ -1,0 +1,46 @@
+# P6 zone / subnet / IP allocation - the IP plan for the segmented lab.
+#
+# What this is: one row per address that exists after P6, so an address is never guessed. Read by
+# scripts/00-Test-P6Preflight.sh and 02-Set-WindowsDhcpScopes.ps1 (indirectly, through the DHCP
+# scope plan) and by anyone building the diagram.
+#
+# STATUS: designed values from docs/00-design.md and LAB-INVENTORY.md. Not measured.
+#
+# Every address is a 192.168.x lab address. The lab's WAN side is the Hyper-V Default Switch (NAT);
+# no WAN or public address appears anywhere in this project (AGENTS.md 4.6).
+#
+# Columns: zone,vlan,subnet,host,role,ip,addressing,notes
+
+zone,vlan,subnet,host,role,ip,addressing,notes
+SERVERS,10,192.168.10.0/24,FW01,HQ firewall and gateway,192.168.10.1,static,Default gateway for the SERVERS zone and the DHCP relay for VLAN 20/30
+SERVERS,10,192.168.10.0/24,HOST01,hypervisor management,192.168.10.5,static,Moves to the MGMT zone in P6
+SERVERS,10,192.168.10.0/24,DC01,domain controller / DNS / DHCP primary,192.168.10.10,static,Tier 0
+SERVERS,10,192.168.10.0/24,DC02,domain controller / DNS / DHCP partner,192.168.10.11,static,Tier 0
+SERVERS,10,192.168.10.0/24,FS01,file services and NPS (RADIUS),192.168.10.20,static,RADIUS server for the VPN and Wi-Fi policies
+SERVERS,10,192.168.10.0/24,LNX01,Linux application server / eapol_test client,192.168.10.30,static,802.1X validation host
+SERVERS,10,192.168.10.0/24,OPS01,GLPI and monitoring containers,192.168.10.40,static,HTTPS allowed to USERS-HQ and VPN-USERS
+SERVERS,10,192.168.10.0/24,SIEM01,Wazuh manager,192.168.10.41,static,Wazuh agent traffic in P7
+SERVERS,10,192.168.10.0/24,BKP01,backup repository,192.168.10.42,static,Moves to MGMT in P6 (not domain-joined)
+SERVERS,10,192.168.10.0/24,CA01,internal enterprise CA (AD CS),192.168.10.43,static,Tier 0 - reachable only from MGMT
+SERVERS,10,192.168.10.0/24,SERVERS static pool,reserved for future static use,192.168.10.50-99,static,Printers and infrastructure reservations
+SERVERS,10,192.168.10.0/24,SERVERS DHCP pool,legacy P1 client scope,192.168.10.100-200,dhcp,Known addresses stay reserved even though the zone is static
+WAREHOUSE,20,192.168.20.0/24,FW02,warehouse firewall,192.168.20.1,static,Site 2 gateway; WireGuard peer of FW01
+WAREHOUSE,20,192.168.20.0/24,WAREHOUSE DHCP pool,warehouse clients,192.168.20.100-200,dhcp,Windows DHCP via relay to 192.168.10.10 and .11
+USERS-HQ,30,192.168.30.0/24,FW01 (opt30),users zone gateway,192.168.30.1,static,DHCP relay to the Windows DHCP pair
+USERS-HQ,30,192.168.30.0/24,USERS DHCP pool,staff workstations and laptops,192.168.30.100-200,dhcp,Scope USERS-HQ-Clients
+USERS-HQ,30,192.168.30.0/24,reserved,reserved for fixed devices,192.168.30.10-99,static,Printers that need a fixed address
+MGMT,40,192.168.40.0/24,FW01 (opt40),management zone gateway,192.168.40.1,static,Anti-lockout rule for the firewall web UI lives here
+MGMT,40,192.168.40.0/24,HOST01 hypervisor,hypervisor management,192.168.40.5,static,Move from 192.168.10.5 in this project
+MGMT,40,192.168.40.0/24,WS02,PAW (privileged access workstation),192.168.40.10,static,The only source allowed to reach every zone
+MGMT,40,192.168.40.0/24,BKP01,backup repository (moved),192.168.40.20,static,Moved from the SERVERS zone per the roadmap
+MGMT,40,192.168.40.0/24,SW01,managed switch management,192.168.40.30,static,Only when a VLAN-aware switch is in the lab
+MGMT,40,192.168.40.0/24,AP01,wireless access point management,192.168.40.31,static,Only when an AP is in the lab
+GUEST,50,192.168.50.0/24,FW01 (opt50),guest zone gateway,192.168.50.1,static,OPNsense DHCP with client isolation; internet only
+GUEST,50,192.168.50.0/24,GUEST DHCP pool,visitor devices,192.168.50.100-200,dhcp,Issued only against a reception voucher
+GUEST,50,192.168.50.0/24,reserved,reserved,192.168.50.10-99,static,Unused by design
+IOT,60,192.168.60.0/24,FW01 (opt60),IoT zone gateway,192.168.60.1,static,OPNsense DHCP; no route to any internal zone except FS01 SMB
+IOT,60,192.168.60.0/24,IOT DHCP pool,printers CCTV DVR scanners,192.168.60.100-200,dhcp,Static reservations inside the pool for the DVR and printers
+VPN-USERS,0,192.168.70.0/24,FW01 (ovpns1),VPN tunnel endpoint,192.168.70.1,static,Split tunnel: only the internal routes are pushed
+VPN-USERS,0,192.168.70.0/24,VPN client pool,remote staff,192.168.70.10-200,dhcp-from-vpn,One tunnel address per authenticated session
+SITE-LINK,0,10.99.0.0/30,FW01 WireGuard tunnel,HQ end of the site-to-site link,10.99.0.1,static,Transport address only - not a user zone
+SITE-LINK,0,10.99.0.0/30,FW02 WireGuard tunnel,warehouse end of the site-to-site link,10.99.0.2,static,Allowed IPs restricted to the remote LAN and the peer tunnel address

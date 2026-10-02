@@ -1,0 +1,105 @@
+<!--
+  Halden Distribution Ltd. — P7 Sysmon configuration (Halden profile)
+  Applies to: all Windows hosts (DC01, DC02, FS01, WS01, WS02), deployed to
+             \\ad.halden.internal\NETLOGON\sysmon\sysmonconfig-halden.xml
+  Deployed by: scripts/04-Deploy-Sysmon.ps1 (GPO startup script or direct)
+  Project: P7
+
+  WHAT THIS IS
+    A focused Sysmon config that captures the events the P7 detections need, and excludes the
+    high-volume noise that would otherwise drown the analyst. It is intentionally small: a
+    starting point that is extended by tuning (docs/tuning-log.md), not a 2,000-line community
+    config committed wholesale.
+
+    It is derived from the well-known public configs (SwiftOnSecurity/sysmon-config and
+    Olaf Hartong/sysmon-modular). Where the lab needs a specific capture (line 1), the event is
+    started from the community default and narrowed by the P7 rule. Base it on the current
+    upstream file at deployment time; this profile records the EVENTS Halden relies on and the
+    exclusions Halden adds.
+
+    Events used by the detections:
+      Event 1  ProcessCreate                -> D5, D6, D7, D9, D9b
+      Event 3  NetworkConnect               -> lateral-movement context
+      Event 7  ImageLoad                    -> unsigned/injected module context
+      Event 10 ProcessAccess (lsass)        -> D5 (credential access)
+      Event 11 FileCreate                   -> ransomware file-staging context
+      Event 13 RegistryEvent                -> persistence context
+      Event 22 DNSQuery                     -> command-and-control context
+-->
+<Sysmon schemaversion="4.90">
+  <HashAlgorithms>SHA256</HashAlgorithms>
+  <CheckRevocation>false</CheckRevocation>
+  <EventFiltering>
+
+    <!-- Process creation: capture command lines, which the D6/D7 rules match. -->
+    <RuleGroup name="Halden process events" groupRelation="or">
+      <ProcessCreate onmatch="exclude">
+        <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+        <CommandLine condition="is">C:\Windows\system32\backgroundTaskHost.exe -ServerName:App.AppXmtcan0h2tfbfy7k9kn8hbxb6dmzz1zh0msf.app</CommandLine>
+      </ProcessCreate>
+    </RuleGroup>
+
+    <!-- Credential access: System-only access to LSASS is expected; everything else is D5. -->
+    <RuleGroup name="Halden process access" groupRelation="or">
+      <ProcessAccess onmatch="include">
+        <TargetImage condition="image">lsass.exe</TargetImage>
+      </ProcessAccess>
+      <ProcessAccess onmatch="exclude">
+        <SourceImage condition="is">C:\Windows\system32\csrss.exe</SourceImage>
+        <SourceImage condition="is">C:\Windows\system32\wininit.exe</SourceImage>
+        <SourceImage condition="is">C:\Windows\system32\services.exe</SourceImage>
+        <SourceImage condition="is">C:\Windows\system32\svchost.exe</SourceImage>
+        <!-- Microsoft Defender is a known-good LSASS reader; if the lab AV is disabled, this
+             exclusion is reviewed rather than kept by habit. -->
+        <SourceImage condition="is">C:\ProgramData\Microsoft\Windows Defender\Platform\*\MsMpEng.exe</SourceImage>
+      </ProcessAccess>
+    </RuleGroup>
+
+    <!-- Network connections: context for lateral movement; exclude noisy loopback. -->
+    <RuleGroup name="Halden network events" groupRelation="or">
+      <NetworkConnect onmatch="exclude">
+        <SourceIp condition="is">127.0.0.1</SourceIp>
+        <DestinationIp condition="is">127.0.0.1</DestinationIp>
+      </NetworkConnect>
+    </RuleGroup>
+
+    <!-- DNS queries: command-and-control context; long/rare domains are reviewed in triage. -->
+    <RuleGroup name="Halden dns events" groupRelation="or">
+      <DnsQuery onmatch="exclude">
+        <QueryName condition="end with">.local</QueryName>
+        <QueryName condition="end with">.in-addr.arpa</QueryName>
+        <QueryName condition="is">ad.halden.internal</QueryName>
+      </DnsQuery>
+    </RuleGroup>
+
+    <!-- Image loads: unsigned or unusual modules loaded into LSASS are worth seeing. -->
+    <RuleGroup name="Halden image loads" groupRelation="or">
+      <ImageLoad onmatch="exclude">
+        <Signed condition="is">true</Signed>
+        <ImageLoaded condition="begin with">C:\Windows\</ImageLoaded>
+      </ImageLoad>
+    </RuleGroup>
+
+    <!-- File creation: removes the OS churn; keep documents, scripts and executables. -->
+    <RuleGroup name="Halden file events" groupRelation="or">
+      <FileCreate onmatch="exclude">
+        <TargetFilename condition="begin with">C:\Windows\</TargetFilename>
+        <TargetFilename condition="begin with">C:\Program Files\</TargetFilename>
+        <TargetFilename condition="begin with">C:\ProgramData\Microsoft\Windows\</TargetFilename>
+        <TargetFilename condition="end with">.tmp</TargetFilename>
+      </FileCreate>
+    </RuleGroup>
+
+    <!-- Registry: watch the keys persistence and ransomware notes use. -->
+    <RuleGroup name="Halden registry events" groupRelation="or">
+      <RegistryEvent onmatch="include">
+        <TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
+        <TargetObject condition="contains">\CurrentVersion\RunOnce</TargetObject>
+        <TargetObject condition="contains">\Image File Execution Options</TargetObject>
+        <TargetObject condition="contains">\Policies\System</TargetObject>
+        <TargetObject condition="contains">\Windows Defender</TargetObject>
+      </RegistryEvent>
+    </RuleGroup>
+
+  </EventFiltering>
+</Sysmon>

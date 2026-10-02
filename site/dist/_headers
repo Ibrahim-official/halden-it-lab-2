@@ -1,0 +1,11 @@
+# Security headers (AGENTS.md 5.6). Supported natively by Cloudflare Pages.
+# For GitHub Pages, copy the relevant headers into the host configuration
+# (GitHub Pages does not serve _headers files).
+# Note: 'unsafe-inline' is required for style and for the small inline theme-toggle script.
+
+/*
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  X-Frame-Options: DENY

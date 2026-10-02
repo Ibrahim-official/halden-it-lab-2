@@ -1,0 +1,121 @@
+# P8 backup job definitions — Halden Distribution Ltd. (fictional, home lab)
+# Where it applies: BKP01 (on-site repository), HOST01 (Hyper-V), DC01/DC02 (system state),
+#                  and the scripts in ../scripts/. Read by 01-Configure-BackupRepository.sh,
+#                  02-Backup-HyperVVMs.ps1, 04-Backup-OffsiteCopy.sh and the retention helper.
+# Values here are the DESIGN. Measured results (durations, sizes, success) are never stored here;
+# they go in evidence/public/ after a real run.
+version: 1
+company: "Halden Distribution Ltd."
+domain: "ad.halden.internal"
+backup_server:
+  host: BKP01
+  ip: 192.168.10.42
+  os: "Ubuntu Server 24.04"
+  domain_joined: false           # deliberate: see docs/00-design.md §9
+  vlan_initial: 10               # SERVERS in P1
+  vlan_target: 40                # MGMT after P6 segmentation
+
+# What each tier protects, how often, and how long it is kept.
+targets:
+  - name: DC01
+    tier: 0
+    role: "AD DS, DNS, DHCP"
+    jobs: [vm-nightly, systemstate-daily]
+    rto_hours: 2
+    rpo_hours: 24
+  - name: DC02
+    tier: 0
+    role: "AD DS, DNS, DHCP failover partner"
+    jobs: [vm-nightly, systemstate-daily]
+    rto_hours: 2
+    rpo_hours: 24
+  - name: FS01
+    tier: 1
+    role: "Finance/Sales file shares"
+    jobs: [vm-nightly, file-hourly]
+    rto_hours: 4
+    rpo_hours: 1
+  - name: LNX01
+    tier: 1
+    role: "order app + database"
+    jobs: [vm-nightly, file-hourly]
+    rto_hours: 4
+    rpo_hours: 1
+  - name: OPS01
+    tier: 2
+    role: "GLPI, BookStack, Uptime Kuma"
+    jobs: [vm-nightly, file-nightly]
+    rto_hours: 24
+    rpo_hours: 24
+  - name: SIEM01
+    tier: 2
+    role: "Wazuh manager + indexer"
+    jobs: [vm-nightly, file-nightly]
+    rto_hours: 24
+    rpo_hours: 24
+  - name: FW01
+    tier: 0
+    role: "firewall config"
+    jobs: [config-daily]
+    rto_hours: 2
+    rpo_hours: 24
+
+jobs:
+  - id: vm-nightly
+    kind: hyperv-export            # 02-Backup-HyperVVMs.ps1
+    runs_on: HOST01
+    schedule: "23:00 daily"
+    application_consistent: true   # production/VSS checkpoint before export
+    destination: "BKP01:/srv/backup/vms"
+  - id: systemstate-daily
+    kind: wbadmin-systemstate      # 03-Backup-DCSystemState.ps1
+    runs_on: [DC01, DC02]
+    schedule: "22:30 daily"
+    tombstone_lifetime_days: 180
+    destination: "BKP01:/srv/backup/systemstate"
+  - id: file-hourly
+    kind: restic-backup
+    runs_on: BKP01
+    schedule: "hourly (Tier 1)"
+    source_manifest: true          # writes the SHA-256 manifest used by the restore test
+    destination: "on-site repo, then Copy 2 (offsite)"
+  - id: file-nightly
+    kind: restic-backup
+    runs_on: BKP01
+    schedule: "01:00 daily (Tier 2)"
+    destination: "on-site repo, then Copy 2 (offsite)"
+  - id: config-daily
+    kind: config-export
+    runs_on: BKP01
+    schedule: "02:00 daily"
+    note: "FW01 config lives in Git (P9); P8 keeps a copy in the repository"
+    destination: "on-site repo"
+  - id: offsite-copy
+    kind: restic-copy
+    runs_on: BKP01
+    schedule: "after each backup"
+    destination: "Copy 2 — MinIO S3 with Object Lock (see p08-offsite-minio.md)"
+  - id: prune
+    kind: restic-forget-prune
+    runs_on: BKP01
+    schedule: "03:00 daily"
+    policy_ref: "retention (below)"
+  - id: verify
+    kind: restic-check
+    runs_on: BKP01
+    schedule: "04:00 Sunday"
+    note: "weekly integrity check; read-data-subset 5%"
+  - id: restore-test
+    kind: restore-verification   # 06-Test-BackupRestore.sh
+    runs_on: BKP01
+    schedule: "05:00 Sunday"
+    destination_sandbox: "VLAN 99 (no uplink)"
+    heartbeat: "Uptime Kuma push (P9)"
+
+# retention: restic forget policy per tier (see p08-retention-policy.md for the narrative table)
+retention:
+  tier0: { daily: 30, monthly: 12 }
+  tier1: { hourly: 24, daily: 14, weekly: 8, monthly: 12 }
+  tier2: { daily: 14, weekly: 8 }
+  immutable_floor_days: 30         # Object Lock COMPLIANCE default; must be >= recovery window
+  recovery_window_days: 30         # promised to the business; immutable_floor must be >= this

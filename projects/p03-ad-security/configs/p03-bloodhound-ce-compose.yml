@@ -1,0 +1,52 @@
+# p03-bloodhound-ce-compose.yml — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the Docker Compose stack that scripts/03-Deploy-BloodHoundCE.sh starts on LNX01
+#         to run BloodHound Community Edition for the P3 assessment.
+# Where:  LNX01 (Ubuntu Server 24.04, AD-joined, 192.168.10.30, VLAN 10 SERVERS), lab only.
+# Status: designed. Not started yet; no collection has been run and no data exists.
+# Secrets: *no* password is stored in this file. The values below come from an environment
+#         file that the deploy script generates at runtime outside the repository
+#         (~/.local/share/halden-p3-bloodhound/.env, git-ignored via logs/ and secrets/).
+# Gate:   the deploy script refuses to run without --authorise, because BloodHound collects
+#         directory data that maps potential attack paths (AGENTS.md rule R6).
+# Note:   BloodHound Community Edition is free and open source. Collection is done with
+#         SharpHound, run from a domain-joined lab host. Raw collection archives never enter
+#         the repository (.gitignore already excludes *.bloodhound.zip and bloodhound JSON).
+services:
+  app-db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bloodhound
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: bloodhound
+    volumes:
+      - app-db-data:/var/lib/postgresql/data
+    networks: [bh-net]
+
+  graph-db:
+    image: neo4j:5
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD}
+    volumes:
+      - graph-db-data:/data
+    networks: [bh-net]
+
+  bloodhound:
+    image: ghcr.io/specterops/bloodhound:latest
+    restart: unless-stopped
+    depends_on: [app-db, graph-db]
+    ports:
+      - "8080:8080"
+    environment:
+      bhe_database_connection: "user=bloodhound password=${POSTGRES_PASSWORD} dbname=bloodhound host=app-db port=5432 sslmode=disable"
+      bhe_neo4j_connection: "neo4j://neo4j:${NEO4J_PASSWORD}@graph-db:7687"
+    networks: [bh-net]
+
+volumes:
+  app-db-data:
+  graph-db-data:
+
+networks:
+  bh-net:
+    driver: bridge

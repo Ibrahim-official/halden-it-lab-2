@@ -1,0 +1,12 @@
+# P10 policy register. Applies to projects/p10-governance. approved_by and approval_date stay blank (approval blocks in the policy pack are visibly unsigned) until a real management review happens. ack_actual_percent stays blank until staff have acknowledged.
+policy_id,title,version,owner,approved_by,approval_date,review_date,ack_target_percent,ack_actual_percent,notes
+IT-POL-01,Information Security Policy,v0.1,IT Lead,,,2027-10-02,100,,"Umbrella policy; approval block deliberately unsigned until the owner and management review it"
+IT-POL-02,Acceptable Use Policy,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-03,Access Control and Identity Standard,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-04,Privileged Access Standard,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-05,Endpoint Security Standard,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-06,Patch and Vulnerability Management Policy,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-07,Network and Remote Access Standard,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-08,Logging Monitoring and Incident Response Policy,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-09,Backup and Recovery Policy,v0.1,IT Lead,,,2027-10-02,100,,
+IT-POL-10,Change and Asset Management Policy,v0.1,IT Lead,,,2027-10-02,100,,

@@ -1,0 +1,38 @@
+# prioritizer.example.yml — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   an example run configuration for scripts/05-prioritize.py. Copy it to
+#         configs/prioritizer.yml (or pass it with --config) and edit the paths/thresholds.
+#         Command-line flags override anything set here.
+# Where:  run on LNX01 or the owner's workstation. Paths are relative to the project folder.
+# Status: example only; the thresholds and weights mirror configs/p05-tier-rules.yml. Nothing here
+#         implies a measured result (AGENTS.md rule R2).
+
+# Inputs
+findings: data/sample-scanner-export.csv        # scanner export (the live program uses data/scans/latest.csv)
+assets: data/asset-criticality.csv              # host -> exposure/criticality/owner
+enrichment: data/sample-enrichment.json         # cached CISA KEV + FIRST EPSS values (synthetic sample)
+rules: configs/p05-tier-rules.yml               # tier rules / thresholds / weights
+
+# Outputs
+out_csv: reports/prioritized-work-list.csv
+out_json: reports/prioritized-work-list.json
+json_bundle: demo/sample-findings.json          # input for the static browser demo (optional)
+
+# Behaviour
+as_of: "2026-10-02"        # date used for SLA due dates; omit to use today
+log_level: INFO
+dry_run: false
+
+# Thresholds and weights (override configs/p05-tier-rules.yml if set)
+thresholds:
+  epss_critical: 0.5
+  epss_high: 0.1
+  cvss_critical: 9.0
+  cvss_high: 7.0
+
+weights:
+  kev: 40
+  epss: 25
+  exposure: 15
+  cvss: 12
+  criticality: 8
+  ransomware_bonus: 5

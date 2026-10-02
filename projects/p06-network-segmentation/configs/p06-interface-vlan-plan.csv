@@ -1,0 +1,15 @@
+# P6 OPNsense interface and VLAN plan - the interface-assignment plan for FW01 (HQ) and FW02 (site 2).
+# Applies to: FW01 (all HQ VLANs, VPN pool) and FW02 (VLAN 20 only).
+# Read by: scripts/01-Apply-OpnSenseNetworks.sh and scripts/00-Test-P6Preflight.sh.
+# Order of work: create the parent VLANs first, assign them, set the gateway, then add rules -
+# never add rules before the anti-lockout path from MGMT is in place (see the design document).
+# Interface names below are the OPNsense option names the owner assigns; the hardware NIC names
+# (igb0/igb1/...) are the ones the owner confirms on their FW01 before running anything.
+vlan_id,zone,parent,opnsense_interface,ip_version,subnet,gateway_ip,dhcp_server,dhcp_relay_targets,notes
+10,SERVERS,igb1 (trunk),opt10,ipv4,192.168.10.0/24,192.168.10.1,static,,Server LAN. Untagged in P1; becomes VLAN-tagged on the trunk in P6.
+20,WAREHOUSE,igb2 (site 2 uplink),opt20,ipv4,192.168.20.0/24,192.168.20.1,windows-via-relay,"192.168.10.10 192.168.10.11",Site 2 behind FW02 across the WireGuard tunnel. Relay runs on FW01.
+30,USERS-HQ,igb1 (trunk),opt30,ipv4,192.168.30.0/24,192.168.30.1,windows-via-relay,"192.168.10.10 192.168.10.11",Staff workstations and laptops. DHCP served by the Windows failover pair.
+40,MGMT,igb1 (trunk),opt40,ipv4,192.168.40.0/24,192.168.40.1,static,,PAW (WS02), hypervisor and switch-AP management. Anti-lockout rule lives here.
+50,GUEST,igb1 (trunk),opt50,ipv4,192.168.50.0/24,192.168.50.1,opnsense-dhcp,,Internet only, client isolation on the access point.
+60,IOT,igb1 (trunk),opt60,ipv4,192.168.60.0/24,192.168.60.1,opnsense-dhcp,,Printers, CCTV DVR and warehouse scanners.
+0,VPN-USERS,ovpns1 (tunnel),ovpns1,ipv4,192.168.70.0/24,192.168.70.1,vpn-pool,,Road-warrior pool. Split tunnel pushes only the internal routes.

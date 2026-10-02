@@ -1,0 +1,29 @@
+{
+  "_comment": "Halden Distribution Ltd. — P9 CMDB category, CI-type and lifecycle definitions. Applies to OPS01 GLPI (Setup -> Dropdowns: asset types, categories, states; and the ITIL category tree). Categories are deliberately kept to two levels so agents pick the right one and reports stay usable. The synthetic asset inventory in data/halden-assets.csv maps to these CI types.",
+  "version": "1.0",
+  "ci_types": [
+    { "name": "Computer", "ad_computer": true, "agent": true, "fields": ["user", "department", "location", "purchase_date", "warranty_end", "supplier", "cost"] },
+    { "name": "Server", "ad_computer": true, "agent": true, "fields": ["role", "location", "purchase_date", "warranty_end", "supplier", "cost"] },
+    { "name": "Printer", "snmp": true, "fields": ["location", "department", "supplier", "contract_end"] },
+    { "name": "Network equipment", "snmp": true, "fields": ["location", "firmware", "supplier", "contract_end"] },
+    { "name": "Phone / peripheral", "agent": false, "fields": ["user", "location", "purchase_date", "warranty_end"] },
+    { "name": "Software licence", "agent": false, "fields": ["publisher", "seats", "cost", "renewal_date"] }
+  ],
+  "lifecycle_states": ["In stock", "In use", "In repair", "Retired", "Disposed"],
+  "locations": ["HQ - Head Office", "HQ - Server Room", "Warehouse", "Remote / Home", "In stock - IT store"],
+  "itil_categories": [
+    { "name": "Access & Accounts", "children": ["Password reset / unlock", "New account", "Group / folder access", "MFA re-registration"] },
+    { "name": "Hardware", "children": ["Laptop / desktop", "Printer", "Peripherals", "Warranty claim"] },
+    { "name": "Software", "children": ["Install request", "Fault / error", "Licence question"] },
+    { "name": "Network & VPN", "children": ["VPN access", "Connectivity", "Wi-Fi", "Mapped drives"] },
+    { "name": "Email & M365", "children": ["Mailbox", "Teams / SharePoint", "Spam / phishing"] },
+    { "name": "Printing", "children": ["Cannot print", "Toner / consumables", "Print queue"] },
+    { "name": "Security", "children": ["Report phishing", "Suspected incident", "Lost / stolen device"] },
+    { "name": "Requests", "children": ["New starter", "Leaver", "Hardware quote", "Change request"] }
+  ],
+  "software_dictionary_rules": [
+    "Normalise publisher and product names (for example 'Microsoft Corporation' and 'Microsoft' to one publisher).",
+    "Flag any installed title that is not on the P5 approved-software list as unauthorised (CIS Safeguard 2.3).",
+    "Tie each licence record to the installs it covers and report seats installed vs seats owned."
+  ]
+}

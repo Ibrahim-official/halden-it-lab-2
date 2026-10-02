@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Active Directory Security Assessment and Privileged Access Hardening | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="Found and closed the paths an attacker would use to take over the domain"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p03/"><meta property="og:title" content="Active Directory Security Assessment and Privileged Access Hardening | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="Found and closed the paths an attacker would use to take over the domain"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p03/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#4 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>Active Directory Security Assessment and Privileged Access Hardening</h1><p style="font-size:1.1rem;">Found and closed the paths an attacker would use to take over the domain</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">Active Directory</span><span class="tag">PingCastle</span><span class="tag">Purple Knight</span><span class="tag">BloodHound CE</span><span class="tag">Windows LAPS</span><span class="tag">Protected Users</span><span class="tag">gMSA</span><span class="tag">Kerberos</span><span class="tag">Fine-Grained Password Policies</span><span class="tag">Privileged access tiering</span><span class="tag">Delegation</span><span class="tag">Group Policy</span><span class="tag">PowerShell</span><span class="tag">Python</span></p></header><img src="/projects/p03-ad-security/p03-architecture.svg" alt="Active Directory Security Assessment and Privileged Access Hardening — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>Halden has one shared local administrator password on every workstation, four people in Domain
+Admins including one disabled account, service accounts whose passwords have not changed in years, an
+unconstrained delegation flag left on the file server, and a domain that still accepts legacy
+authentication with a seven-character password policy. Any of those alone is a finding; together they
+mean one phished laptop can plausibly reach domain control in hours. That matters because credential
+abuse is the most common initial access vector — 22% of breaches in Verizon’s 2025 DBIR — and
+ransomware appears in 88% of SMB breaches, with attackers escalating to directory control first
+because that is what lets them encrypt every machine at once. Halden also cannot answer the simple
+business question “who can change the domain?”.</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>A repeatable assessment</strong> — PingCastle, Purple Knight and BloodHound Community Edition run
+against the lab domain, with the baseline captured before any change and the same tools re-run
+afterwards, so the before/after comparison is like-for-like.</li>
+<li><strong>A risk-rated findings register</strong> — every finding scored by likelihood × impact (1–25), banded
+P0–P3, with an owner, a target date and an evidence file, produced by a small Python tool whose
+scoring logic is covered by unit tests.</li>
+<li><strong>Honest seeding of the “before” state</strong> — a lab-guarded, <code>-WhatIf</code>-capable script creates the
+realistic weaknesses (Kerberoastable service account, AS-REP-roastable user, unconstrained
+delegation, excess privileged accounts, a shared local admin password, weak policy, legacy
+protocols) so the baseline score means something.</li>
+<li><strong>Quick wins first</strong> — AD Recycle Bin enabled, Domain Admins reduced to the designed Tier 0
+accounts plus the built-in break-glass Administrator, pre-authentication and delegation weaknesses
+cleared, Print Spooler disabled on the domain controllers, and a stricter fine-grained password
+policy for administrators.</li>
+<li><strong>Windows LAPS done properly</strong> — schema extension, encrypted Active Directory backup, read access
+delegated by tier (helpdesk on workstations, server admins on servers, Tier 0 on the DCs including
+the DSRM password), 20-character passwords rotating every 30 days, and a post-authentication reset.</li>
+<li><strong>A three-tier privileged access model</strong> — an <code>_Admin</code> OU structure, a separate <code>adm-t{0,1,2}-*</code>
+account for every IT person, deny-logon Group Policy per tier, Protected Users for human Tier 0
+accounts, a designated Tier 0 privileged access workstation, and delegated password-reset rights
+for the helpdesk instead of Domain Admin.</li>
+<li><strong>Service-account and Kerberos hygiene</strong> — a gMSA replacing the legacy service account, Kerberos
+RC4 requests audited before AES-only is enforced, and the krbtgt rotation kept as a separate,
+deliberately non-automated change.</li>
+<li><strong>Legacy-protocol hardening in an audit-then-enforce sequence</strong> — LM level 5, SMB signing required,
+SMBv1 removed, LDAP signing and channel binding, LLMNR disabled, with NTLM auditing reviewed first.</li>
+<li><strong>Verification rather than assumption</strong> — a read-only script re-checks every control the project
+claims and reports PASS / FAIL / UNKNOWN, plus a recurring privileged-access review.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P3 tier model and assessment loop" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p03-architecture.DXS3u7Gv_Z4lz9b.svg"></p>
+<p>Three tiers, three boundaries. <strong>Tier 0</strong> is the directory itself — the domain controllers and the
+privileged access workstation — reachable only by <code>adm-t0-*</code> accounts. <strong>Tier 1</strong> is the member
+servers and <strong>Tier 2</strong> is the workstations and the helpdesk’s work on user objects. The boundaries
+are enforced rather than suggested, because deny-logon Group Policy means a Tier 0 account cannot
+sign in to a workstation, and a credential that cannot be typed into a workstation cannot be cached
+there. Around the tiers runs the loop the project is really about — assess, remediate, detect,
+verify, review — with every step producing a file that can be cited.</p>
+<p>The idea that makes the model work in a small business is delegation instead of elevation. The
+helpdesk does not need domain administrator rights to do its job; it needs the <em>Reset Password</em>
+extended right on the user organisational units, which the tiering script grants directly:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="color:#6A737D"># Reset Password (extended right 00299570-246d-11d0-a768-00aa006e0529) on user OUs only.</span></span>
+<span class="line"><span style="color:#E1E4E8">$rule </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> New-Object</span><span style="color:#E1E4E8"> System.DirectoryServices.ActiveDirectoryAccessRule(</span></span>
+<span class="line"><span style="color:#E1E4E8">  $sid</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">System.DirectoryServices.ActiveDirectoryRights</span><span style="color:#E1E4E8">]::ExtendedRight</span><span style="color:#F97583">,</span><span style="color:#9ECBFF"> 'Allow'</span><span style="color:#F97583">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  [</span><span style="color:#F97583">guid</span><span style="color:#E1E4E8">]</span><span style="color:#9ECBFF">'00299570-246d-11d0-a768-00aa006e0529'</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit is complete — scripts, configs, documentation, business
+artifacts and the diagram — and the lab execution has not started, so there is nothing to report.
+I am deliberately not publishing numbers before they exist, and the assessment tooling has not been
+run: the score, the indicator counts and the attack-path figures are all still open.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PingCastle global risk score</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>BloodHound paths from Domain Users to Domain Admins</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Endpoints with a unique rotating LAPS password</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Findings closed by priority</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<p>Each row will be filled from a real lab run, with a file in <code>evidence/public/</code> named as its source,
+and the same measurement re-taken after remediation so the before/after claim is like-for-like.</p>
+<h2 id="business-side">Business side</h2>
+<p>The technical assessment is only half of it; the other half is what management gets and can act on:</p>
+<ul>
+<li><strong>One-page executive summary</strong> — the risk in plain language (“one careless click is enough to lose
+the network”), the five things being fixed and when, what is deliberately <em>not</em> being done (no
+penetration test, no credential cracking), and the four decisions the business has to make.</li>
+<li><strong>Findings register</strong> — every finding with a likelihood, an impact, a priority band, a named owner
+and a target date, plus an explicit risk-acceptance log so “we chose not to fix this” is written
+down with an owner and a review date instead of being quietly dropped.</li>
+<li><strong>Privileged access standard</strong> — the policy behind the technical controls: the tier model, separate
+admin accounts, who may read a LAPS password, service account rules, the break-glass exception and
+the review cycle.</li>
+<li><strong>Change record</strong> — risk, impact, the phase plan, acceptance tests and the backout plan, including
+the two changes that cannot be reversed (the LAPS schema extension and a krbtgt reset).</li>
+<li><strong>Five-slide management deck outline</strong> — problem, method, what changed, the score movement, and the
+remaining risks with the asks that go with them.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>Design the scoring before running the tools.</strong> Deciding likelihood × impact and the priority
+bands up front turned the assessment into a decision-ready register rather than a pile of tool
+output, and the same schema is reused later in the portfolio.</li>
+<li><strong>Authorisation belongs in the code, not in a sentence.</strong> A README that says “lab only” is a
+promise; a gate script that refuses to run without a recorded authorisation reference is a control.</li>
+<li><strong>Audit, analyse, then enforce is a design decision.</strong> Every protocol change here produces the
+events the enforcement decision rests on. Skipping that would have been faster and would have
+broken something eventually.</li>
+<li><strong>A tiering model needs a test, not a diagram,</strong> and I would move the privileged access
+workstation’s network isolation into this project rather than leaving it to the network phase —
+“privileged access workstation” is not really true while it shares a network with everything else.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p03-ad-security/p03-change-record.pdf">Change Record</a></li><li><a href="/projects/p03-ad-security/p03-exec-summary.pdf">Exec Summary</a></li><li><a href="/projects/p03-ad-security/p03-findings-register.pdf">Findings Register</a></li><li><a href="/projects/p03-ad-security/p03-management-deck.pdf">Management Deck</a></li><li><a href="/projects/p03-ad-security/p03-privileged-access-policy.pdf">Privileged Access Policy</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p03-ad-security">projects/p03-ad-security/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). The weaknesses assessed here were deliberately seeded in the lab so the assessment had realistic problems to find, and the assessment was run as an authorised exercise against the owner&#39;s own isolated lab domain only. Every number published on this page comes from a real run in the lab; none has been published yet.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

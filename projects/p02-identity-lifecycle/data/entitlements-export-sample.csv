@@ -1,0 +1,12 @@
+# SYNTHETIC sample of the access-review export (shape only). Applies to: projects/p02-identity-lifecycle
+# scripts/10-Export-AccessReview.ps1 (Halden lab only). This is an illustrative sample so the review
+# sheet layout can be reviewed before the lab run. It is NOT a measurement: LastLogonDate is left
+# empty because it is a real value the script reads from AD, and ReviewDecision is empty because a
+# department head fills it in. The live export is written to reports/access-review-<date>/.
+EmployeeID,SamAccountName,DisplayName,Department,Title,ManagerID,CurrentGroups,DesiredGroups,InMatrix,LastLogonDate,ReviewDecision
+1007,laiba.qureshi,Laiba Qureshi,Operations,Dispatcher,1038,G_Finance_Staff;G_AllStaff,G_Operations_Staff;G_AllStaff,Yes,,
+1001,anum.hussain,Anum Hussain,Management,Managing Director,,G_Management;G_AllStaff,G_Management;G_AllStaff,Yes,,
+1003,salman.rana,Salman Rana,Management,Finance Director,1001,G_Management;G_AllStaff,G_Management;G_AllStaff,Yes,,
+1082,amna.anwar,Amna Anwar,IT,Systems Administrator,1081,"G_IT_Staff;G_IT_LinuxAdmins;G_AllStaff","G_IT_Staff;G_IT_LinuxAdmins;G_AllStaff",Yes,,
+1085,mina.hussain,Mina Hussain,IT,IT Support Officer,1081,G_IT_Staff;G_AllStaff,G_IT_Staff;G_AllStaff,Yes,,
+1042,mahnoor.malik,Mahnoor Malik,Operations,Stock Controller,1038,(disabled - leaver; groups captured to logs/leavers/1042.json),(none - leaver),Yes,,

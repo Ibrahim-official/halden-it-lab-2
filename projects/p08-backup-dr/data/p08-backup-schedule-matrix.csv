@@ -1,0 +1,14 @@
+# P8 designed backup schedule and retention matrix — Halden Distribution Ltd.
+# STATUS: DESIGN ONLY. These are the designed schedule and retention values; no run has occurred yet.
+# Nothing in this file is a measured result (AGENTS.md R2). Source: configs/p08-backup-jobs.yaml
+# and docs/00-design.md §4/§5. Retention reaches (days) is the conservative reach computed by
+# scripts/lib/retention_policy.py from the same policy the lab uses.
+system,host,tier,rto_target_h, rpo_target_h,vm_backup,file_backup,system_state,offsite_copy,offline_copy,daily,weekly,monthly,retention_reach_days
+DC01,DC01,0,2,24,daily,-,daily,after-each-backup,monthly,30,-,12,360
+DC02,DC02,0,2,24,daily,-,daily,after-each-backup,monthly,30,-,12,360
+FW01,FW01,0,2,24,-,config-daily,-,after-each-backup,monthly,30,-,12,360
+FS01,FS01,1,4,1,daily,hourly,-,after-each-backup,monthly,14,8,12,360
+LNX01,LNX01,1,4,1,daily,hourly,-,after-each-backup,monthly,14,8,12,360
+OPS01,OPS01,2,24,24,daily,nightly,-,after-each-backup,monthly,14,8,-,56
+SIEM01,SIEM01,2,24,24,daily,nightly,-,after-each-backup,monthly,14,8,-,56
+Workstations (WS01/WS02),WS01,3,72,n/a,-,-,-,-,-,-,-,-,0

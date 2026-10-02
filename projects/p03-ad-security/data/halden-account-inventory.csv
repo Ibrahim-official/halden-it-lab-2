@@ -1,0 +1,91 @@
+Account,Type,DisplayName,Department,Title,AdminFor,ProposedTier,CurrentTier,Basis
+anum.hussain,Standard,Anum Hussain,Management,Managing Director,-,-,unassigned,daily-use account; no administrative rights by design
+usman.qureshi,Standard,Usman Qureshi,Management,Operations Director,-,-,unassigned,daily-use account; no administrative rights by design
+salman.rana,Standard,Salman Rana,Management,Finance Director,-,-,unassigned,daily-use account; no administrative rights by design
+saad.ahmed,Standard,Saad Ahmed,Management,Sales Director,-,-,unassigned,daily-use account; no administrative rights by design
+sana.rauf,Standard,Sana Rauf,Management,HR Director,-,-,unassigned,daily-use account; no administrative rights by design
+iqra.zafar,Standard,Iqra Zafar,Finance,Finance Manager,-,-,unassigned,daily-use account; no administrative rights by design
+laiba.qureshi,Standard,Laiba Qureshi,Finance,Accountant,-,-,unassigned,daily-use account; no administrative rights by design
+sara.naqvi,Standard,Sara Naqvi,Finance,Accounts Clerk,-,-,unassigned,daily-use account; no administrative rights by design
+danish.mirza,Standard,Danish Mirza,Finance,Payroll Officer,-,-,unassigned,daily-use account; no administrative rights by design
+danish.hussain,Standard,Danish Hussain,Finance,Accountant,-,-,unassigned,daily-use account; no administrative rights by design
+alina.iqbal,Standard,Alina Iqbal,Finance,Accounts Clerk,-,-,unassigned,daily-use account; no administrative rights by design
+lena.rana,Standard,Lena Rana,Finance,Payroll Officer,-,-,unassigned,daily-use account; no administrative rights by design
+hania.malik,Standard,Hania Malik,Finance,Accountant,-,-,unassigned,daily-use account; no administrative rights by design
+anum.dar,Standard,Anum Dar,HR,HR Manager,-,-,unassigned,daily-use account; no administrative rights by design
+asad.malik,Standard,Asad Malik,HR,HR Officer,-,-,unassigned,daily-use account; no administrative rights by design
+rida.malik,Standard,Rida Malik,HR,Recruiter,-,-,unassigned,daily-use account; no administrative rights by design
+adil.javed,Standard,Adil Javed,HR,HR Officer,-,-,unassigned,daily-use account; no administrative rights by design
+farhan.iqbal,Standard,Farhan Iqbal,Sales,Sales Manager,-,-,unassigned,daily-use account; no administrative rights by design
+rabia.lodhi,Standard,Rabia Lodhi,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+anum.butt,Standard,Anum Butt,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+noor.javed,Standard,Noor Javed,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+rabia.anwar,Standard,Rabia Anwar,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+imran.qureshi,Standard,Imran Qureshi,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+adil.malik,Standard,Adil Malik,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+zoya.raza,Standard,Zoya Raza,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+haris.javed,Standard,Haris Javed,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+usman.rana,Standard,Usman Rana,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+arslan.gill,Standard,Arslan Gill,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+farhan.qureshi,Standard,Farhan Qureshi,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+tariq.naqvi,Standard,Tariq Naqvi,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+salman.nawaz,Standard,Salman Nawaz,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+hania.dar,Standard,Hania Dar,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+shan.khan,Standard,Shan Khan,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+salman.anwar,Standard,Salman Anwar,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+zain.chaudhry,Standard,Zain Chaudhry,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+sara.rana,Standard,Sara Rana,Sales,Account Manager,-,-,unassigned,daily-use account; no administrative rights by design
+hamza.rauf,Standard,Hamza Rauf,Sales,Sales Executive,-,-,unassigned,daily-use account; no administrative rights by design
+anum.rauf,Standard,Anum Rauf,Operations,Operations Manager,-,-,unassigned,daily-use account; no administrative rights by design
+farhan.naqvi,Standard,Farhan Naqvi,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+owais.khan,Standard,Owais Khan,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+omar.hussain,Standard,Omar Hussain,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+mahnoor.malik,Standard,Mahnoor Malik,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+hira.naqvi,Standard,Hira Naqvi,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+bushra.aslam,Standard,Bushra Aslam,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+owais.dar,Standard,Owais Dar,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+komal.rana,Standard,Komal Rana,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+rehan.lodhi,Standard,Rehan Lodhi,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+owais.javed,Standard,Owais Javed,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+hira.siddiqui,Standard,Hira Siddiqui,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+sana.gill,Standard,Sana Gill,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+asad.hashmi,Standard,Asad Hashmi,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+lena.siddiqui,Standard,Lena Siddiqui,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+adil.lodhi,Standard,Adil Lodhi,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+aisha.rana,Standard,Aisha Rana,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+usman.aslam,Standard,Usman Aslam,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+maya.lodhi,Standard,Maya Lodhi,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+laiba.javed,Standard,Laiba Javed,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+haris.hussain,Standard,Haris Hussain,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+usman.raza,Standard,Usman Raza,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+aisha.nawaz,Standard,Aisha Nawaz,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+usman.malik,Standard,Usman Malik,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+imran.hashmi,Standard,Imran Hashmi,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+komal.qureshi,Standard,Komal Qureshi,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+eman.raza,Standard,Eman Raza,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+hania.khan,Standard,Hania Khan,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+waqas.chaudhry,Standard,Waqas Chaudhry,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+shan.lodhi,Standard,Shan Lodhi,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+rida.raza,Standard,Rida Raza,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+nida.ahmed,Standard,Nida Ahmed,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+talha.aslam,Standard,Talha Aslam,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+imran.rauf,Standard,Imran Rauf,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+dua.malik,Standard,Dua Malik,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+zain.gill,Standard,Zain Gill,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+lena.dar,Standard,Lena Dar,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+talha.gill,Standard,Talha Gill,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+faisal.lodhi,Standard,Faisal Lodhi,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+rehan.sheikh,Standard,Rehan Sheikh,Operations,Dispatcher,-,-,unassigned,daily-use account; no administrative rights by design
+waqas.siddiqui,Standard,Waqas Siddiqui,Operations,Stock Controller,-,-,unassigned,daily-use account; no administrative rights by design
+yasir.gill,Standard,Yasir Gill,Operations,Warehouse Operative,-,-,unassigned,daily-use account; no administrative rights by design
+faisal.rauf,Standard,Faisal Rauf,Operations,Forklift Driver,-,-,unassigned,daily-use account; no administrative rights by design
+hira.qureshi,Standard,Hira Qureshi,IT,IT Manager,-,-,unassigned,daily-use account; no administrative rights by design
+adm-t0-hira.qureshi,Admin,Admin Tier 0 - Hira Qureshi,IT,IT Manager,IT Manager,0,unassigned,"owns the domain, its controllers and the directory itself"
+amna.anwar,Standard,Amna Anwar,IT,Systems Administrator,-,-,unassigned,daily-use account; no administrative rights by design
+adm-t1-amna.anwar,Admin,Admin Tier 1 - Amna Anwar,IT,Systems Administrator,Systems Administrator,1,unassigned,administers member servers and their applications
+haris.rauf,Standard,Haris Rauf,IT,IT Support Officer,-,-,unassigned,daily-use account; no administrative rights by design
+adm-t2-haris.rauf,Admin,Admin Tier 2 - Haris Rauf,IT,IT Support Officer,IT Support Officer,2,unassigned,administers workstations and user objects
+shan.chaudhry,Standard,Shan Chaudhry,IT,Systems Administrator,-,-,unassigned,daily-use account; no administrative rights by design
+adm-t1-shan.chaudhry,Admin,Admin Tier 1 - Shan Chaudhry,IT,Systems Administrator,Systems Administrator,1,unassigned,administers member servers and their applications
+mina.hussain,Standard,Mina Hussain,IT,IT Support Officer,-,-,unassigned,daily-use account; no administrative rights by design
+adm-t2-mina.hussain,Admin,Admin Tier 2 - Mina Hussain,IT,IT Support Officer,IT Support Officer,2,unassigned,administers workstations and user objects

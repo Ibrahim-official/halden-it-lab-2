@@ -1,0 +1,14 @@
+# SYNTHETIC test fixture — a deliberately corrupted HR export used to prove the circuit breaker.
+# Applies to: projects/p02-identity-lifecycle/scripts/01-Invoke-HaldenJML.ps1 (Halden lab only).
+# Every status here is wrongly set to 'Leaver', so if the engine did not have a circuit breaker it
+# would disable most of the company in one run. Used by the Phase 5 acceptance test; it must NEVER
+# be copied over data/hr-export.csv.
+EmployeeID,First,Last,Department,Title,ManagerID,Status,StartDate,EndDate,Office
+1001,Anum,Hussain,Management,Managing Director,,Leaver,2015-12-09,2026-10-01,HQ
+1003,Salman,Rana,Management,Finance Director,1001,Leaver,2023-02-19,2026-10-01,HQ
+1007,Laiba,Qureshi,Finance,Accountant,1006,Leaver,2022-10-09,2026-10-01,HQ
+1014,Anum,Dar,HR,HR Manager,1001,Leaver,2020-10-07,2026-10-01,HQ
+1038,Anum,Rauf,Operations,Operations Manager,1001,Active,2024-04-05,,Warehouse
+1042,Mahnoor,Malik,Operations,Stock Controller,1038,Leaver,2016-12-16,2026-10-01,Warehouse
+1082,Amna,Anwar,IT,Systems Administrator,1081,Leaver,2019-10-26,2026-10-01,HQ
+1085,Mina,Hussain,IT,IT Support Officer,1081,Active,2016-12-18,,HQ

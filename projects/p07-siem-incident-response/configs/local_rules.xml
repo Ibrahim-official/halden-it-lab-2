@@ -1,0 +1,261 @@
+<!--
+  Halden Distribution Ltd. — P7 Wazuh custom detection rules
+  Applies to: SIEM01 (Wazuh manager) — deployed to /var/ossec/etc/rules/local_rules.xml
+  Project: P7 Security Monitoring, SIEM and Incident Response · Domain: ad.halden.internal
+
+  WHAT THIS IS
+  The custom rule set for the fictional Halden scenario. Rule IDs are in the 100100-100199
+  range reserved for local rules. Every rule is written for BEHAVIOUR (what an action does on a
+  host), not for a known signature: the detections have to survive an attacker changing tooling.
+
+  IMPORTANT — BASE SIDS
+  Rules that match Windows event-channel events use <if_sid>60000</if_sid> (the parent "Group of
+  windows rules.") and then narrow by EventID. The exact parent SID and the fields Wazuh extracts
+  differ between Wazuh versions: VERIFY each rule with `wazuh-logtest` on the installed version
+  BEFORE relying on it (see docs/runbooks/restore-wazuh-component.md and docs/00-design.md §6).
+  Where a rule needs GeoIP (D12) the MaxMind database must be installed first.
+
+  IMPORTANT — NOTHING HERE IS A CLAIM
+  These rules have NOT been executed in the lab. The detection-coverage matrix
+  (configs/detection-coverage-matrix.csv) lists each rule with an empty "validated" column; it is
+  filled only from a real, approved simulation run (scripts/07) and the validation report (08).
+
+  SANITIZATION: no secrets, keys, tokens or raw alert data belong in this file.
+-->
+<group name="halden_custom_rules,">
+
+  <!-- ============================================================================
+       Identity: privileged group and account manipulation
+       ============================================================================ -->
+
+  <!-- D1 — Member added to a privileged group (T1098 Account Manipulation)
+       Business meaning: the single most direct way to take over a domain. At Halden the
+       legitimate sources of these events are the JML process (P2) and change records (P10),
+       so an after-hours add with no matching ticket is an incident, not noise. -->
+  <group name="halden,windows,identity,">
+    <rule id="100100" level="12">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^4728$|^4732$|^4756$</field>
+      <field name="win.eventdata.targetUserName" type="pcre2">(?i)^(Domain Admins|Enterprise Admins|Schema Admins|Administrators|Account Operators|Backup Operators|G_IT_DomainAdmins)$</field>
+      <description>Halden D1: member added to privileged group $(win.eventdata.targetUserName) by $(win.eventdata.subjectUserName)</description>
+      <mitre>
+        <id>T1098</id>
+      </mitre>
+    </rule>
+
+    <!-- D1-correlation — the account that made the change, captured for scoping. -->
+    <rule id="100101" level="0">
+      <if_sid>100100</if_sid>
+      <description>Halden D1: (context) privileged group change source</description>
+    </rule>
+  </group>
+
+  <!-- ============================================================================
+       Kerberos abuse
+       ============================================================================ -->
+
+  <!-- D2 — Kerberoasting: a service ticket requested with weak RC4 encryption (T1558.003).
+       P3 removed legacy RC4 where it could; any RC4 service ticket in this domain is suspicious. -->
+  <group name="halden,windows,kerberos,">
+    <rule id="100102" level="12">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^4769$</field>
+      <field name="win.eventdata.ticketEncryptionType" type="pcre2">^0x17$</field>
+      <field name="win.eventdata.status" type="pcre2">^0x0$</field>
+      <description>Halden D2: Kerberos service ticket requested with RC4 (possible Kerberoasting) for $(win.eventdata.serviceName) by $(win.eventdata.targetUserName)</description>
+      <mitre>
+        <id>T1558.003</id>
+      </mitre>
+    </rule>
+
+    <!-- D3 — AS-REP roasting: TGT requested with pre-authentication disabled (T1558.004). -->
+    <rule id="100103" level="10">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^4768$</field>
+      <field name="win.eventdata.preAuthType" type="pcre2">^0$</field>
+      <description>Halden D3: Kerberos TGT requested without pre-authentication (possible AS-REP roasting) for $(win.eventdata.targetUserName)</description>
+      <mitre>
+        <id>T1558.004</id>
+      </mitre>
+    </rule>
+  </group>
+
+  <!-- ============================================================================
+       Credential access
+       ============================================================================ -->
+
+  <!-- D5 — LSASS credential dumping via Sysmon process access (T1003.001).
+       Tuned with an explicit allow-list of known-good readers; new exceptions are added as
+       narrow rules in the tuning log, never by disabling the detection (plan Phase 4). -->
+  <group name="halden,windows,credential-access,">
+    <rule id="100104" level="13">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^10$</field>
+      <field name="win.eventdata.targetImage" type="pcre2">(?i)lsass\.exe$</field>
+      <field name="win.eventdata.grantedAccess" type="pcre2">^0x1010$|^0x1410$|^0x143a$|^0x1fffff$</field>
+      <description>Halden D5: process $(win.eventdata.sourceImage) accessed LSASS with $(win.eventdata.grantedAccess) (possible credential dumping)</description>
+      <mitre>
+        <id>T1003.001</id>
+      </mitre>
+    </rule>
+
+    <!-- D11 — DCSync: directory replication request from a non-DC account (T1003.006). -->
+    <rule id="100105" level="14">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^4662$</field>
+      <field name="win.eventdata.properties" type="pcre2">(?i)(1131f6aa-9c07-11d1-f79f-00c04fc2dcd2|1131f6ad-9c07-11d1-f79f-00c04fc2dcd2|89e95b76-444d-4c62-991a-0facbeda640c)</field>
+      <description>Halden D11: directory replication (DCSync) right used by $(win.eventdata.subjectUserName) — verify this is a domain controller</description>
+      <mitre>
+        <id>T1003.006</id>
+      </mitre>
+    </rule>
+  </group>
+
+  <!-- ============================================================================
+       Execution and defence evasion
+       ============================================================================ -->
+
+  <!-- D6 — Encoded or download-cradle PowerShell (T1059.001).
+       Sysmon 1 command lines and PowerShell 4104 script blocks are both matched. -->
+  <group name="halden,windows,execution,">
+    <rule id="100106" level="12">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^1$|^4104$</field>
+      <field name="win.eventdata.commandLine" type="pcre2">(?i)(-enc(odedcommand)?\s|frombase64string|iex\s*\(|invoke-expression|downloadstring|downloadfile|net\.webclient|invoke-webrequest\s+.*-(uri|url))</field>
+      <description>Halden D6: encoded or download-cradle PowerShell activity from $(win.eventdata.image)</description>
+      <mitre>
+        <id>T1059.001</id>
+      </mitre>
+    </rule>
+
+    <!-- D7 — Shadow-copy deletion, a ransomware precursor (T1490). -->
+    <rule id="100107" level="14">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^1$</field>
+      <field name="win.eventdata.commandLine" type="pcre2">(?i)(vssadmin.*delete.*shadows|wmic.*shadowcopy.*delete|wbadmin.*delete.*(catalog|backup)|bcdedit.*recoveryenabled\s+no)</field>
+      <description>Halden D7: shadow copies or recovery data being deleted by $(win.eventdata.image) (ransomware precursor)</description>
+      <mitre>
+        <id>T1490</id>
+      </mitre>
+    </rule>
+
+    <!-- D8 — Windows security event log cleared (T1070.001). -->
+    <rule id="100108" level="12">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^1102$</field>
+      <description>Halden D8: the Windows security event log was cleared by $(win.eventdata.subjectUserName)</description>
+      <mitre>
+        <id>T1070.001</id>
+      </mitre>
+    </rule>
+  </group>
+
+  <!-- ============================================================================
+       Persistence
+       ============================================================================ -->
+
+  <!-- D9 — New Windows service installed (T1543.003). Tuned by host role: new services on
+       servers are interesting; the same event on a workstation is louder. -->
+  <group name="halden,windows,persistence,">
+    <rule id="100109" level="10">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^7045$</field>
+      <description>Halden D9: new Windows service installed — "$(win.eventdata.serviceName)" ($(win.eventdata.imagePath))</description>
+      <mitre>
+        <id>T1543.003</id>
+      </mitre>
+    </rule>
+
+    <!-- D9b — Scheduled task created (T1053.005). -->
+    <rule id="100110" level="10">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^4698$</field>
+      <description>Halden D9b: scheduled task created by $(win.eventdata.subjectUserName) — "$(win.eventdata.taskName)"</description>
+      <mitre>
+        <id>T1053.005</id>
+      </mitre>
+    </rule>
+  </group>
+
+  <!-- ============================================================================
+       Account use and remote access
+       ============================================================================ -->
+
+  <!-- D10 — Tier 0 or break-glass account used interactively on a non-Tier 0 host (T1078).
+       Legitimate use is a console session on a DC or the PAW (P3); anything else is an incident. -->
+  <group name="halden,windows,account-use,">
+    <rule id="100111" level="10">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^4624$</field>
+      <field name="win.eventdata.logonType" type="pcre2">^(2|10)$</field>
+      <field name="win.eventdata.targetUserName" type="pcre2">(?i)^(adm-t0-|breakglass|break-glass)</field>
+      <description>Halden D10: Tier 0 or break-glass account $(win.eventdata.targetUserName) logged on interactively to $(win.system.computer) — confirm the host is a DC or the PAW</description>
+      <mitre>
+        <id>T1078</id>
+      </mitre>
+    </rule>
+
+    <!-- D4 — Password spraying: one source, many accounts, short window (T1110.003).
+         Composite rule: Wazuh counts 4625/4771 failures per source IP. -->
+    <rule id="100112" level="12" frequency="10" timeframe="300">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^4625$|^4771$</field>
+      <same_source_ip />
+      <description>Halden D4: possible password spraying — $(win.system.eventID) failures against multiple accounts from $(win.eventdata.ipAddress) in 5 minutes</description>
+      <mitre>
+        <id>T1110.003</id>
+      </mitre>
+    </rule>
+
+    <!-- D12 — Remote (VPN) logon anomaly (T1133). Template: needs the OPNsense decoder and the
+         MaxMind GeoIP database. Highlights an off-hours or unexpected-country VPN session. -->
+    <rule id="100113" level="10">
+      <location>firewall</location>
+      <program_name type="pcre2">(?i)(openvpn|wireguard)</program_name>
+      <match type="pcre2">(?i)(authentication succeeded|peer connected|peer authenticated)</match>
+      <description>Halden D12: remote-access (VPN) session established for $(win.eventdata.common_name) from $(srcip) — review against working hours and expected region</description>
+      <mitre>
+        <id>T1133</id>
+      </mitre>
+    </rule>
+  </group>
+
+  <!-- ============================================================================
+       Endpoint protection and availability
+       ============================================================================ -->
+
+  <!-- D13 — Defender / ASR blocked a malicious action (T1204.002).
+       A block is a prevention, not a compromise — but correlating blocks is how a partially
+       successful intrusion is spotted before it succeeds. -->
+  <group name="halden,windows,defender,">
+    <rule id="100114" level="10">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^1116$|^1117$|^1121$|^1123$</field>
+      <description>Halden D13: Microsoft Defender/ASR acted on "$(win.eventdata.threatName)" on $(win.system.computer)</description>
+      <mitre>
+        <id>T1204.002</id>
+      </mitre>
+    </rule>
+  </group>
+
+  <!-- D14 — Backup heartbeat missing (availability; NOT an ATT&CK technique).
+       The P8 backup job calls the Uptime Kuma push URL on success; Wazuh raises this when the
+       expected "backup-complete" syslog line has not arrived within the window. -->
+  <group name="halden,availability,">
+    <rule id="100115" level="12">
+      <if_sid>60000</if_sid>
+      <field name="win.system.eventID">^9009$</field>
+      <match type="pcre2">(?i)backup</match>
+      <description>Halden D14: backup job reported a failure — "$(win.eventdata.message)" (restore capability is now in doubt until a successful run is verified)</description>
+    </rule>
+
+    <!-- D15 — A monitored agent has stopped reporting (availability).
+         Wazuh already tracks agent keep-alives; this raises the gap to alert level so a silent
+         host is noticed. -->
+    <rule id="100116" level="8">
+      <if_sid>503</if_sid>
+      <description>Halden D15: Wazuh agent $(win.eventdata.agent) is not reporting — event collection from this host has stopped</description>
+    </rule>
+  </group>
+
+</group>

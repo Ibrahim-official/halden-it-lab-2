@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Endpoint Hardening Baseline and Windows 11 Readiness Program | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="A measurable Windows endpoint baseline, plus a costed Windows 10 replacement plan"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p04/"><meta property="og:title" content="Endpoint Hardening Baseline and Windows 11 Readiness Program | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="A measurable Windows endpoint baseline, plus a costed Windows 10 replacement plan"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p04/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#5 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>Endpoint Hardening Baseline and Windows 11 Readiness Program</h1><p style="font-size:1.1rem;">A measurable Windows endpoint baseline, plus a costed Windows 10 replacement plan</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">Microsoft Security Baselines</span><span class="tag">Defender ASR</span><span class="tag">BitLocker</span><span class="tag">Windows LAPS</span><span class="tag">HardeningKitty</span><span class="tag">Group Policy</span><span class="tag">Policy Analyzer</span><span class="tag">PowerShell</span><span class="tag">Python</span><span class="tag">Power BI</span></p></header><img src="/projects/p04-endpoint-hardening/p04-architecture.svg" alt="Endpoint Hardening Baseline and Windows 11 Readiness Program — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>Halden’s PCs were set up by whoever unboxed them. Every user is a local administrator, BitLocker is
+off, Defender runs on its defaults only, and about 30% of devices still run Windows 10, which lost
+support on 14 October 2025. The business therefore cannot answer three ordinary questions: is a lost
+sales laptop a data breach, is ransomware behaviour actually blocked, and what will moving off Windows
+10 cost? Industry data puts about <strong>21% of small-business Windows devices still on Windows 10 in
+mid-2026</strong> (Lansweeper, via Computer Weekly), and Microsoft’s commercial Extended Security Updates run
+for at most three years and are paid for annually — so waiting has a price as well as a risk.</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>A measured “before” state</strong> — BitLocker status, local Administrators membership, Defender
+configuration, ASR mode and a CIS/Microsoft baseline score — captured by one script and repeated the
+same way afterwards, so any before/after claim has two real files behind it.</li>
+<li><strong>The Microsoft Security Baseline imported through Group Policy</strong> into a new GPO, with a separate
+higher-precedence overrides GPO for documented deviations and a Policy Analyzer comparison against
+the existing P1–P3 GPOs before anything reached the fleet.</li>
+<li><strong>Sixteen Defender Attack Surface Reduction rules, audit first and block second.</strong> The seven-day audit
+period is enforced in code, and only registered exceptions survive the move to blocking.</li>
+<li><strong>BitLocker (XTS-AES 256, TPM-only startup) with recovery keys escrowed to Active Directory</strong> — and a
+script that refuses to encrypt until the escrow policy is confirmed, plus a tested helpdesk recovery
+runbook with an identity-verification step.</li>
+<li><strong>Local administrator rights removed</strong>, with a published software-request process and time-limited
+elevation: the answer to “I need admin for one app” is a process, not a permanent exception.</li>
+<li><strong>Firewall, Credential Guard, LSA protection and PowerShell logging</strong> applied consistently, with the
+remote-management rules designed here and narrowed to the management subnet in P6.</li>
+<li><strong>A daily compliance report over nine named controls</strong>, producing an HTML traffic-light report and a
+CSV for management reporting — where a check that cannot run is shown as amber and excluded, never
+counted as a pass.</li>
+<li><strong>A Windows 11 readiness assessment</strong> that runs the same classification rules over the lab’s real
+machines and over a clearly labelled <strong>synthetic</strong> fleet, with a costed three-option recommendation.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P4 endpoint hardening architecture" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p04-architecture.DReWQn9N_Z4lz9b.svg"></p>
+<p>The baseline is never edited where it sits: it is imported into a new GPO beside the Microsoft backup,
+Halden deviations live in a separate higher-precedence GPO, and both go to a pilot OU before the fleet.
+The one rule that keeps the hardening honest is enforced by the script rather than by memory:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">-not</span><span style="color:#E1E4E8"> $ReviewedAuditDays </span><span style="color:#F97583">-ge</span><span style="color:#79B8FF"> 7</span><span style="color:#F97583"> -and</span><span style="color:#F97583"> -not</span><span style="color:#E1E4E8"> $Force) {</span></span>
+<span class="line"><span style="color:#F97583">    throw</span><span style="color:#9ECBFF"> 'ASR rules must be audited for at least 7 days before blocking. Pass -ReviewedAuditDays &lt;n&gt;, or -Force with a recorded reason.'</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>The BitLocker phase has the same pattern with <code>-EscrowPolicyVerified</code>, because enabling encryption before
+the key-escrow policy exists leaves a recovery key in nobody’s hands. A control that only exists in a
+runbook gets skipped at 18:00 on a Friday; one that exists in code does not.</p>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit — scripts, configs, documentation and business artefacts — is
+complete and the lab execution is pending. I am deliberately not publishing endpoint numbers before
+they exist: the compliance percentage, the ASR event counts, the BitLocker coverage and the restored
+key all become real values once the phases run, each with a file in <code>evidence/public/</code> as its source.</p>
+<p>One set of figures does exist today, and it is <strong>synthetic</strong>: a 150-device invented fleet, generated
+deterministically by a script in this repository, classifies as <strong>78 ready, 41 upgrade, 31 replace</strong>,
+with a Windows 10 population of 72 devices (48%). Those counts are plain arithmetic over the generated
+CSV — reproducible by re-running the generator with the same seed — and they describe <strong>no real
+hardware</strong>. They exist because the lab has two Windows 11 VMs and one Windows 10 VM: enough to prove the
+procedure, nowhere near enough to talk about a fleet. Every place the figure appears it says
+“synthetic fleet”, including the management report, because a planning number that looks like a survey
+is worse than no number at all. The <em>rules</em> it is measured against — TPM 2.0, Secure Boot, UEFI, a
+supported CPU, 4 GB RAM, 64 GB disk — and the code that applies them to real machines are real.</p>
+<h2 id="business-side">Business side</h2>
+<p>The technical work is half of an endpoint project; the other half is what the business approves and
+receives:</p>
+<ul>
+<li><strong>A one-page executive brief</strong> — the situation, why it matters commercially, what will be enforced,
+what it costs, and four decisions the reader is being asked to take. Written for somebody with five
+minutes.</li>
+<li><strong>An endpoint security standard</strong> that a manager can actually approve: each requirement states what
+is enforced, why it exists and what a user will notice — including an explicit list of what is
+deliberately <em>not</em> required (USBs are not blocked, no BitLocker PIN by default), because unexplained
+exclusions are what auditors write up.</li>
+<li><strong>A Windows 11 readiness report</strong> with a costed three-option recommendation (upgrade and replace;
+upgrade with Extended Security Updates as a bridge; do nothing) and the risks of each, based on a
+clearly labelled synthetic fleet with a note on which departments hold the oldest devices.</li>
+<li><strong>An ASR exception register</strong>, deliberately empty until the audit run fills it, so that the first row
+is evidence rather than a guess.</li>
+<li><strong>A change record</strong> in the company’s change format, with the risk, the test plan and the backout for
+every control, feeding the P10 governance dashboard.</li>
+<li><strong>A staff communication</strong> explaining what changes, what users will actually notice, and how to request
+software — because “you no longer have admin rights” without a route to a fix is how a good control
+gets a bad reputation.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>Put the sequencing in code, not in the runbook.</strong> “Audit first” and “escrow before you encrypt” are
+exactly the instructions that get skipped under time pressure. Making the script refuse without a
+confirmation flag turned two good intentions into two controls.</li>
+<li><strong>The honest compliance figure is the less flattering one.</strong> My first version of the report counted
+checks it could not measure as passes, which quietly inflated the score. Amber “not checked”,
+excluded from the percentage, is both more accurate and more useful to a manager.</li>
+<li><strong>Be blunt and repetitive about synthetic data.</strong> The fleet analysis is only meaningful if the reader
+knows instantly that it describes an invented estate; anything that looks like a measurement but is a
+plan is a trust problem waiting to happen.</li>
+<li><strong>I would move tamper protection into scope next time.</strong> It is the one control an endpoint standard
+leans on that cannot be fully centralised without Intune or Defender for Endpoint, so in this lab it
+is set manually and recorded as a gap rather than claimed as covered.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p04-endpoint-hardening/p04-asr-exceptions.pdf">Asr Exceptions</a></li><li><a href="/projects/p04-endpoint-hardening/p04-change-record.pdf">Change Record</a></li><li><a href="/projects/p04-endpoint-hardening/p04-endpoint-standard.pdf">Endpoint Standard</a></li><li><a href="/projects/p04-endpoint-hardening/p04-exec-brief.pdf">Exec Brief</a></li><li><a href="/projects/p04-endpoint-hardening/p04-user-comms.pdf">User Comms</a></li><li><a href="/projects/p04-endpoint-hardening/p04-win11-readiness-report.pdf">Win11 Readiness Report</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p04-endpoint-hardening">projects/p04-endpoint-hardening/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). The Windows 11 readiness fleet is a SYNTHETIC 150-device dataset generated by a reproducible script and labelled as such everywhere it appears; it is not a real inventory. Every other figure published on this page will come from a real run in the lab, and the results table stays empty until then.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

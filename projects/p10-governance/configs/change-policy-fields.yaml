@@ -1,0 +1,59 @@
+# P10 change-management policy fields. Applies to projects/p10-governance and to every change record
+# in data/change-log.csv. Edited by humans; validated by scripts/change_log.py. Halden Distribution Ltd.
+# is fictional; the process is a realistic small-business ITIL-style process, not a real company's.
+
+change_record:
+  # Fields every normal or emergency change must carry before it can be approved.
+  required_fields:
+    - change_id            # CHG-YYYY-NNN
+    - date_raised
+    - title
+    - change_type          # standard | normal | emergency
+    - risk                 # low | medium | high
+    - requested_by
+    - approver             # blank until a real approval happens
+    - status               # see status_values below
+    - category
+    - affected_services
+    - test_plan
+    - rollback_plan        # a change without a rollback note is not approvable
+    - cab_reference
+
+  status_values: [planned, pending, approved, implemented, reviewed, rejected, withdrawn]
+
+  # A change may not be marked reviewed until its post-implementation review is written.
+  status_gates:
+    approved: [approver, approval_date]
+    reviewed: [post_implementation_review]
+
+risk_assessment:
+  # Likelihood x impact gives the score; the checklist below decides whether the CAB needs management.
+  likelihood_values: [unlikely, possible, likely]
+  impact_values: [minor, moderate, major]
+  checklist:
+    - "Touches a Tier 0 service (AD, DNS, DHCP, identity)?"
+    - "Affects more than one department or more than 10 users?"
+    - "Has the change been tested outside production?"
+    - "Has the rollback been tested, or is it a documented snapshot revert?"
+    - "Is there a maintenance window, and is it outside a freeze period?"
+    - "Does it change an approval path, a policy, or a control measured by CIS IG1?"
+  management_escalation: "Any high-risk change, any Tier 0 change, and any change touching personal or Finance data is presented to management, not just the IT Lead."
+
+cab:
+  cadence: "Weekly, 15 minutes (extend only when there is an emergency retrospective)"
+  standing_attendees: [IT Lead, Service Desk representative, affected department head]
+  management_attends_when: "risk is high, or the change is Tier 0"
+  agenda_order: [emergency_retrospectives, changes_awaiting_approval, changes_implemented_last_week, post_implementation_reviews, risks_and_unauthorised_changes, actions]
+  quorum: "IT Lead plus at least one affected-department representative"
+
+freeze_periods:
+  - name: "Month-end close"
+    applies_to: "Finance systems"
+    rule: "No normal changes in the last two working days of the month; emergency changes allowed with retrospective review."
+  - name: "Peak dispatch season"
+    applies_to: "Warehouse and dispatch systems"
+    rule: "Agreed with Operations before the season; no normal changes; emergency changes with retrospective review."
+
+unauthorised_change_loop:
+  detection: "P9 config-as-code drift alert (a tracked config changed with no matching approved change record)"
+  response: "Raise a ticket, identify the root cause, record the lesson in this procedure or in staff training, and log the unauthorised change as a change-KPI exception."

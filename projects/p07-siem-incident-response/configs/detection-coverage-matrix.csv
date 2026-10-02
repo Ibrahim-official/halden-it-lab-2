@@ -1,0 +1,23 @@
+# Halden Distribution Ltd. — P7 detection coverage matrix
+# Applies to: SIEM01 (Wazuh manager, local_rules.xml) · Project: P7
+# One row per custom detection rule. The `validated` and `time_to_alert_s` columns are INTENTIONALLY
+# EMPTY: they are filled only from a real, approved simulation run (scripts 07/08) and the
+# validation report. Do not enter a value here that was not observed in the lab (AGENTS.md R2).
+rule_id,detection,data_source,attack_technique,expected_alert,level,runbook,validated,time_to_alert_s
+100100,D1 privileged group membership change,"Security 4728/4732/4756 (DC01, DC02)",T1098,"member added to Domain/Enterprise/Schema Admins/Administrators",12,privileged-group-change,,
+100101,D1 context child (acting account),Security 4728/4732/4756,T1098,"context event, level 0",0,privileged-group-change,,
+100102,D2 Kerberoasting (RC4 service ticket),Security 4769,T1558.003,"service ticket with 0x17 encryption",12,suspicious-logon,,
+100103,D3 AS-REP roasting,Security 4768,T1558.004,"TGT with preAuthType 0",10,suspicious-logon,,
+100104,D5 LSASS credential access,Sysmon 10,T1003.001,"process access to lsass.exe with 0x1010/0x1410/0x143a/0x1fffff",13,ransomware-pre-encryption,,
+100105,D11 DCSync attempt,Security 4662,T1003.006,"replication GUID used by a non-DC account",14,privileged-group-change,,
+100106,D6 encoded / download-cradle PowerShell,"Sysmon 1, PowerShell 4104",T1059.001,"-enc / FromBase64String / IEX / DownloadString",12,ransomware-pre-encryption,,
+100107,D7 shadow copy / recovery deletion,Sysmon 1,T1490,"vssadmin / wmic / wbadmin delete",14,ransomware-pre-encryption,,
+100108,D8 security event log cleared,Security 1102,T1070.001,"security log cleared",12,privileged-group-change,,
+100109,D9 new Windows service installed,System 7045,T1543.003,"new service image path in a system location",10,ransomware-pre-encryption,,
+100110,D9b scheduled task created,Security 4698,T1053.005,"new scheduled task",10,ransomware-pre-encryption,,
+100111,D10 Tier 0 / break-glass interactive logon,Security 4624,T1078,"adm-t0-* / break-glass on a non-DC, non-PAW host",10,privileged-group-change,,
+100112,D4 password spraying,Security 4625/4771,T1110.003,"10+ failures from one source to 5+ accounts in 5 minutes",12,suspicious-logon,,
+100113,D12 remote-access (VPN) logon anomaly,"OPNsense OpenVPN/WireGuard logs (syslog)",T1133,"off-hours or unexpected-region VPN session",10,suspicious-logon,,
+100114,D13 Defender / ASR blocked an action,"Defender Operational 1116/1117/1121/1123",T1204.002,"malicious file or ASR block",10,ransomware-pre-encryption,,
+100115,D14 backup job failed,"Backup host syslog / Uptime Kuma push heartbeat",availability,"missing or failed backup-complete heartbeat",12,incident-response,,
+100116,D15 Wazuh agent stopped reporting,Wazuh internal rule 503,availability,"agent disconnected / no keep-alive",8,restore-wazuh-component,,

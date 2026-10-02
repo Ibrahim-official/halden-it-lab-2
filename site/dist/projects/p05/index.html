@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Risk-Based Patch and Vulnerability Management Program | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="A Python prioritizer that turns a wall of scanner findings into a short, ranked action list"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p05/"><meta property="og:title" content="Risk-Based Patch and Vulnerability Management Program | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="A Python prioritizer that turns a wall of scanner findings into a short, ranked action list"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p05/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#7 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>Risk-Based Patch and Vulnerability Management Program</h1><p style="font-size:1.1rem;">A Python prioritizer that turns a wall of scanner findings into a short, ranked action list</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">Python</span><span class="tag">Greenbone CE</span><span class="tag">CISA KEV</span><span class="tag">FIRST EPSS</span><span class="tag">CISA BOD 26-04</span><span class="tag">WSUS</span><span class="tag">Group Policy</span><span class="tag">Ansible</span><span class="tag">Vulnerability management</span><span class="tag">Risk-based prioritisation</span><span class="tag">PowerShell</span><span class="tag">Linux patching</span></p></header><img src="/projects/p05-vuln-management/p05-architecture.svg" alt="Risk-Based Patch and Vulnerability Management Program — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>Halden patches “when someone has time”. Nobody knows which machines are missing which updates, the
+firewall firmware is two years old, and a scan by the cyber-insurance provider returned 400 “critical”
+findings. IT cannot fix 400 things, and management cannot tell which ones matter. That matters more in
+2026, not less: exploitation of vulnerabilities as an initial access vector <strong>rose 34%</strong>, concentrated
+on edge devices and VPNs — exactly the equipment an SMB leaves unpatched the longest
+(Verizon DBIR 2025, via <code>docs/plan/00-research-and-selection.md</code>).</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>A risk-based prioritizer, not a report reader.</strong> A Python engine ingests a scanner export and an
+asset inventory, enriches every finding with <strong>CISA KEV</strong> (is it already exploited?) and <strong>FIRST
+EPSS</strong> (how likely is it to be used?), joins exposure and business criticality, and produces a
+tiered P0–P4 work list with an SLA date and a 0–100 score. The rule order is a pure, unit-tested
+function, so “why is this a P1?” has one auditable answer.</li>
+<li><strong>A model inspired by CISA BOD 26-04.</strong> The June 2026 directive replaced flat patch deadlines with
+risk tiers; here the same idea applies at SMB scale — exposure and confirmed exploitation outrank
+raw severity, and a known-exploited flaw on an internet-facing host is checked for compromise
+before and after patching.</li>
+<li><strong>Ring-based Windows patching with a real gate.</strong> Three rings (Pilot → Broad → Servers) via WSUS and
+Group Policy client-side targeting, a <strong>coded pilot gate</strong> that refuses broader approval until the
+pilot is healthy, and a server script that patches <strong>DC02 then DC01, never together</strong>, with pre- and
+post-health checks that stop the run on the first failure.</li>
+<li><strong>Automated Linux patching</strong> with an Ansible playbook (one host at a time, reboot only if required,
+SSH asserted afterwards) plus unattended security updates between cycles.</li>
+<li><strong>Weekly authenticated scanning</strong> with Greenbone Community Edition, behind a <strong>hard lab-range safety
+guard</strong>: a wrong address aborts the run rather than scanning it.</li>
+<li><strong>A closure loop, not a spreadsheet.</strong> P0/P1 items become service-desk tickets with an owner and a
+due date; a ticket closes only when a re-scan stops reporting the finding, and MTTR is derived from
+the two scans rather than estimated.</li>
+<li><strong>An interactive browser demo</strong> (<code>demo/index.html</code>) that runs the same model over a bundled
+<strong>synthetic</strong> sample with no backend and no network — the funnel, the tier distribution and the
+reason behind every priority, live in the page.</li>
+<li><strong>The business layer</strong>: a policy with <strong>targets</strong> rather than slogans, an exception/risk-acceptance
+register, a monthly report template, a vendor advisory log, an executive brief and a change record.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P5 risk-based vulnerability prioritisation funnel" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p05-architecture.DX6I4rzu_Z4lz9b.svg"></p>
+<p>Findings come in on the left, are deduplicated (one remediation task per host, CVE, service and port),
+risk-scored, and come out as a much shorter tiered list that becomes tickets, changes and verified
+closures. Data sources, the human decision points (the pilot gate, accept-or-fix) and the closure
+step are all marked, because the model prioritises work — it does not authorise downtime or accept risk.</p>
+<p>The whole project lives or dies on four lines of tier logic:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> tier</span><span style="color:#E1E4E8">(in_kev, exposed, epss, cvss, criticality, rules</span><span style="color:#F97583">=</span><span style="color:#79B8FF">DEFAULT_RULES</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> in_kev </span><span style="color:#F97583">and</span><span style="color:#E1E4E8"> exposed:                                      </span><span style="color:#F97583">return</span><span style="color:#9ECBFF"> "P0"</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> in_kev </span><span style="color:#F97583">or</span><span style="color:#E1E4E8"> (exposed </span><span style="color:#F97583">and</span><span style="color:#E1E4E8"> epss </span><span style="color:#F97583">&gt;=</span><span style="color:#E1E4E8"> rules.epss_critical):     </span><span style="color:#F97583">return</span><span style="color:#9ECBFF"> "P1"</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> epss </span><span style="color:#F97583">&gt;=</span><span style="color:#E1E4E8"> rules.epss_high </span><span style="color:#F97583">or</span><span style="color:#E1E4E8"> (cvss </span><span style="color:#F97583">&gt;=</span><span style="color:#E1E4E8"> rules.cvss_critical </span><span style="color:#F97583">and</span><span style="color:#E1E4E8"> criticality </span><span style="color:#F97583">&gt;=</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8">): </span><span style="color:#F97583">return</span><span style="color:#9ECBFF"> "P2"</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> cvss </span><span style="color:#F97583">&gt;=</span><span style="color:#E1E4E8"> rules.cvss_high:                                 </span><span style="color:#F97583">return</span><span style="color:#9ECBFF"> "P3"</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#9ECBFF"> "P4"</span></span></code></pre>
+<p>Keeping that function free of I/O is what makes it testable without a scanner, a network or a lab host.
+Everything — thresholds, weights, SLA targets — is data (<code>configs/p05-tier-rules.yml</code>), and the
+production engine, the config and the browser demo all agree because the same rule order is asserted
+by unit tests.</p>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit (scripts, configs, documentation, business artefacts) is complete
+and lab execution is in progress. I am deliberately not publishing numbers before they exist: the
+metrics below will be filled from real lab runs, each with a file in <code>evidence/public/</code> as its source.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scanner findings (raw, then after deduplication)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Findings in the urgent queue (P0 + P1) and their share</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Findings matched to CISA KEV, and those on exposed assets</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Patch compliance within the ring deadlines</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Mean time to remediate (MTTR) by tier</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<p>The only figure shown anywhere on this project is a property of the <strong>synthetic sample</strong> the
+interactive demo runs on — 51 scanner rows reducing to 49 unique findings and 9 urgent items — and it
+is labelled as synthetic every time it appears.</p>
+<h2 id="business-side">Business side</h2>
+<p>An IT project that cannot be explained to management is a hobby:</p>
+<ul>
+<li><strong>Executive brief</strong> — why “fix everything by Friday” is not a plan, what the business agreed to do
+instead, and the four things IT needs from management (approve the standard, approve downtime
+windows, nominate asset owners, decide on the ageing firewall).</li>
+<li><strong>Policy</strong> — scope, the four-tier model, remediation <strong>targets</strong>, maintenance windows, roles, and an
+exception process where a named owner accepts a risk with a compensating control and an expiry of no
+more than 90 days. The approval block is deliberately unsigned until a real review happens.</li>
+<li><strong>Exception register</strong> — with an empty table and one clearly-labelled worked example, so the shape of
+a proper risk acceptance is visible without pretending one has occurred.</li>
+<li><strong>Monthly report template</strong> — open items by tier, overdue by tier, KEV exposure, patch compliance,
+and a short “asks for management” section. Every figure names the source file it came from.</li>
+<li><strong>Vendor advisory log</strong> — the part a scanner cannot see: firmware advisories, applicability and the
+action taken, including the decision to replace an end-of-life device rather than patch it forever.</li>
+<li><strong>Change record</strong> — the programme build plus a worked record for a P0 remediation, showing the
+compromise check <em>before</em> patching that the 2026 guidance made explicit.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>The hard part was deciding what not to fix.</strong> Writing the tier rule forced every assumption into
+the open, and the most valuable output of the project is a short list rather than a long one.</li>
+<li><strong>Tooling is only trustworthy if it can refuse.</strong> The lab-range guard went in before the scanner did;
+a vulnerability scanner pointed at the wrong address is not a slip, it is an incident.</li>
+<li><strong>Honesty is a design constraint.</strong> MTTR is explicitly withheld because one scan cannot produce it,
+and every table says “not measured”. A project about risk discipline that invented its own
+effectiveness numbers would undermine its own argument.</li>
+<li><strong>I would sequence two things differently next time:</strong> start the Greenbone feed sync a day early (it
+takes hours), and define asset criticality with the business before writing the model — the tiers
+are only as good as the criticality data underneath, which is why P9’s CMDB improves this project.</li>
+</ul>
+<blockquote>
+<p>(the Definition of Done is in <code>AGENTS.md</code>, Section 4.7). Progress is tracked in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p05-vuln-management/p05-change-record.pdf">Change Record</a></li><li><a href="/projects/p05-vuln-management/p05-exception-register.pdf">Exception Register</a></li><li><a href="/projects/p05-vuln-management/p05-exec-brief.pdf">Exec Brief</a></li><li><a href="/projects/p05-vuln-management/p05-monthly-report-template.pdf">Monthly Report Template</a></li><li><a href="/projects/p05-vuln-management/p05-patch-vuln-policy.pdf">Patch Vuln Policy</a></li><li><a href="/projects/p05-vuln-management/p05-vendor-advisory-log.pdf">Vendor Advisory Log</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p05-vuln-management">projects/p05-vuln-management/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd). The vulnerability scanner is scoped to the lab ranges only and never targets anything outside the lab; the sample dataset bundled with the interactive demo is synthetic. This page shows a working build kit being executed in the lab phase by phase — numbers appear only once they have actually been measured, so the results section is deliberately empty until then.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

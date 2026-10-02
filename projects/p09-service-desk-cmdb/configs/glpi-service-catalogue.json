@@ -1,0 +1,99 @@
+{
+  "_comment": "Halden Distribution Ltd. — P9 service catalogue. What IT offers, who may request it, who approves and the target time. Applies to OPS01 GLPI (self-service forms + catalogue) and to business/p09-service-catalogue.md. All values are DESIGNED targets, not measured results. Requesters and approvers are synthetic roles for the fictional company.",
+  "version": "1.0",
+  "owner": "Muhammad Ibrahim Akmal (IT)",
+  "review_cycle": "quarterly",
+  "business_hours": "Mon-Fri 08:00-18:00 (Asia/Karachi), excluding public holidays",
+  "services": [
+    {
+      "id": "SRV-NEW-STARTER",
+      "name": "New starter setup",
+      "description": "Create the account, mailbox, groups, drive maps and first-day access for a new employee.",
+      "request_type": "Form (HR)",
+      "approval": ["HR", "Hiring manager"],
+      "target": "Ready the business day before the start date",
+      "sla_priority": "P3",
+      "linked_project": "P2 (joiner/mover/leaver automation)"
+    },
+    {
+      "id": "SRV-LEAVER",
+      "name": "Leaver / offboarding",
+      "description": "Disable the account, remove access, recover equipment and hand over data.",
+      "request_type": "Form (HR)",
+      "approval": ["HR"],
+      "target": "Within 1 hour of the HR notification",
+      "sla_priority": "P2",
+      "linked_project": "P2"
+    },
+    {
+      "id": "SRV-SOFTWARE",
+      "name": "Software installation",
+      "description": "Install approved software on a managed device; unapproved titles go to IT for review first.",
+      "request_type": "Form",
+      "approval": ["Line manager", "IT if the title is not on the approved list"],
+      "target": "2 business days",
+      "sla_priority": "P4",
+      "linked_project": "P5 (approved software list)"
+    },
+    {
+      "id": "SRV-VPN",
+      "name": "VPN access",
+      "description": "MFA-protected remote access for approved remote or travelling staff.",
+      "request_type": "Form",
+      "approval": ["Line manager"],
+      "target": "1 business day",
+      "sla_priority": "P4",
+      "linked_project": "P6 (VPN and MFA)"
+    },
+    {
+      "id": "SRV-FOLDER-ACCESS",
+      "name": "Shared folder access",
+      "description": "Read or change access to a departmental share, granted through the AGDLP group model.",
+      "request_type": "Form",
+      "approval": ["Data owner (department head)"],
+      "target": "1 business day",
+      "sla_priority": "P4",
+      "linked_project": "P1 (AGDLP permissions)"
+    },
+    {
+      "id": "SRV-HARDWARE",
+      "name": "Hardware request",
+      "description": "New or replacement laptop, monitor, dock, headset or printer consumables.",
+      "request_type": "Form",
+      "approval": ["Line manager", "Budget holder"],
+      "target": "Quote within 3 business days",
+      "sla_priority": "P4",
+      "linked_project": "P9 (asset lifecycle)"
+    },
+    {
+      "id": "SRV-INCIDENT",
+      "name": "Incident (something is broken)",
+      "description": "Report a fault via the portal, email or phone; routed by priority per the SLA policy.",
+      "request_type": "Portal / email / phone",
+      "approval": [],
+      "target": "Per the priority SLA (TTO/TTR)",
+      "sla_priority": "P1-P4",
+      "linked_project": "P9 (helpdesk)"
+    },
+    {
+      "id": "SRV-SECURITY-REPORT",
+      "name": "Report a suspicious email or security concern",
+      "description": "Report phishing or a suspected security event; always triaged by L2.",
+      "request_type": "Form / email to the security address",
+      "approval": [],
+      "target": "Acknowledge in 1 hour, triage per the P7 IR plan",
+      "sla_priority": "P2",
+      "linked_project": "P7 (SIEM and incident response)"
+    },
+    {
+      "id": "SRV-RESTORE",
+      "name": "Restore a file or folder",
+      "description": "Self-service restore from Previous Versions where possible; else raise a restore request.",
+      "request_type": "Form",
+      "approval": [],
+      "target": "2 business days (self-service = immediate)",
+      "sla_priority": "P3",
+      "linked_project": "P1 (shadow copies), P8 (backups)"
+    }
+  ]
+}

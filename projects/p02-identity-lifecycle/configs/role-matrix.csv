@@ -1,0 +1,15 @@
+# configs/role-matrix.csv — the DESIRED access for each role, applied by the P2 JML engine.
+# Applies to: ad.halden.internal, OU=<Department>,OU=Users,OU=Halden (Halden lab only).
+# Lines beginning with '#' are comments and are skipped by 01-Invoke-HaldenJML.ps1, jml-plan.py and 00-Validate-HrExport.sh.
+# Title matching order: exact match first, then the first '*' contains-match, then the department-wide '*'. The first match wins.
+# RoleGroups are the ONLY groups the mover path may add or remove. ResourceGroups are reached through those role
+# groups by P1's AGDLP model and are listed here so the access review can explain what a group actually grants.
+# Applications are the cloud/service entitlements a role receives; the licence assignment on the joiner path uses this.
+Department,Title,RoleGroups,ResourceGroups,Applications
+Management,*,G_Management;G_AllStaff,DL_Share-Company_RO;DL_Share-Finance_RO;DL_Share-HR_RO;DL_Share-Sales_RO;DL_Share-Operations_RO,Microsoft 365;GLPI;BookStack
+Finance,*,G_Finance_Staff;G_AllStaff,DL_Share-Finance_RW;DL_Share-Finance_RO;DL_Share-Company_RO,Microsoft 365;GLPI;BookStack
+HR,*,G_HR_Staff;G_AllStaff,DL_Share-HR_RW;DL_Share-Company_RO,Microsoft 365;GLPI;BookStack
+Sales,*,G_Sales_Staff;G_AllStaff,DL_Share-Sales_RW;DL_Share-Company_RO,Microsoft 365;GLPI;BookStack
+Operations,*,G_Operations_Staff;G_AllStaff,DL_Share-Operations_RW;DL_Share-Company_RO,Microsoft 365;GLPI;BookStack
+IT,*Systems*,G_IT_Staff;G_IT_LinuxAdmins;G_AllStaff,DL_Share-Company_RO;DL_Share-Finance_RO;DL_Share-HR_RO;DL_Share-Sales_RO;DL_Share-Operations_RO;Linux servers (AD group),Microsoft 365;GLPI;BookStack;LNX01 SSH and sudo
+IT,*,G_IT_Staff;G_AllStaff,DL_Share-Company_RO;DL_Share-Finance_RO;DL_Share-HR_RO;DL_Share-Sales_RO;DL_Share-Operations_RO,Microsoft 365;GLPI;BookStack

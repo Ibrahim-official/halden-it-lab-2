@@ -1,0 +1,12 @@
+# p05-patch-rings.csv — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the three Windows Update rings and their deferral/deadline behaviour. scripts/09-
+#         Invoke-WsusRingSetup.ps1 creates the WSUS computer groups and the GPO client-side
+#         targeting that puts each computer into the right ring, so a bad update is caught in a
+#         small pilot group before it reaches the fleet.
+# Where:  WSUS on a member server (OPS01/FS01) with the GPOs linked to the Workstations and Servers
+#         OUs in ad.halden.internal. Linux patching uses the Ansible playbook 12-patch-linux.yml.
+# Status: designed values only — no patch compliance percentage has been measured (AGENTS.md rule R2).
+ring,target_group,scope,populated_from_gpo,deferral_days,deadline_days,install_behaviour,reboot_behaviour,approval,notes
+Ring0-Pilot,WS11-Pilot,2 pilot workstations (WS01 plus one spare),WKS - WU Ring0 - v1,0,2,Automatic download and install,Restart outside active hours,Automatic for security and critical,Safety net: catches a broken update before the broad rollout
+Ring1-Broad,WS11-Broad,Remaining workstations and laptops,WKS - WU Ring1 - v1,3,5,Automatic download and install,Restart outside active hours with a 2-day grace period,Manual after Ring0 is validated,Most users; the main change to communicate
+Ring2-Servers,Windows-Servers,Member servers (FS01, OPS01, CA01),SRV - WU Ring2 - v1,7,14,Download and notify; install in the Saturday window,Manual restart in the maintenance window,Manual after Ring0 and Ring1 are healthy,DCs are handled separately by 11-Invoke-ServerPatch.ps1 in DC02 then DC01 order

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p9Title p9Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p9Title">Halden Distribution P9 service desk, CMDB and documentation architecture</title>
+  <desc id="p9Desc">OPS01 runs five docker containers: GLPI and its MariaDB database provide the service desk and CMDB, Uptime Kuma monitors the lab and hosts the P8 backup heartbeat, and BookStack and its database form the documentation hub. Discovery and reconciliation data flows in from the P1 domain controllers, file server and workstations, while config-as-code exports nightly to a private Git repository with drift alerts.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P9 service desk, CMDB and documentation hub</text>
+  <text x="40" y="66" font-size="13.5" fill="#475569">Isolated home lab · OPS01 Ubuntu Server 24.04, 192.168.10.40 · domain ad.halden.internal · GLPI (PHP/MySQL), Uptime Kuma, BookStack, config-as-code</text>
+
+  <!-- Data sources on the left: the P1 infrastructure -->
+  <rect x="40" y="104" width="252" height="404" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="60" y="130" font-size="13.5" font-weight="700" fill="#0f172a">Managed estate (P1/P2/P8)</text>
+  <text x="60" y="150" font-size="11.5" fill="#64748b">Sources that feed discovery and alerts</text>
+
+  <g font-size="12" fill="#334155">
+    <rect x="58" y="168" width="216" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="70" y="190" font-size="12.5" font-weight="600" fill="#0f172a">DC01 / DC02</text>
+    <text x="70" y="209" fill="#475569">AD, DNS, DHCP · LDAP 636 · leases</text>
+
+    <rect x="58" y="234" width="216" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="70" y="256" font-size="12.5" font-weight="600" fill="#0f172a">FS01 · LNX01</text>
+    <text x="70" y="275" fill="#475569">file, Linux hosts · GLPI Agent</text>
+
+    <rect x="58" y="300" width="216" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="70" y="322" font-size="12.5" font-weight="600" fill="#0f172a">WS01 / WS02 clients</text>
+    <text x="70" y="341" fill="#475569">agent inventory every 24 h · SNMP prints</text>
+
+    <rect x="58" y="366" width="216" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="70" y="388" font-size="12.5" font-weight="600" fill="#0f172a">P8 backup / restore test</text>
+    <text x="70" y="407" fill="#475569">pings the Kuma heartbeat on success</text>
+
+    <rect x="58" y="432" width="216" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="70" y="454" font-size="12.5" font-weight="600" fill="#0f172a">P7 Wazuh alerts</text>
+    <text x="70" y="473" fill="#475569">High alerts become Security tickets</text>
+  </g>
+
+  <!-- OPS01 container host in the centre -->
+  <rect x="332" y="104" width="536" height="404" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="352" y="130" font-size="14" font-weight="700" fill="#0f766e">OPS01 — Ubuntu 24.04 · docker compose</text>
+  <text x="352" y="150" font-size="11.5" fill="#64748b">5 containers, one host · secrets in a git-ignored .env · HTTPS proxy added in P6</text>
+
+  <!-- service desk group -->
+  <rect x="352" y="168" width="240" height="322" rx="6" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="472" y="192" font-size="12.5" font-weight="700" fill="#134e4a" text-anchor="middle">Service desk + CMDB (GLPI)</text>
+
+  <rect x="368" y="206" width="208" height="52" rx="6" fill="#ffffff" stroke="#5eead4"/>
+  <text x="472" y="228" font-size="12.5" font-weight="600" fill="#0f172a" text-anchor="middle">halden-glpi</text>
+  <text x="472" y="246" font-size="11" fill="#475569" text-anchor="middle">GLPI 10 · tickets, SLA, KB, CMDB</text>
+
+  <rect x="368" y="264" width="208" height="46" rx="6" fill="#ffffff" stroke="#5eead4"/>
+  <text x="472" y="284" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">halden-glpi-db</text>
+  <text x="472" y="301" font-size="11" fill="#475569" text-anchor="middle">MariaDB · backend network only</text>
+
+  <g font-size="11.5" fill="#334155">
+    <text x="368" y="336">Assets · software · licences · contracts</text>
+    <text x="368" y="356">Categories · priorities · SLAs (TTO/TTR)</text>
+    <text x="368" y="376">L1 → L2 → vendor escalation</text>
+    <text x="368" y="396">Self-service forms · email collector</text>
+    <text x="368" y="416">Knowledge base (10+ articles)</text>
+    <text x="368" y="440">Renewal alerts at 90 / 30 days</text>
+  </g>
+  <text x="368" y="466" font-size="11.5" font-weight="600" fill="#0f766e">Reconciled weekly vs DHCP + nmap</text>
+  <text x="368" y="482" font-size="11.5" fill="#0f766e">Target: 0 unknown-on-network</text>
+
+  <!-- monitoring + docs group -->
+  <rect x="608" y="168" width="244" height="322" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+
+  <rect x="624" y="182" width="212" height="70" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="730" y="204" font-size="12.5" font-weight="600" fill="#0f172a" text-anchor="middle">halden-kuma — Uptime Kuma</text>
+  <text x="730" y="222" font-size="11" fill="#475569" text-anchor="middle">polls DC/FS/GLPI/BookStack</text>
+  <text x="730" y="239" font-size="11" fill="#0f766e" text-anchor="middle">P8 backup heartbeat (PUSH)</text>
+
+  <rect x="624" y="262" width="212" height="48" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="730" y="282" font-size="12.5" font-weight="600" fill="#0f172a" text-anchor="middle">halden-bookstack</text>
+  <text x="730" y="299" font-size="11" fill="#475569" text-anchor="middle">documentation hub · LDAP to AD</text>
+
+  <rect x="624" y="318" width="212" height="44" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="730" y="336" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">halden-bookstack-db</text>
+  <text x="730" y="353" font-size="11" fill="#475569" text-anchor="middle">MariaDB</text>
+
+  <g font-size="11.5" fill="#334155">
+    <text x="624" y="382">Shelves: Infrastructure · Security ·</text>
+    <text x="624" y="400">Runbooks · Policies · Vendors</text>
+    <text x="624" y="420">Owner + review date on every page</text>
+    <text x="624" y="440">Monthly review reminder script</text>
+    <text x="624" y="464" fill="#0f766e">Secrets live in the password</text>
+    <text x="624" y="480" fill="#0f766e">manager — never in the wiki</text>
+  </g>
+
+  <!-- arrows from estate into OPS01 -->
+  <g stroke="#0f766e" stroke-width="2" fill="#0f766e">
+    <line x1="292" y1="196" x2="348" y2="220"/><polygon points="348,220 339,217 342,211"/>
+    <line x1="292" y1="262" x2="348" y2="250"/><polygon points="348,250 338,249 340,242"/>
+    <line x1="292" y1="328" x2="348" y2="280"/><polygon points="348,280 338,279 340,272"/>
+    <line x1="292" y1="394" x2="348" y2="310"/><polygon points="348,310 338,309 340,302"/>
+    <line x1="292" y1="460" x2="348" y2="340"/><polygon points="348,340 338,339 340,332"/>
+  </g>
+  <text x="300" y="176" font-size="10.5" fill="#0f766e" transform="rotate(-30 300 176)">inventory / alerts</text>
+
+  <!-- Git repository box bottom -->
+  <rect x="40" y="524" width="1100" height="112" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="60" y="550" font-size="13.5" font-weight="700" fill="#0f766e">halden-configs — private Git repository (config-as-code)</text>
+  <text x="60" y="572" font-size="11.5" fill="#475569">Nightly export from DC01/DC02 (GPO, AD, DHCP, DNS, NPS) and from OPNsense/Linux (filtered config): scripts/06 and scripts/07. Commit message "nightly: &lt;date&gt;".</text>
+  <text x="60" y="592" font-size="11.5" fill="#475569">Drift check (scripts/08): a changed file with no approved change record in GLPI raises an "unauthorised change" High ticket. The diff is half the control; the change record is the other half.</text>
+
+  <!-- arrow OPS01 -> git -->
+  <line x1="600" y1="508" x2="600" y2="524" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="600,524 596,516 604,516" fill="#0f766e"/>
+  <text x="610" y="520" font-size="10.5" fill="#0f766e">commit / diff / alert</text>
+
+  <!-- Legend -->
+  <rect x="40" y="648" width="700" height="0" fill="none"/>
+  <g font-size="11.5" fill="#334155">
+    <rect x="40" y="648" width="14" height="14" fill="#f0fdfa" stroke="#0f766e"/>
+    <text x="62" y="660">GLPI service desk / CMDB</text>
+    <rect x="248" y="648" width="14" height="14" fill="#f8fafc" stroke="#94a3b8"/>
+    <text x="270" y="660">monitoring + documentation</text>
+    <rect x="472" y="648" width="14" height="14" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="494" y="660">managed estate (data source)</text>
+    <line x1="700" y1="655" x2="740" y2="655" stroke="#0f766e" stroke-width="2"/>
+    <polygon points="740,655 732,651 732,659" fill="#0f766e"/>
+    <text x="748" y="660">data / control flow</text>
+  </g>
+
+  <text x="40" y="684" font-size="11" fill="#64748b">Lab note: Halden Distribution Ltd. is a fictional company. All tickets, assets, suppliers and contracts shown by this system are synthetic. The configurations are real, and every figure published on the site comes from a real run in this lab.</text>
+</svg>

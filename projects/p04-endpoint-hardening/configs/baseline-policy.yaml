@@ -1,0 +1,119 @@
+# Windows 11 security baseline - Halden endpoint hardening
+
+# WHAT IT IS
+#   The baseline selection for P4 Phase 1: which Microsoft Security Baseline settings are applied
+#   to Halden Windows 11 clients, and what has been deliberately excluded so the business is not
+#   broken. Imported unchanged into the GPO "WKS - MSFT Baseline Computer - v1"; Halden-specific
+#   deviations live in "WKS - Halden Overrides - v1" (higher precedence).
+#
+# WHERE IT APPLIES
+#   Domain: ad.halden.internal  ·  Linked to: Workstations\Pilot (3 days), then Workstations OU
+#   Clients: WS01, WS02 (Windows 11 Enterprise eval)  ·  Delivered by: Group Policy
+#
+# SYNTHETIC / HONESTY NOTE
+#   This file records the DESIGNED selection. It is not a GPO export and no setting here is claimed
+#   as "applied" until gpresult shows it on a client and the compliance report passes.
+#
+# SOURCE OF TRUTH
+#   Microsoft Security Compliance Toolkit (Windows 11 security baseline). Refresh this file from the
+#   toolkit download page each time Microsoft releases a new baseline; the version string below is
+#   what the lab targets.
+
+baseline:
+  product: "Windows 11 Enterprise"
+  toolkit: "Microsoft Security Compliance Toolkit (Security Baselines)"
+  toolkit_version: "current release at time of build"
+  backup_name: "MSFT Windows 11 24H2 - Computer"
+  import_command: >
+    Import-GPO -BackupGpoName "MSFT Windows 11 24H2 - Computer" -Path .\configs\baseline
+    -TargetName "WKS - MSFT Baseline Computer - v1" -CreateIfNeeded
+  target_gpo: "WKS - MSFT Baseline Computer - v1"
+  overrides_gpo: "WKS - Halden Overrides - v1"
+  import_rule: >
+    Never edit Microsoft's original backup GPO. Import into a new GPO, keep Halden deviations in a
+    separate higher-precedence GPO, and use Policy Analyzer to document conflicts with the P1-P3 GPOs.
+
+# -------------------------------------------------------------------------------------------------
+# Areas the baseline covers on Halden clients. Every item below is expected to reach the client and
+# is verified by the compliance report or by the phase evidence, not assumed.
+# -------------------------------------------------------------------------------------------------
+applied_areas:
+  - area: "Accounts and logon"
+    settings:
+      - "Do not display the last signed-in user name"
+      - "Interactive logon: do not require Ctrl+Alt+Del"
+      - "Lock screen after 10 minutes of inactivity (kept in step with the P1 desktop-standards GPO)"
+  - area: "Attack Surface Reduction (Defender)"
+    settings:
+      - "16 approved ASR rules - see configs/asr-rules.csv for GUIDs, mode and rationale"
+      - "Controlled Folder Access, audit mode first"
+    note: "Rule mode (audit then block) is set by scripts/02 and 03, not by the baseline import."
+  - area: "Microsoft Defender Antivirus"
+    settings:
+      - "Real-time protection on; cloud-delivered protection high; PUA protection on"
+      - "Network protection on; sample submission send-safe-samples"
+      - "Scheduled quick scan daily"
+  - area: "BitLocker"
+    settings:
+      - "OS drive: XTS-AES 256, TPM-only startup"
+      - "Fixed drives: XTS-AES 256"
+      - "Recovery information stored in Active Directory DS (required before any encryption)"
+    note: "Escrow must exist before encryption. See configs/bitlocker-design.csv and the runbook."
+  - area: "Firewall"
+    settings:
+      - "Domain, private and public profiles on; inbound default block"
+      - "RDP and WinRM allowed only from the management subnet (192.168.40.0/24, applied in P6)"
+  - area: "Credential and process protections"
+    settings:
+      - "Credential Guard (Virtualization-based security) enabled where hardware allows"
+      - "LSA protection (RunAsPPL = 1)"
+      - "UAC: admin approval mode, prompt for consent on the secure desktop"
+  - area: "PowerShell and logging"
+    settings:
+      - "Script block logging on; module logging on (consumed by P7)"
+      - "Transcription off by default (revisit if P7 needs it)"
+  - area: "Windows Update (placeholder only)"
+    settings:
+      - "No update ring settings here - P5 owns the rings"
+    note: >
+      P1 created a placeholder GPO "WKS - Windows Update - v1". P4 leaves update configuration to P5
+      so the two projects do not compete for the same setting. See the hand-off script.
+
+# -------------------------------------------------------------------------------------------------
+# Deliberately EXCLUDED from the Microsoft baseline for Halden, with the business reason. Each row
+# is a candidate for configs/baseline-exceptions.csv and needs its own change record.
+# -------------------------------------------------------------------------------------------------
+excluded:
+  - setting: "Legacy SMB1 client and server disabled by baseline defaults"
+    reason: "There is no SMB1-only device in Halden; leaving the stricter default in place is safe."
+    status: "included-in-baseline"
+  - setting: "Require a specific Windows Information Protection / AppLocker publisher rule"
+    reason: >
+      No line-of-business application needs AppLocker yet; enforcing a publisher rule without a
+      signed package would block work. AppLocker stays in audit mode as a stretch goal.
+    status: "deferred"
+  - setting: "Block process creations from PSExec and WMI commands (ASR rule)"
+    reason: >
+      This rule can conflict with management tooling (for example ConfigMgr or remote admin
+      scripts). Decision recorded in DECISIONS.md; it starts in audit mode with the rest.
+    status: "audit-and-review"
+  - setting: "TPM + PIN startup for BitLocker"
+    reason: >
+      TPM-only is the design for the pilot. A PIN adds a support cost and a recovery call per
+      forgotten PIN. Revisit for laptops carrying Finance or HR data.
+    status: "deferred"
+  - setting: "Disable all removable storage"
+    reason: "Warehouse scanners and USB stock guns are in daily use. Blocking USB wholesale stops work."
+    status: "excluded"
+  - setting: "Disable local password storage / credential caching limits"
+    reason: "Remote sales staff need cached credentials to log in offline on the road."
+    status: "excluded"
+
+# -------------------------------------------------------------------------------------------------
+# How to prove it reached a client
+# -------------------------------------------------------------------------------------------------
+verification:
+  - "gpresult /h on WS01 - the baseline and overrides GPOs appear as applied"
+  - "Policy Analyzer comparison export saved under evidence/public (xlsx screenshotted, sanitized)"
+  - "Get-EndpointCompliance.ps1 pass/fail per control; overall % recorded in README.md"
+  - "Get-MpPreference on the client shows the ASR rule array and Defender settings"

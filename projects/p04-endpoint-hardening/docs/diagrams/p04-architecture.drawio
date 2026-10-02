@@ -1,0 +1,61 @@
+<mxfile host="app.diagrams.net" agent="halden-it-lab" version="24.7.17">
+  <diagram id="p4-architecture" name="P4 endpoint hardening">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Halden Distribution Ltd — P4 endpoint hardening and Windows 11 readiness&#10;Isolated home lab · domain ad.halden.internal · WS01 (policy test) and WS02 (Tier 0 PAW) · depends on P1 (GPO) and P3 (LAPS, tiering)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1090" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="source" value="Baseline source&#10;&#10;Microsoft Security Baseline&#10;(Security Compliance Toolkit)&#10;&#10;CIS finding list scores the before&#10;and after (HardeningKitty)&#10;Vendor backups are never edited." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;fontStyle=0;fontColor=#334155;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="96" width="250" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="delivery" value="Policy delivery&#10;&#10;WKS - MSFT Baseline Computer - v1&#10;WKS - Halden Overrides - v1&#10;WKS - Windows Hardening - v1&#10;&#10;Pilot OU 3 days, then Workstations OU&#10;Intune would replace this with a paid licence" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;fontColor=#334155;align=center;" vertex="1" parent="1">
+          <mxGeometry x="340" y="96" width="250" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="endpoints" value="Endpoints&#10;&#10;WS01 — user workstation&#10;WS02 — Tier 0 PAW&#10;Windows 11 Enterprise&#10;&#10;one Windows 10 VM upgraded in Phase 6&#10;group policy on every refresh" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;fontColor=#334155;align=center;" vertex="1" parent="1">
+          <mxGeometry x="640" y="96" width="230" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;strokeWidth=2;" edge="1" parent="1" source="source" target="delivery">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;strokeWidth=2;" edge="1" parent="1" source="delivery" target="endpoints">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="controls" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="256" width="1120" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="controlsTitle" value="Four control areas applied to every endpoint" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="60" y="266" width="520" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="asr" value="1 · Attack Surface Reduction&#10;&#10;16 Defender ASR rules (GUIDs in configs/asr-rules.yaml).&#10;Audit mode first, 7 days minimum, then Block —&#10;enforced in the script, not in memory.&#10;event 1122 audited · event 1121 blocked" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=11;fontColor=#134e4a;align=left;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="60" y="296" width="262" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="bitlocker" value="2 · BitLocker&#10;&#10;XTS-AES 256, TPM-only startup.&#10;Recovery password + key protector.&#10;Escrow to Active Directory BEFORE encryption&#10;— enforced in the script.&#10;Keys stay in the vault and are never published." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=11;fontColor=#134e4a;align=left;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="338" y="296" width="262" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="laps" value="3 · Windows LAPS&#10;&#10;Consumes the P3 deployment: a unique local&#10;administrator password per device.&#10;IT reads the update time only, never the password.&#10;Local Administrators = LAPS account&#10;+ G_Tier2_Admins only." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=11;fontColor=#134e4a;align=left;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="616" y="296" width="262" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="network" value="4 · Network, credentials, logs&#10;&#10;Firewall on, inbound block; RDP/WinRM from&#10;the management subnet only (narrowed in P6).&#10;Credential Guard + LSA protection.&#10;PowerShell script block and module logging&#10;— consumed by P7." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=11;fontColor=#134e4a;align=left;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="894" y="296" width="246" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="compliance" value="Compliance report loop (daily, automated)&#10;&#10;Get-EndpointCompliance.ps1 runs nine named checks per workstation:&#10;C1 OS build · C2 BitLocker · C3 Defender · C4 ASR all blocking · C5 firewall ·&#10;C6 local admins · C7 LAPS age · C8 pending reboot · C9 last patch (link to P5)&#10;&#10;overall % = checks passed ÷ checks that ran  (a 'not checked' result is amber and excluded — never counted as a pass)&#10;&#10;Outputs: reports/endpoint-compliance-&lt;date&gt;.html (traffic lights) and .csv (Power BI → P10 KPI)&#10;The trend over time is the management story; one day's percentage is only a snapshot." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;fontColor=#334155;align=left;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="466" width="640" height="176" as="geometry" />
+        </mxCell>
+        <mxCell id="readiness" value="Windows 11 readiness assessment&#10;&#10;Rules: TPM 2.0 · Secure Boot · UEFI · supported CPU · 4 GB RAM · 64 GB disk&#10;ready = capable and already on Windows 11&#10;upgrade = capable device still on Windows 10&#10;replace = a hardware requirement is not met&#10;&#10;THE DEVICE FLEET HERE IS SYNTHETIC — an invented 150-device inventory for the fictional company, not a real measurement." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#c2410c;fontSize=11;fontColor=#7c2d12;align=left;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="700" y="466" width="460" height="176" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;dashed=1;" edge="1" parent="1" source="endpoints" target="compliance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#c2410c;dashed=1;" edge="1" parent="1" source="endpoints" target="readiness">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="Halden Distribution Ltd. is a fictional company. Configurations are real; every figure published on the site comes from a real lab run, except the clearly labelled synthetic fleet." style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="40" y="656" width="1130" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

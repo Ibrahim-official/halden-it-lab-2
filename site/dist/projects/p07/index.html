@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Security Monitoring, SIEM and Incident Response | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="ATT&amp;CK-mapped detections, validated with Atomic Red Team, plus a tested incident response plan"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p07/"><meta property="og:title" content="Security Monitoring, SIEM and Incident Response | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="ATT&amp;CK-mapped detections, validated with Atomic Red Team, plus a tested incident response plan"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p07/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#9 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>Security Monitoring, SIEM and Incident Response</h1><p style="font-size:1.1rem;">ATT&amp;CK-mapped detections, validated with Atomic Red Team, plus a tested incident response plan</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">Wazuh</span><span class="tag">Sysmon</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">Atomic Red Team</span><span class="tag">Uptime Kuma</span><span class="tag">Incident Response</span><span class="tag">NIST SP 800-61r3</span><span class="tag">Tabletop Exercise</span><span class="tag">Windows Auditing</span><span class="tag">Detection Engineering</span></p></header><img src="/projects/p07-siem-incident-response/p07-architecture.svg" alt="Security Monitoring, SIEM and Incident Response — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>At Halden nobody would notice an attacker until the ransom note appeared: logs live on each machine
+and overwrite within days, nothing watches them, and there is no written answer to “who do we call?”.
+Ransomware appears in <strong>88% of small-business breaches</strong> (Verizon DBIR 2025) and attackers typically
+spend days escalating privilege before they encrypt — a window that is only useful if someone is
+watching it. Two job-ad responsibilities sit directly behind this project: monitor health,
+availability, logs, alerts and security events, and identify and respond to security incidents.
+(Market context and the job-ad evidence: <code>docs/plan/00-research-and-selection.md</code>.)</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>One place that watches the whole environment</strong> — a Wazuh SIEM (manager, indexer and dashboard) on
+a dedicated server, collecting security events from every server and workstation plus syslog from
+both firewalls, deployed as a declarative Docker Compose stack.</li>
+<li><strong>Endpoint telemetry that actually supports detection</strong> — Sysmon with a focused config on every
+Windows host, Windows advanced audit policy, command-line process auditing, PowerShell script-block
+logging and enlarged security logs. These are prerequisites, not nice-to-haves: without them most
+endpoint detections cannot see anything.</li>
+<li><strong>Sixteen custom detections mapped to fourteen ATT&amp;CK techniques</strong>, written for <strong>behaviour over
+signatures</strong> — privileged group changes, Kerberoasting, AS-REP roasting, LSASS access, DCSync,
+encoded PowerShell, shadow-copy deletion, log clearing, new services and scheduled tasks, Tier 0
+logons, password spraying, VPN anomalies and Defender/ASR blocks, plus two availability checks.
+Each rule has a severity, an ATT&amp;CK id and a runbook.</li>
+<li><strong>A detection-validation method</strong> — an approved, snapshotted lab exercise drives public Atomic Red
+Team tests and records which rules fired, how fast, and where Defender <em>prevented</em> the action (a
+prevention is a good result, recorded separately from a detection).</li>
+<li><strong>An ATT&amp;CK coverage heat map derived from the rules themselves</strong>, so the picture cannot drift away
+from what is actually configured, plus a coverage matrix whose <code>validated</code> column is filled only
+from a real run.</li>
+<li><strong>Availability monitoring</strong> — DNS, LDAP, SMB, web and VPN checks, a <strong>backup push heartbeat</strong> where
+the <em>absence</em> of a signal means a failed backup, and a staff status page that answers “is it down
+or just me?”.</li>
+<li><strong>An incident response capability</strong> — a NIST SP 800-61r3 / CSF 2.0-aligned plan, a severity matrix
+by business impact, five runbooks, an escalation matrix and a management tabletop exercise pack.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P7 monitoring and incident response architecture" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p07-architecture.BAwuHBeP_Z4lz9b.svg"></p>
+<p>Log sources send telemetry through Wazuh agents into the SIEM, where the custom rules turn events
+into alerts, the indexer stores them and the dashboard presents them. Alerts feed analyst triage,
+triage feeds a ticket or incident, and the incident feeds improvements back into the detections — the
+feedback loop is what keeps coverage honest. Availability monitoring sits alongside on a second host,
+and the ATT&amp;CK heat map (<code>docs/diagrams/p07-attack-coverage.svg</code>) is derived from the same mapping
+file the rules use.</p>
+<p>The rule below is the clearest example of the approach: it does not look for a known ransomware
+program, it looks for what ransomware does to a host at the point of no return.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">rule</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"100107"</span><span style="color:#B392F0"> level</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"14"</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">if_sid</span><span style="color:#E1E4E8">&gt;60000&lt;/</span><span style="color:#85E89D">if_sid</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">field</span><span style="color:#B392F0"> name</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"win.system.eventID"</span><span style="color:#E1E4E8">&gt;^1$&lt;/</span><span style="color:#85E89D">field</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">field</span><span style="color:#B392F0"> name</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"win.eventdata.commandLine"</span><span style="color:#B392F0"> type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"pcre2"</span><span style="color:#E1E4E8">&gt;(?i)(vssadmin.*delete.*shadows|wmic.*shadowcopy.*delete|wbadmin.*delete.*(catalog|backup))&lt;/</span><span style="color:#85E89D">field</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">description</span><span style="color:#E1E4E8">&gt;Halden D7: shadow copies or recovery data being deleted (ransomware precursor)&lt;/</span><span style="color:#85E89D">description</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">mitre</span><span style="color:#E1E4E8">&gt;&lt;</span><span style="color:#85E89D">id</span><span style="color:#E1E4E8">&gt;T1490&lt;/</span><span style="color:#85E89D">id</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">mitre</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">rule</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit — scripts, configs, 16 detections, runbooks and business
+artefacts — is complete, and lab execution is pending. I am deliberately not publishing numbers
+before they exist, and <strong>detection coverage in particular is a measured result, not a claim</strong>: the
+coverage matrix lists all 16 rules with the <code>validated</code> column empty, filled in only after an
+approved, snapshotted validation run. The metrics below will be filled from real lab output, each
+with a file in <code>evidence/public/</code> as its source.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agents reporting (share of hosts)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Rules that fired in the authorised validation run</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Median time from event to alert</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Alerts per day before vs after tuning</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Share of High+ alerts that were true positives</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Tabletop improvement actions produced</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<h2 id="business-side">Business side</h2>
+<p>The technical detections are only half of the deliverable; the other half is what management and
+staff receive and sign off:</p>
+<ul>
+<li><strong>Executive brief</strong> — what we can see, what we can respond to, what we are asking management to
+approve, and an honest statement of what this does <em>not</em> solve. Written for a non-technical reader.</li>
+<li><strong>Incident response plan</strong> — severity definitions, roles (including the management decision-maker),
+escalation, external contacts and notification deadlines, communication templates and evidence
+handling. The approval block is deliberately unsigned until a real review happens.</li>
+<li><strong>Monitoring and log collection policy</strong> — what is collected, why, retention, and the privacy
+commitments. Monitoring is for security and availability, <strong>not</strong> for watching staff, and that
+distinction is written down and auditable.</li>
+<li><strong>Tabletop exercise pack and report template</strong> — a 60-minute ransomware scenario with timed injects
+(including “should we pay?” and “are you watching my screen?”) so the first time management deals
+with this is not the real thing. The report’s outcome section is empty until it is run.</li>
+<li><strong>Monthly security summary template</strong> and a <strong>change record</strong> — feeding management reporting and
+the P10 governance dashboard.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>The hardest part was deciding what <em>not</em> to collect.</strong> “Collect everything and alert on
+everything” is the classic SIEM failure: it produces an unreadable dashboard and an analyst who
+stops reading it. Use-case-driven collection was the discipline that kept it usable.</li>
+<li><strong>A detection is only as good as the telemetry under it.</strong> Command-line process auditing and
+PowerShell script-block logging are unglamorous settings, and without them half my endpoint rules
+would have seen nothing at all.</li>
+<li><strong>I would write the privacy policy before the first agent, not after.</strong> Adding monitoring is a
+change to how staff experience their workplace; treating the policy as an afterthought would have
+made the honest “systems, not people” answer much harder.</li>
+<li><strong>Honesty is the feature.</strong> A rule that did not fire, a coverage gap, and a detection that was
+prevented by Defender rather than observed are all recorded as they are. A coverage slide that
+claims more than the matrix shows would undermine the whole project.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p07-siem-incident-response/p07-change-record.pdf">Change Record</a></li><li><a href="/projects/p07-siem-incident-response/p07-exec-brief.pdf">Exec Brief</a></li><li><a href="/projects/p07-siem-incident-response/p07-ir-plan.pdf">Ir Plan</a></li><li><a href="/projects/p07-siem-incident-response/p07-monitoring-policy.pdf">Monitoring Policy</a></li><li><a href="/projects/p07-siem-incident-response/p07-monthly-security-summary.pdf">Monthly Security Summary</a></li><li><a href="/projects/p07-siem-incident-response/p07-tabletop-exercise.pdf">Tabletop Exercise</a></li><li><a href="/projects/p07-siem-incident-response/p07-tabletop-report.pdf">Tabletop Report</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p07-siem-incident-response">projects/p07-siem-incident-response/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). The lab is never exposed to the internet, and any attack-technique exercise is an authorised test on the owner&#39;s own isolated lab only, run with explicit approval against a snapshotted host and described defensively (what is detected and how it is triaged). This page shows a build kit being executed in the lab: every figure appears only once it has actually been measured, and the results table is deliberately empty until then.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

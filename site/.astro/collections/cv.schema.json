@@ -1,0 +1,328 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "linkedin": {
+                "type": "string"
+              },
+              "github": {
+                "type": "string"
+              },
+              "site": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "email",
+              "linkedin",
+              "github"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "group": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "group",
+                "items"
+              ]
+            }
+          },
+          "experience": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string"
+                },
+                "org": {
+                  "type": "string"
+                },
+                "place": {
+                  "type": "string"
+                },
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "bullets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "role",
+                "org",
+                "start",
+                "end",
+                "bullets"
+              ]
+            }
+          },
+          "education": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "degree": {
+                  "type": "string"
+                },
+                "org": {
+                  "type": "string"
+                },
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": "string"
+                },
+                "notes": {
+                  "type": "string"
+                },
+                "fyp": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "degree",
+                "org",
+                "start",
+                "end"
+              ]
+            }
+          },
+          "certifications": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "projects_on_cv": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "headline",
+          "location",
+          "links",
+          "summary",
+          "skills",
+          "experience",
+          "education"
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "linkedin": {
+                "type": "string"
+              },
+              "github": {
+                "type": "string"
+              },
+              "site": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "email",
+              "linkedin",
+              "github"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "group": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "group",
+                "items"
+              ]
+            }
+          },
+          "experience": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string"
+                },
+                "org": {
+                  "type": "string"
+                },
+                "place": {
+                  "type": "string"
+                },
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "bullets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "role",
+                "org",
+                "start",
+                "end",
+                "bullets"
+              ]
+            }
+          },
+          "education": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "degree": {
+                  "type": "string"
+                },
+                "org": {
+                  "type": "string"
+                },
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": "string"
+                },
+                "notes": {
+                  "type": "string"
+                },
+                "fyp": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "degree",
+                "org",
+                "start",
+                "end"
+              ]
+            }
+          },
+          "certifications": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "projects_on_cv": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "headline",
+          "location",
+          "links",
+          "summary",
+          "skills",
+          "experience",
+          "education"
+        ]
+      }
+    }
+  ]
+}

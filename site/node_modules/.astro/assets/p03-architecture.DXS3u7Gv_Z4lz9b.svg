@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p3Title p3Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p3Title">Halden Distribution P3 privileged access and assessment loop</title>
+  <desc id="p3Desc">A three-tier privileged access model for a fictional 85-user company: Tier 0 domain controllers and the privileged access workstation, Tier 1 member servers, Tier 2 workstations and helpdesk, with separate admin accounts in the _Admin OU, and the assessment, remediation and detection loop that runs repeatedly. All activity is confined to an isolated home lab.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P3 privileged access and assessment loop</text>
+  <text x="40" y="66" font-size="13.5" fill="#475569">Isolated home lab · domain ad.halden.internal · lab-only assessment with free tools (PingCastle, Purple Knight, BloodHound CE, Windows LAPS)</text>
+
+  <!-- ============================ Tier columns ============================ -->
+  <!-- Tier 0 -->
+  <rect x="40" y="92" width="360" height="270" rx="10" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="60" y="120" font-size="15" font-weight="700" fill="#9a3412">Tier 0 — domain and identity</text>
+  <text x="60" y="142" font-size="12.5" fill="#7c2d12">DCs · AD · Entra Connect (P2) · PKI · DC backups</text>
+  <rect x="60" y="158" width="150" height="58" rx="8" fill="#ffffff" stroke="#c2410c"/>
+  <text x="135" y="181" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">DC01 / DC02</text>
+  <text x="135" y="201" font-size="11" fill="#475569" text-anchor="middle">192.168.10.10/.11</text>
+  <rect x="230" y="158" width="150" height="58" rx="8" fill="#ffffff" stroke="#c2410c"/>
+  <text x="305" y="181" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">WS02 — PAW</text>
+  <text x="305" y="201" font-size="11" fill="#475569" text-anchor="middle">Tier 0 logons only (P6 isolates it)</text>
+  <rect x="60" y="230" width="320" height="58" rx="8" fill="#ffffff" stroke="#c2410c"/>
+  <text x="220" y="252" font-size="12.5" font-weight="600" fill="#0f172a" text-anchor="middle">adm-t0-* accounts · G_Tier0_Admins</text>
+  <text x="220" y="273" font-size="11" fill="#475569" text-anchor="middle">Protected Users · not delegable · FGPP (20 chars, lockout 5)</text>
+  <rect x="60" y="302" width="320" height="46" rx="8" fill="#fef3c7" stroke="#d97706"/>
+  <text x="220" y="330" font-size="11.5" fill="#78350f" text-anchor="middle">Deny logon to Tier 1 servers and every workstation</text>
+
+  <!-- Tier 1 -->
+  <rect x="420" y="92" width="330" height="270" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="440" y="120" font-size="15" font-weight="700" fill="#1e40af">Tier 1 — member servers</text>
+  <text x="440" y="142" font-size="12.5" fill="#1e3a8a">FS01 (files) · LNX01 (app) · CA01 (P6)</text>
+  <rect x="440" y="158" width="290" height="58" rx="8" fill="#ffffff" stroke="#1d4ed8"/>
+  <text x="585" y="181" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">FS01 · LNX01 · CA01</text>
+  <text x="585" y="201" font-size="11" fill="#475569" text-anchor="middle">192.168.10.20 / .30 / .43</text>
+  <rect x="440" y="230" width="290" height="58" rx="8" fill="#ffffff" stroke="#1d4ed8"/>
+  <text x="585" y="252" font-size="12.5" font-weight="600" fill="#0f172a" text-anchor="middle">adm-t1-* accounts · G_Tier1_Admins</text>
+  <text x="585" y="273" font-size="11" fill="#475569" text-anchor="middle">Read LAPS passwords for servers only</text>
+  <rect x="440" y="302" width="290" height="46" rx="8" fill="#dbeafe" stroke="#1d4ed8"/>
+  <text x="585" y="330" font-size="11.5" fill="#1e3a8a" text-anchor="middle">Deny logon to DCs and workstations</text>
+
+  <!-- Tier 2 -->
+  <rect x="770" y="92" width="390" height="270" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+  <text x="790" y="120" font-size="15" font-weight="700" fill="#166534">Tier 2 — workstations and support</text>
+  <text x="790" y="142" font-size="12.5" fill="#14532d">WS01 · WS02 (user side) · helpdesk work on user objects</text>
+  <rect x="790" y="158" width="350" height="58" rx="8" fill="#ffffff" stroke="#15803d"/>
+  <text x="965" y="181" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">WS01 — Windows 11 Enterprise</text>
+  <text x="965" y="201" font-size="11" fill="#475569" text-anchor="middle">unique LAPS password, rotated every 30 days</text>
+  <rect x="790" y="230" width="350" height="58" rx="8" fill="#ffffff" stroke="#15803d"/>
+  <text x="965" y="252" font-size="12.5" font-weight="600" fill="#0f172a" text-anchor="middle">adm-t2-* accounts · G_Tier2_Helpdesk</text>
+  <text x="965" y="273" font-size="11" fill="#475569" text-anchor="middle">Reset password + unlock by delegation on user OUs only</text>
+  <rect x="790" y="302" width="350" height="46" rx="8" fill="#dcfce7" stroke="#15803d"/>
+  <text x="965" y="330" font-size="11.5" fill="#166534" text-anchor="middle">Deny logon to DCs and member servers</text>
+
+  <!-- ============================ _Admin OU ============================ -->
+  <rect x="40" y="386" width="530" height="160" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="60" y="412" font-size="13.5" font-weight="700" fill="#0f172a">Where admin accounts live: the _Admin OU</text>
+  <g font-size="12" fill="#334155">
+    <text x="60" y="436">_Admin\Tier0\Accounts and \Groups → adm-t0-*, G_Tier0_Admins</text>
+    <text x="60" y="458">_Admin\Tier1\Accounts and \Groups → adm-t1-*, G_Tier1_Admins</text>
+    <text x="60" y="480">_Admin\Tier2\Accounts and \Groups → adm-t2-*, G_Tier2_Helpdesk</text>
+    <text x="60" y="502">_Admin\PAW\Devices → WS02, the Tier 0 privileged access workstation</text>
+    <text x="60" y="526">Every IT person keeps a separate daily-use account with no admin rights.</text>
+  </g>
+
+  <!-- ============================ Loop ============================ -->
+  <rect x="600" y="386" width="560" height="160" rx="10" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="620" y="412" font-size="13.5" font-weight="700" fill="#0f766e">The loop: assess → remediate → detect → verify</text>
+  <g font-size="12" fill="#134e4a">
+    <text x="620" y="438">1. Assess — PingCastle healthcheck, Purple Knight, BloodHound CE</text>
+    <text x="620" y="458">2. Remediate — tiering, Windows LAPS, gMSA, legacy-protocol hardening</text>
+    <text x="620" y="478">3. Detect — NTLM audit events (8004), Kerberos RC4 tickets (4769), LAPS backup (10018)</text>
+    <text x="620" y="498">4. Verify — re-run the tools and the verification script; every finding gets a source</text>
+    <text x="620" y="520">5. Review — monthly privileged-access review; residual risk gets an owner and a date</text>
+  </g>
+
+  <!-- ============================ Legend ============================ -->
+  <rect x="40" y="562" width="530" height="76" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="60" y="586" font-size="12.5" font-weight="700" fill="#0f172a">Legend and honest scope</text>
+  <g font-size="11.5" fill="#334155">
+    <text x="60" y="607">Halden Distribution Ltd. is a fictional company; the domain, hosts and accounts are the owner's isolated lab.</text>
+    <text x="60" y="627">Weaknesses were seeded deliberately so the assessment has something to find; this is an authorised lab exercise.</text>
+  </g>
+
+  <rect x="600" y="562" width="560" height="76" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="620" y="586" font-size="12.5" font-weight="700" fill="#0f172a">Footnotes</text>
+  <g font-size="11.5" fill="#334155">
+    <text x="620" y="607">No score, path count or coverage figure is shown on this diagram: none has been measured yet.</text>
+    <text x="620" y="627">Every published number will come from a real run in the lab, cited to a file in evidence/public/.</text>
+  </g>
+
+  <text x="40" y="666" font-size="11" fill="#64748b">Assessment tooling is free and open (PingCastle basic, Purple Knight, BloodHound Community Edition, Windows LAPS). It is run only against the lab domain, with the owner's written authorisation, and the raw output stays out of the published repository.</text>
+  <text x="40" y="686" font-size="11" fill="#64748b">Diagram is descriptive, not a measurement. Controls are shown as designed; verification results are added to the project README after the lab run.</text>
+</svg>

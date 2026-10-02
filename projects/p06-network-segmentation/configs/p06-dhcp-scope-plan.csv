@@ -1,0 +1,8 @@
+# P6 DHCP scope plan - the two new Windows scopes added to the existing P1 failover pair.
+# Applies to: DC01 and DC02 (the Windows DHCP failover pair). The DHCP relay that forwards the
+# broadcast from VLAN 20 and VLAN 30 to these servers runs on FW01 (OPNsense).
+# Read by: scripts/02-Set-WindowsDhcpScopes.ps1.
+# Option values are the designed ones from docs/00-design.md, not measured facts.
+scope_name,subnet,start_range,end_range,lease,option003_router,option006_dns,option015_domain,failover_relationship,relayed_from
+USERS-HQ-Clients,192.168.30.0/24,192.168.30.100,192.168.30.200,8.00:00:00,192.168.30.1,"192.168.10.10 192.168.10.11",ad.halden.internal,HQ-Failover,VLAN 30 via FW01 relay
+WAREHOUSE-Clients,192.168.20.0/24,192.168.20.100,192.168.20.200,8.00:00:00,192.168.20.1,"192.168.10.10 192.168.10.11",ad.halden.internal,HQ-Failover,VLAN 20 via FW02 then the FW01 relay

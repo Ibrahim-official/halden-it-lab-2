@@ -1,0 +1,126 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import MetricCard from '../../components/MetricCard.astro';
+import { assetUrl, repoUrl } from '../../lib/assets';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('showcase');
+  return projects.map((project) => ({
+    params: { id: project.data.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'showcase'>;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+
+const statusNote: Record<string, string> = {
+  planned:
+    'This project is planned. The plan and progress log are in the repo — the case study, metrics and evidence appear here once it is Done.',
+  'in-progress': 'This project is being built now. Finished phases appear here as they are completed.',
+  done: '',
+};
+
+function fmt(date: Date | undefined): string {
+  return date
+    ? date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '';
+}
+---
+
+<BaseLayout title={data.title} description={data.tagline}>
+  <p class="small">
+    <a href="/projects/">← All projects</a>
+  </p>
+
+  <header>
+    <p>
+      <span class="small muted">#{data.order} in build order · </span>
+      <StatusBadge status={data.status} />
+      {data.started && <span class="small muted"> · started {fmt(data.started)}</span>}
+      {data.completed && <span class="small muted"> · completed {fmt(data.completed)}</span>}
+    </p>
+    <h1>{data.title}</h1>
+    <p style="font-size:1.1rem;">{data.tagline}</p>
+    <p>
+      {data.roles.map((role) => (
+        <span class="tag">{role === 'sysadmin' ? 'System Administration' : 'IT Support'}</span>
+      ))}
+      {data.skills.map((skill) => <span class="tag">{skill}</span>)}
+    </p>
+  </header>
+
+  {data.hero && <img src={assetUrl(data.repo_path, data.hero)} alt={`${data.title} — hero diagram`} />}
+
+  {data.metrics.length > 0 && (
+    <section>
+      <h2>Results</h2>
+      <div class="metric-grid">
+        {data.metrics.map((metric) => (
+          <MetricCard
+            label={metric.label}
+            before={metric.before}
+            after={metric.after}
+            better={metric.better}
+            source={metric.source}
+            repoPath={data.repo_path}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="stack">
+    {statusNote[data.status] && <p class="problem-statement">{statusNote[data.status]}</p>}
+    <Content />
+  </section>
+
+  {data.gallery.length > 0 && (
+    <section>
+      <h2>Evidence gallery</h2>
+      <div class="grid-cards">
+        {data.gallery.map((item) => (
+          <figure style="margin:0;">
+            <img src={assetUrl(data.repo_path, item.src)} alt={item.alt} loading="lazy" />
+            {item.caption && <figcaption class="small muted">{item.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {data.documents.length > 0 && (
+    <section>
+      <h2>Business documents</h2>
+      <ul>
+        {data.documents.map((doc) => (
+          <li><a href={assetUrl(data.repo_path, doc.href)}>{doc.title}</a></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {data.video && (
+    <section>
+      <h2>Demo</h2>
+      <p><a href={data.video}>Watch the short demo</a></p>
+    </section>
+  )}
+
+  <section>
+    <h2>Repository</h2>
+    <p class="small">
+      Code, sanitized configs and documents: <a href={repoUrl(data.repo_path)}>{data.repo_path}/</a>
+    </p>
+  </section>
+
+  <p class="small muted problem-statement"><strong>Lab note:</strong> {data.lab_note}</p>
+</BaseLayout>

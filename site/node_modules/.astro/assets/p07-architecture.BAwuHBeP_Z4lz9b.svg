@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p7Title p7Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p7Title">Halden Distribution P7 monitoring and incident response architecture</title>
+  <desc id="p7Desc">Log sources (Windows servers and workstations, Linux servers, OPNsense firewalls) send telemetry through Wazuh agents to SIEM01, where the Wazuh manager, indexer and dashboard apply ATT&amp;CK-mapped detection rules. Alerts are triaged by an analyst, escalated into tickets or incidents, and feed improvements back into the detections. Uptime Kuma on OPS01 provides availability monitoring.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P7 monitoring &amp; incident response</text>
+  <text x="40" y="66" font-size="13.5" fill="#475569">Isolated home lab · domain ad.halden.internal · SIEM01 192.168.10.41 · DESIGN — lab execution pending, no metrics shown</text>
+
+  <!-- ===================== Stage 1: log sources ===================== -->
+  <text x="40" y="104" font-size="12.5" font-weight="700" fill="#0f766e">1 · LOG SOURCES</text>
+  <rect x="40" y="112" width="250" height="150" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="165" y="136" font-size="13.5" font-weight="700" fill="#0f172a" text-anchor="middle">Windows servers</text>
+  <text x="165" y="158" font-size="11.5" fill="#334155" text-anchor="middle">DC01 · DC02 · FS01</text>
+  <text x="165" y="180" font-size="11.5" fill="#64748b" text-anchor="middle">Security · System · Sysmon</text>
+  <text x="165" y="198" font-size="11.5" fill="#64748b" text-anchor="middle">PowerShell 4104 · Defender</text>
+  <text x="165" y="216" font-size="11.5" fill="#64748b" text-anchor="middle">Directory Service · FIM SYSVOL</text>
+  <text x="165" y="242" font-size="11" fill="#0f766e" text-anchor="middle">identity is the #1 vector</text>
+
+  <rect x="302" y="112" width="222" height="150" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="413" y="136" font-size="13.5" font-weight="700" fill="#0f172a" text-anchor="middle">Windows workstations</text>
+  <text x="413" y="158" font-size="11.5" fill="#334155" text-anchor="middle">WS01 · WS02</text>
+  <text x="413" y="180" font-size="11.5" fill="#64748b" text-anchor="middle">Sysmon · Security · Defender</text>
+  <text x="413" y="198" font-size="11.5" fill="#64748b" text-anchor="middle">PowerShell 4104</text>
+  <text x="413" y="242" font-size="11" fill="#0f766e" text-anchor="middle">endpoint behaviour</text>
+
+  <rect x="536" y="112" width="212" height="150" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="642" y="136" font-size="13.5" font-weight="700" fill="#0f172a" text-anchor="middle">Linux servers</text>
+  <text x="642" y="158" font-size="11.5" fill="#334155" text-anchor="middle">LNX01 · OPS01 · BKP01</text>
+  <text x="642" y="180" font-size="11.5" fill="#64748b" text-anchor="middle">auth.log · syslog · auditd</text>
+  <text x="642" y="198" font-size="11.5" fill="#64748b" text-anchor="middle">FIM /etc/sudoers.d, /etc/ssh</text>
+  <text x="642" y="242" font-size="11" fill="#0f766e" text-anchor="middle">SSH, sudo, backup job</text>
+
+  <rect x="760" y="112" width="200" height="150" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="860" y="136" font-size="13.5" font-weight="700" fill="#0f172a" text-anchor="middle">OPNsense firewalls</text>
+  <text x="860" y="158" font-size="11.5" fill="#334155" text-anchor="middle">FW01 · FW02</text>
+  <text x="860" y="180" font-size="11.5" fill="#64748b" text-anchor="middle">filterlog · OpenVPN · WireGuard</text>
+  <text x="860" y="198" font-size="11.5" fill="#64748b" text-anchor="middle">syslog over UDP 514</text>
+  <text x="860" y="242" font-size="11" fill="#0f766e" text-anchor="middle">perimeter + remote access</text>
+
+  <!-- ===================== Stage 2: agents ===================== -->
+  <text x="1000" y="104" font-size="12.5" font-weight="700" fill="#0f766e">2 · COLLECTION</text>
+  <rect x="1000" y="112" width="160" height="150" rx="8" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+  <text x="1080" y="140" font-size="13" font-weight="700" fill="#134e4a" text-anchor="middle">Wazuh agent</text>
+  <text x="1080" y="162" font-size="11.5" fill="#134e4a" text-anchor="middle">one per host</text>
+  <text x="1080" y="182" font-size="11.5" fill="#134e4a" text-anchor="middle">enrolment + queue</text>
+  <text x="1080" y="202" font-size="11.5" fill="#134e4a" text-anchor="middle">agent groups decide</text>
+  <text x="1080" y="220" font-size="11.5" fill="#134e4a" text-anchor="middle">what is collected</text>
+  <text x="1080" y="242" font-size="11" fill="#0f766e" text-anchor="middle">TLS to the manager</text>
+
+  <!-- arrows down to SIEM01 -->
+  <line x1="600" y1="262" x2="600" y2="300" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="600,306 594,296 606,296" fill="#0f766e"/>
+  <text x="600" y="284" font-size="11.5" fill="#475569" text-anchor="middle">events, file integrity, syslog</text>
+
+  <!-- ===================== Stage 3: SIEM01 ===================== -->
+  <text x="40" y="322" font-size="12.5" font-weight="700" fill="#0f766e">3 · SIEM01 — Wazuh manager + indexer + dashboard</text>
+  <rect x="40" y="330" width="1120" height="150" rx="10" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+
+  <rect x="60" y="348" width="240" height="112" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="180" y="372" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Manager</text>
+  <text x="180" y="394" font-size="11.5" fill="#334155" text-anchor="middle">decoders + rule engine</text>
+  <text x="180" y="414" font-size="11.5" fill="#64748b" text-anchor="middle">custom rules 100100-100116</text>
+  <text x="180" y="434" font-size="11.5" fill="#64748b" text-anchor="middle">agent groups · active response</text>
+
+  <rect x="320" y="348" width="240" height="112" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="440" y="372" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Indexer</text>
+  <text x="440" y="394" font-size="11.5" fill="#334155" text-anchor="middle">alert + event storage</text>
+  <text x="440" y="414" font-size="11.5" fill="#64748b" text-anchor="middle">90 days hot (planned)</text>
+  <text x="440" y="434" font-size="11.5" fill="#64748b" text-anchor="middle">search API</text>
+
+  <rect x="580" y="348" width="240" height="112" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="700" y="372" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Dashboard</text>
+  <text x="700" y="394" font-size="11.5" fill="#334155" text-anchor="middle">alert views, ATT&amp;CK view</text>
+  <text x="700" y="414" font-size="11.5" fill="#64748b" text-anchor="middle">lab network only —</text>
+  <text x="700" y="434" font-size="11.5" fill="#64748b" text-anchor="middle">never exposed to the internet</text>
+
+  <rect x="840" y="348" width="300" height="112" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="990" y="372" font-size="13" font-weight="700" fill="#7c2d12" text-anchor="middle">Detection rules · ATT&amp;CK mapped</text>
+  <text x="990" y="394" font-size="11.5" fill="#7c2d12" text-anchor="middle">behaviour over signatures</text>
+  <text x="990" y="414" font-size="11.5" fill="#9a3412" text-anchor="middle">14 techniques mapped · validation pending</text>
+  <text x="990" y="434" font-size="11.5" fill="#9a3412" text-anchor="middle">each rule has a runbook</text>
+
+  <!-- ===================== Stage 4: alert -> triage -> ticket ===================== -->
+  <line x1="600" y1="480" x2="600" y2="512" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="600,518 594,508 606,508" fill="#0f766e"/>
+  <text x="600" y="502" font-size="11.5" fill="#475569" text-anchor="middle">alert (severity by business impact)</text>
+
+  <text x="40" y="536" font-size="12.5" font-weight="700" fill="#0f766e">4 · RESPONSE</text>
+  <rect x="40" y="544" width="356" height="96" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="218" y="568" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Analyst triage</text>
+  <text x="218" y="590" font-size="11.5" fill="#334155" text-anchor="middle">validate · scope (who, what host)</text>
+  <text x="218" y="608" font-size="11.5" fill="#64748b" text-anchor="middle">contain · preserve · escalate</text>
+  <text x="218" y="628" font-size="11.5" fill="#64748b" text-anchor="middle">runbook per detection</text>
+
+  <line x1="396" y1="592" x2="432" y2="592" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="438,592 428,586 428,598" fill="#0f766e"/>
+
+  <rect x="438" y="544" width="330" height="96" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="603" y="568" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Ticket / incident</text>
+  <text x="603" y="590" font-size="11.5" fill="#334155" text-anchor="middle">GLPI ticket (SEV3) or incident record</text>
+  <text x="603" y="608" font-size="11.5" fill="#64748b" text-anchor="middle">timeline · evidence · actions (P10)</text>
+  <text x="603" y="628" font-size="11.5" fill="#64748b" text-anchor="middle">IR plan + playbooks + tabletop</text>
+
+  <line x1="768" y1="592" x2="804" y2="592" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="810,592 800,586 800,598" fill="#0f766e"/>
+
+  <rect x="810" y="544" width="350" height="96" rx="8" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+  <text x="985" y="568" font-size="13" font-weight="700" fill="#134e4a" text-anchor="middle">Feedback loop</text>
+  <text x="985" y="590" font-size="11.5" fill="#134e4a" text-anchor="middle">tune narrow exceptions, never disable</text>
+  <text x="985" y="608" font-size="11.5" fill="#134e4a" text-anchor="middle">new/improved rules · runbook updates</text>
+  <text x="985" y="628" font-size="11.5" fill="#134e4a" text-anchor="middle">tabletop actions tracked in P10</text>
+
+  <!-- feedback arrow back up the right side -->
+  <path d="M1160 592 L1180 592 L1180 400 L1144 400" fill="none" stroke="#0f766e" stroke-width="2" stroke-dasharray="5 4"/>
+  <polygon points="1140,400 1150,394 1150,406" fill="#0f766e"/>
+
+  <!-- Availability monitoring callout -->
+  <rect x="40" y="654" width="696" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="58" y="676" font-size="11.5" fill="#334155">Availability: Uptime Kuma on OPS01 — DNS/LDAP/SMB/web/VPN monitors, a backup push heartbeat (absence = failed backup) and a staff status page.</text>
+
+  <!-- Legend -->
+  <rect x="756" y="654" width="404" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="768" y="664" width="14" height="14" rx="3" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+  <text x="790" y="676" font-size="11.5" fill="#475569">control / collection</text>
+  <rect x="908" y="664" width="14" height="14" rx="3" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="930" y="676" font-size="11.5" fill="#475569">ATT&amp;CK-mapped detection layer</text>
+
+  <text x="40" y="700" font-size="10.5" fill="#64748b">Halden Distribution Ltd. is a fictional company. All simulated activity shown here is authorised lab testing on the owner's own isolated lab, never a real network. This diagram is a DESIGN: detection coverage and metrics are published only after a real run.</text>
+</svg>

@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Core Infrastructure Build: AD DS, DNS, DHCP, File Services, GPO and Linux Integration | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="A redundant Windows Server foundation — two domain controllers, least-privilege file services, and a Linux server that logs in with a domain account"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p01/"><meta property="og:title" content="Core Infrastructure Build: AD DS, DNS, DHCP, File Services, GPO and Linux Integration | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="A redundant Windows Server foundation — two domain controllers, least-privilege file services, and a Linux server that logs in with a domain account"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p01/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#1 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 29 Sept 2026</span></p><h1>Core Infrastructure Build: AD DS, DNS, DHCP, File Services, GPO and Linux Integration</h1><p style="font-size:1.1rem;">A redundant Windows Server foundation — two domain controllers, least-privilege file services, and a Linux server that logs in with a domain account</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">Active Directory</span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">Group Policy</span><span class="tag">Windows Server 2025</span><span class="tag">PowerShell</span><span class="tag">Linux (Ubuntu)</span><span class="tag">SSSD/realmd</span><span class="tag">DFS</span><span class="tag">FSRM</span><span class="tag">AGDLP</span></p></header><img src="/projects/p01-core-infrastructure/p01-architecture.svg" alt="Core Infrastructure Build: AD DS, DNS, DHCP, File Services, GPO and Linux Integration — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>Halden runs everything on one aging server — domain controller, file server and print server, with
+no redundancy — and all 85 staff hold Full Control on the shared drive. If that server fails,
+nobody can log in, get an IP address or open a file. Because permissions are wide open, one mistake
+or one ransomware infection can destroy any department’s data, and nobody can answer the simple
+business question “who can read Finance data?”. (Market context and the job-ad evidence behind this
+project: <code>docs/plan/00-research-and-selection.md</code>.)</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>Two replicating domain controllers</strong> on Windows Server 2025 with AD-integrated DNS, so
+authentication and name resolution survive one server being down.</li>
+<li><strong>DHCP failover, 50/50, with name protection</strong> and dynamic DNS updates performed by a dedicated
+low-privilege service account instead of a DC’s computer account.</li>
+<li><strong>Sites and subnets now, segmentation later</strong> — HQ and WAREHOUSE replication sites and <code>/24</code>
+subnet objects exist before the P6 firewall work needs them.</li>
+<li><strong>An OU tree that mirrors the org chart</strong>, with protected OUs, a Tier 0 <code>_Admin</code> OU and a
+<code>Disabled</code> OU that the leaver process in P2 will use.</li>
+<li><strong>AGDLP least privilege</strong>: accounts → <code>G_</code> role groups → <code>DL_</code> resource groups → permission.
+Only <code>DL_</code> groups, SYSTEM and Administrators may ever appear on an ACL, and an audit script fails
+the build if that is not true.</li>
+<li><strong>File services worth the name</strong>: five departmental shares plus hidden home drives, a DFS
+namespace so shares can move servers without remapping drives, Access-Based Enumeration so users
+cannot even see what they may not open, FSRM quotas and file screens, and twice-daily shadow
+copies for self-service restores.</li>
+<li><strong>85 accounts provisioned from a CSV</strong> by an idempotent script that sets department, title,
+manager and EmployeeID, forces a password change at first logon, and writes an audit log.</li>
+<li><strong>A Group Policy baseline</strong> — password and lockout policy, drive maps with group item-level
+targeting, desktop standards, kiosk lockdown, server remote-management rules — with the ADMX
+Central Store and a committed backup of every GPO.</li>
+<li><strong>Ubuntu joined to AD</strong> with <code>realmd</code>/SSSD, SSH allowed only to one AD group by key only, and
+sudo granted by AD group membership.</li>
+<li><strong>Documentation as a deliverable</strong>: as-built document, logical diagram, six runbooks, a
+permission matrix for department-head approval and a one-page staff brief.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P1 logical architecture" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p01-architecture.CGnIi4yB_Z4lz9b.svg"></p>
+<p>Each DC points at its peer first and itself second for DNS, and at no point at a public resolver —
+a DC that can only resolve itself is an island, and one pointed at a public resolver cannot resolve
+AD at all. That is the difference between a design that works after a reboot and one that fails.</p>
+<p>The permission model is the other half of the design. The one rule that keeps it honest is enforced
+by code rather than discipline:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="color:#6A737D"># Only DL_ resource groups (plus SYSTEM / Administrators / CREATOR OWNER) may hold an ACE.</span></span>
+<span class="line"><span style="color:#E1E4E8">$ok </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> '^(NT AUTHORITY\\SYSTEM|BUILTIN\\Administrators|CREATOR OWNER|[^\\]+\\DL_.+)$'</span></span>
+<span class="line"><span style="color:#E1E4E8">$violations </span><span style="color:#F97583">=</span><span style="color:#F97583"> @</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">Get-Acl</span><span style="color:#E1E4E8"> $path).Access </span><span style="color:#F97583">|</span><span style="color:#79B8FF"> Where-Object</span><span style="color:#E1E4E8"> { </span><span style="color:#79B8FF">$_</span><span style="color:#E1E4E8">.IdentityReference.Value </span><span style="color:#F97583">-notmatch</span><span style="color:#E1E4E8"> $ok }</span></span></code></pre>
+<p>An 86-line PowerShell script walks every share root, exits with the number of violations as its
+exit code, and writes a CSV report — so “0 violations” is a test result, not a claim.</p>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit (scripts, configs, documentation, business artifacts) is
+complete and the lab execution is in progress. I am deliberately not publishing numbers before
+they exist: the metrics below will be filled from real lab runs, each with a file in
+<code>evidence/public/</code> as its source.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DC replication failures (<code>repadmin /replsummary</code>)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Service availability with DC01 powered off</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Direct user ACEs on share roots</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Accounts provisioned from CSV in one run</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<h2 id="business-side">Business side</h2>
+<p>The technical work is only half of an infrastructure project; the other half is what the business
+receives and signs off:</p>
+<ul>
+<li><strong>Permission matrix</strong> — department × share × access, with an approval column for department heads.
+Access is a business decision: IT implements it, the business owns it. The sign-off column is
+deliberately unsigned until a review actually happens.</li>
+<li><strong>One-page staff brief</strong> — what is changing, why it matters, the five things users will actually
+notice, what they must do on day one, and who to contact. Written for a non-technical reader.</li>
+<li><strong>Change record</strong> — risk, impact, phase plan, acceptance tests and the backout plan, in the shape
+a small company’s change log expects. It feeds the governance dashboard in P10.</li>
+<li><strong>Six runbooks</strong> — add a user, grant access, DC down, DHCP failover check, restore a previous
+version, and the weekly checks — so the environment is supportable by someone other than its
+author.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>A permission model needs an automated control.</strong> Writing the ACL audit script changed how I
+assigned access mid-build: it is much easier to stay disciplined when the check runs in seconds.</li>
+<li><strong>I would separate DHCP from the domain controllers next time.</strong> It is documented as an accepted
+risk here, but placing a network service on a Tier 0 server increases the blast radius if either
+is compromised.</li>
+<li><strong>Idempotency is a design decision, not a detail.</strong> Writing every script to be safe to re-run was
+slower at first and much faster by phase 5, because a failed step could simply be re-run.</li>
+<li><strong>Interview answers come from the runbooks.</strong> The “user can’t log in” runbook is literally the
+answer to that interview question — writing documentation was revision, not admin overhead.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p01-core-infrastructure/p01-brief.pdf">Brief</a></li><li><a href="/projects/p01-core-infrastructure/p01-change-record.pdf">Change Record</a></li><li><a href="/projects/p01-core-infrastructure/p01-permission-matrix.pdf">Permission Matrix</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p01-core-infrastructure">projects/p01-core-infrastructure/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). The staff file is synthetic. This page shows a working build kit that is being executed in the lab phase by phase — numbers appear here only once they have actually been measured, and the results table is deliberately empty until then.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

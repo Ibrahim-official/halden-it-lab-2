@@ -1,0 +1,27 @@
+---
+import { assetUrl } from '../lib/assets';
+
+interface Props {
+  label: string;
+  before: string;
+  after: string;
+  better?: 'lower' | 'higher';
+  source: string;
+  repoPath: string;
+}
+
+const { label, before, after, better = 'lower', source, repoPath } = Astro.props;
+const arrow = better === 'lower' ? '▼' : '▲';
+---
+
+<div class="metric">
+  <div class="muted small">{label}</div>
+  <div class="values">
+    <span class="before">{before}</span>
+    <span aria-hidden="true"> → </span>
+    <span class="after">{after} <span class="small" title={better === 'lower' ? 'lower is better' : 'higher is better'}>{arrow}</span></span>
+  </div>
+  <div class="small">
+    <a href={assetUrl(repoPath, source)}>view source evidence</a>
+  </div>
+</div>

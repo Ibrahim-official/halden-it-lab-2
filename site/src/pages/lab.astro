@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="The lab"
+  description="The Halden Distribution Ltd story, the lab architecture, the tools, and the honesty statement behind this portfolio."
+>
+  <h1>The lab</h1>
+
+  <section>
+    <h2>One simulated company for all ten projects</h2>
+    <div class="problem-statement">
+      <strong>Halden Distribution Ltd.</strong> (fictional): 85 staff, one head office, one
+      warehouse, 12 remote sales staff. Departments: Management, Finance, HR, Sales,
+      Operations/Warehouse, and IT (me). The situation I inherited: a flat network, shared admin
+      passwords, no MFA, ad-hoc backups nobody has tested, assets tracked in a spreadsheet, tickets
+      arriving by email and WhatsApp, and 30% of PCs on Windows 10.
+    </div>
+    <p>
+      Every project starts from that inherited state, fixes it, and measures the before/after. The
+      domain is <code>ad.halden.internal</code> — <code>.internal</code> is the top-level domain
+      ICANN reserved for private use in 2024.
+    </p>
+  </section>
+
+  <section>
+    <h2>Architecture</h2>
+    <p class="small muted">
+      The whole environment runs as virtual machines on one physical host (Hyper-V on Windows 11 Pro,
+      16 GB RAM), and it is never exposed to the internet. VMs use dynamic memory and only the ones a
+      phase needs are switched on — that is what keeps ten projects inside 16 GB. In P1 everything
+      sits in one flat 192.168.10.0/24 network; project P6 splits it into the firewall-enforced zones
+      below.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Host</th><th>Role</th><th>RAM (start–max)</th><th>Project</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>FW01</td><td>OPNsense gateway, VPN endpoint, DHCP relay</td><td>0.5–1 GB</td><td>P1, P6</td></tr>
+        <tr><td>DC01</td><td>Domain controller, DNS, DHCP (primary), PDC emulator</td><td>1–2 GB</td><td>P1+</td></tr>
+        <tr><td>DC02</td><td>Domain controller, DNS, DHCP (failover partner)</td><td>1–2 GB</td><td>P1+</td></tr>
+        <tr><td>FS01</td><td>File services, DFS-N, FSRM; NPS/RADIUS in P6</td><td>1–2 GB</td><td>P1, P2, P6</td></tr>
+        <tr><td>LNX01</td><td>AD-joined Ubuntu app server; vulnerability scanner in P5</td><td>0.5–1 GB</td><td>P1, P5, P7</td></tr>
+        <tr><td>WS01 / WS02</td><td>Windows 11 workstations (WS02 becomes the admin PAW)</td><td>2–4 GB</td><td>P1, P3, P4</td></tr>
+        <tr><td>OPS01</td><td>GLPI, Uptime Kuma, BookStack in containers</td><td>1–2 GB</td><td>P9</td></tr>
+        <tr><td>SIEM01</td><td>Wazuh manager, indexer and dashboard</td><td>4–6 GB (only while in use)</td><td>P7</td></tr>
+        <tr><td>BKP01</td><td>Backup repository — deliberately <em>not</em> domain-joined</td><td>1–2 GB</td><td>P8</td></tr>
+        <tr><td>CA01</td><td>Internal enterprise CA (AD CS) for 802.1X and TLS</td><td>1–2 GB</td><td>P6</td></tr>
+      </tbody>
+    </table>
+    <p class="small muted">Network zones after P6:</p>
+    <table>
+      <thead>
+        <tr><th>VLAN</th><th>Zone</th><th>Subnet</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>10</td><td>SERVERS</td><td>192.168.10.0/24</td><td>Domain controllers, file server, app servers</td></tr>
+        <tr><td>20</td><td>WAREHOUSE</td><td>192.168.20.0/24</td><td>Warehouse site behind its own firewall</td></tr>
+        <tr><td>30</td><td>USERS-HQ</td><td>192.168.30.0/24</td><td>Staff workstations</td></tr>
+        <tr><td>40</td><td>MGMT</td><td>192.168.40.0/24</td><td>Admin workstation (PAW), hypervisor, backup plane</td></tr>
+        <tr><td>50</td><td>GUEST</td><td>192.168.50.0/24</td><td>Guest Wi-Fi, internet only</td></tr>
+        <tr><td>60</td><td>IOT</td><td>192.168.60.0/24</td><td>Printers, CCTV, scanners</td></tr>
+        <tr><td>—</td><td>VPN-USERS</td><td>192.168.70.0/24</td><td>Remote staff (MFA VPN)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Where the work stands today</h2>
+    <p>
+      Each project is built as a <strong>build kit</strong> first: the design document, the numbered
+      and idempotent scripts for every phase, the runbooks, the business artifacts and the evidence
+      plan. The build kits for all ten projects exist in the
+      <a href="https://github.com/ibrahim-official/halden-it-lab">repository</a>.
+    </p>
+    <p>
+      Lab execution runs phase by phase after that, and <strong>that is when the numbers appear
+      here</strong>. Until a phase has actually been run, its page shows "not measured" rather than a
+      figure — a deliberate choice, enforced by an automated check that fails the build if a metric
+      has no evidence file behind it.
+    </p>
+  </section>
+
+  <section>
+    <h2>Tools in the lab</h2>
+    <p>
+      Windows Server 2025 and Windows 11 Enterprise (evaluation), Ubuntu Server 24.04, OPNsense,
+      Hyper-V, Active Directory, Entra ID (trial tenant), PowerShell, Python, Ansible, WSUS,
+      Greenbone Community Edition, Wazuh, Sysmon, GLPI, BookStack, Uptime Kuma, restic, MinIO with
+      Object Lock, Proxmox Backup Server, PingCastle, BloodHound CE, Windows LAPS, HardeningKitty,
+      Atomic Red Team, MITRE ATT&amp;CK Navigator and draw.io. Everything used is free or an
+      evaluation licence.
+    </p>
+  </section>
+
+  <section>
+    <h2>Honesty statement</h2>
+    <p>
+      This is a <strong>home lab</strong>: a simulated company, on my own isolated hardware, using
+      evaluation licences and free software. The configurations, scripts and documents are real. The
+      measurements on this site are real measurements — and where a phase has not been run yet, the
+      page says <em>not measured</em> instead of showing a number. Synthetic data (such as the
+      85-user HR file, the device readiness fleet and the sample vulnerability export) is labelled as
+      synthetic wherever it appears.
+    </p>
+    <p>
+      The lab is listed on my CV under <em>Projects / Home Lab</em> — never as employment experience —
+      and nothing here was ever run against any network, device or account I do not own. The small
+      number of scripts that simulate attacker behaviour (P3, P7) are written to refuse to run outside
+      the lab and are documented defensively: what was detected and how it was fixed, not how to
+      repeat it.
+    </p>
+  </section>
+</BaseLayout>

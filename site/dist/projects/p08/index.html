@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Backup, Recovery and Disaster Recovery with Automated Restore Verification | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="3-2-1-1-0 backups with an immutable copy and restore tests that actually run every week"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p08/"><meta property="og:title" content="Backup, Recovery and Disaster Recovery with Automated Restore Verification | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="3-2-1-1-0 backups with an immutable copy and restore tests that actually run every week"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p08/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#6 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>Backup, Recovery and Disaster Recovery with Automated Restore Verification</h1><p style="font-size:1.1rem;">3-2-1-1-0 backups with an immutable copy and restore tests that actually run every week</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">Proxmox Backup Server</span><span class="tag">Veeam CE</span><span class="tag">restic</span><span class="tag">MinIO Object Lock</span><span class="tag">wbadmin</span><span class="tag">S3 Object Lock</span><span class="tag">Business Impact Analysis</span><span class="tag">RTO/RPO</span><span class="tag">DR Runbooks</span><span class="tag">AD Recycle Bin</span><span class="tag">authoritative restore</span><span class="tag">Bash</span><span class="tag">PowerShell</span><span class="tag">Python</span><span class="tag">Uptime Kuma</span></p></header><img src="/projects/p08-backup-dr/p08-architecture.svg" alt="Backup, Recovery and Disaster Recovery with Automated Restore Verification — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>Halden “has backups”: a nightly copy of the file server to a USB disk plugged into the same server,
+running under a Domain Admin account, never tested — and the domain controllers are not backed up at
+all. That is worse than having nothing, because it creates false confidence. Attackers now target the
+backups themselves: industry research finds backup repositories attacked in around <strong>96% of ransomware
+attacks</strong> and successfully destroyed in about <strong>76%</strong> of those attempts, and ransomware appears in
+<strong>88% of SMB breaches</strong> (Verizon DBIR 2025). A domain-joined, on-line-only, untested backup sits
+squarely in that majority. (The job-ad and market evidence behind this project is summarised in
+<code>docs/plan/00-research-and-selection.md</code>.)</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>A Business Impact Analysis with each department</strong> that converts “how long can you survive without
+this?” into recovery objectives per system — the business sets the targets, IT engineers to them.</li>
+<li><strong>A 3-2-1-1-0 design</strong>: three copies, two media, one off-site, one immutable or offline, and zero
+errors on a verified restore as the standard the whole design is held to.</li>
+<li><strong>A hardened backup server that is not part of the domain</strong>, with its own credentials, console TOTP,
+a host firewall limited to the backup ports, and an encrypted repository — so a compromised domain
+does not take the backups with it.</li>
+<li><strong>Three layers of backup</strong>: whole virtual machines per tier, hourly file incrementals for the
+critical shares, and an AD-aware system-state backup that is what makes a proper directory restore
+possible.</li>
+<li><strong>An immutable off-site copy</strong> in S3-compatible object storage with a deletion lock, plus a monthly
+<strong>offline</strong> encrypted disk that no network credential can reach.</li>
+<li><strong>Automated weekly restore verification</strong> — files restored and hash-compared, the repository
+integrity-checked, and one virtual machine per week booted in an isolated sandbox with service health
+checks — with the result pushed to monitoring and a failure raised as an alert.</li>
+<li><strong>Active Directory recovery drills</strong> (recycle-bin restore and an authoritative restore in a sandbox)
+and a <strong>timed ransomware recovery drill</strong> against the agreed targets.</li>
+<li><strong>Documentation someone else can use</strong>: a DR runbook written for a person who did not build the lab,
+a restore-test register, a backup policy, a change record and a management brief.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P8 backup and DR data flow" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p08-architecture.C2IIAfUz_Z4lz9b.svg"></p>
+<p>Production servers are copied nightly to an encrypted repository on the backup server, which is
+deliberately <strong>not domain-joined</strong> and lives in the management network. A second copy is synchronised
+to an object store configured with a deletion lock; a third is rotated monthly to an offline encrypted
+disk. The weekly restore test sits on top of the whole chain and is the “0” in 3-2-1-1-0 — the design
+counts as finished only when a restore has been proven, automatically, week after week.</p>
+<p>The immutability is not a promise in a policy; it is a test that is <em>expected to fail</em>. The check runs
+with the backup user’s own credentials and records the refusal:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># 1. this "succeeds" - but only writes a delete marker</span></span>
+<span class="line"><span style="color:#B392F0">mc</span><span style="color:#9ECBFF"> rm</span><span style="color:#79B8FF"> --recursive</span><span style="color:#79B8FF"> --force</span><span style="color:#9ECBFF"> halden/backup-immutable/fs01</span></span>
+<span class="line"><span style="color:#6A737D"># 2. this MUST fail - the locked object versions are WORM-protected</span></span>
+<span class="line"><span style="color:#B392F0">mc</span><span style="color:#9ECBFF"> rm</span><span style="color:#79B8FF"> --recursive</span><span style="color:#79B8FF"> --force</span><span style="color:#79B8FF"> --versions</span><span style="color:#9ECBFF"> halden/backup-immutable/fs01</span></span>
+<span class="line"><span style="color:#6A737D"># 3. this MUST fail too - compliance retention cannot be cleared or shortened, even by root</span></span>
+<span class="line"><span style="color:#B392F0">mc</span><span style="color:#9ECBFF"> retention</span><span style="color:#9ECBFF"> clear</span><span style="color:#79B8FF"> --recursive</span><span style="color:#9ECBFF"> halden/backup-immutable/fs01</span></span></code></pre>
+<p>Because deletion lock requires versioning, restic keeps working normally and the locked versions
+survive the “delete” — which is exactly why the lock period must be at least the recovery window
+promised to the business.</p>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit (scripts, configurations, runbooks, business artifacts) is complete
+and the lab execution is beginning. There is deliberately <strong>no measured recovery time, no restore
+success rate and no drill duration on this page</strong> — those numbers appear only once a timed drill has
+actually produced them, each with a file in <code>evidence/public/</code> as its source. What exists today is the
+agreed <strong>targets</strong> (a two-hour recovery objective for identity, four hours for file services and the
+order system, one hour of acceptable data loss on critical data) and the machinery that will hold the
+design to them.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Immutable copy: deletion attempt with backup credentials</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Weekly restore test: files hash-matched</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Recovery time vs target (per system)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<h2 id="business-side">Business side</h2>
+<p>The technical work is only half of a resilience project; the other half is what the business receives
+and signs off:</p>
+<ul>
+<li><strong>Executive brief</strong> — what Halden can survive, expressed as targets and labelled as targets, with
+the honest “proven or not” position stated against every claim.</li>
+<li><strong>Backup and recovery policy</strong> — scope, tiers, the 3-2-1-1-0 rule, retention, encryption and key
+escrow, access control and the verification schedule. A draft, visibly unsigned.</li>
+<li><strong>Disaster recovery plan</strong> — roles, contact steps, the order of restoration, and the decision points
+(restore in place or rebuild; which restore point; when to accept data loss). Untested until a drill
+is run, and it says so.</li>
+<li><strong>Service levels</strong> — the recovery objectives agreed with each department, including the cost/risk
+trade-off the business is accepting and an explicitly empty “latest measured” column.</li>
+<li><strong>Restore-test register</strong> — the format that proves backups are periodically verified, with empty rows
+rather than invented successes.</li>
+<li><strong>Change record</strong> — risk, test plan and backout in the shape a small company’s change log expects,
+feeding the governance dashboard in P10.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>The plan’s default tool assumed a different hypervisor than the lab actually has.</strong> P1 chose
+Hyper-V, so a Proxmox-specific backup product could not be the default; I designed a hypervisor-
+agnostic core and kept the alternatives documented. Designing for the lab you have beats following a
+plan literally.</li>
+<li><strong>A policy nobody tests can be quietly wrong.</strong> The first draft of the retention table promised the
+business a 30-day recovery window but only kept four weeks for one tier. A small unit test on the
+retention calculator caught it — the same lesson as P1’s permission audit: an unautomated control is
+a wish, not a control.</li>
+<li><strong>It is tempting to measure the backup instead of the restore.</strong> “The job ran” is comfortable and
+meaningless. The only number that matters to a director is how long until we are working again — so
+the KPI here is a weekly restore test and a timed drill, and even the immutability evidence is a
+<em>failed</em> deletion.</li>
+<li><strong>Keeping the backup out of the domain has a real cost, and that is the point.</strong> It means another set
+of credentials and no single sign-on. It buys survival of the exact scenario backups exist for, and
+pretending otherwise would have been the easy mistake.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p08-backup-dr/p08-backup-policy.pdf">Backup Policy</a></li><li><a href="/projects/p08-backup-dr/p08-change-record.pdf">Change Record</a></li><li><a href="/projects/p08-backup-dr/p08-dr-plan.pdf">Dr Plan</a></li><li><a href="/projects/p08-backup-dr/p08-executive-brief.pdf">Executive Brief</a></li><li><a href="/projects/p08-backup-dr/p08-restore-test-register.pdf">Restore Test Register</a></li><li><a href="/projects/p08-backup-dr/p08-service-levels.pdf">Service Levels</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p08-backup-dr">projects/p08-backup-dr/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). This page shows a working build kit that is being executed in the lab phase by phase. Recovery times, restore success rates and drill durations are deliberately absent: they appear only once a timed drill has actually measured them. Until then every figure here is a target, clearly labelled as such.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

@@ -1,0 +1,125 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import { sortByOrder } from '../lib/assets';
+
+const projects = sortByOrder(await getCollection('showcase'));
+const cvEntry = await getEntry('cv', 'cv');
+const cv = cvEntry?.data;
+
+// Results strip: the 4 strongest real metrics across Done projects (AGENTS.md 5.4).
+const doneMetrics = projects
+  .filter((p) => p.data.status === 'done')
+  .flatMap((p) => p.data.metrics.map((m) => ({ ...m, project: p })))
+  .slice(0, 4);
+
+const done = projects.filter((p) => p.data.status === 'done');
+const inProgress = projects.filter((p) => p.data.status === 'in-progress');
+const planned = projects.filter((p) => p.data.status === 'planned');
+
+function formatPeriod(start: string, end: string | null): string {
+  const fmt = (value: string) => {
+    const [y, m] = value.split('-');
+    if (!m) return value;
+    return new Date(Number(y), Number(m) - 1).toLocaleDateString('en-GB', {
+      month: 'short',
+      year: 'numeric',
+    });
+  };
+  return `${fmt(start)} – ${end ? fmt(end) : 'Present'}`;
+}
+---
+
+<BaseLayout>
+  <section>
+    <h1>{cv?.name}</h1>
+    <p style="font-size:1.15rem;margin-top:-0.2rem;">{cv?.headline}</p>
+    <p class="muted">{cv?.location}</p>
+    <p>{cv?.summary}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/cv/">View CV</a>
+      <a class="btn" href="/projects/">View projects</a>
+      <a class="btn" href="/cv/Muhammad-Ibrahim-Akmal-CV.pdf">Download CV (PDF)</a>
+    </div>
+  </section>
+
+  <section class="results-strip" aria-label="Results so far">
+    {doneMetrics.length > 0 ? (
+      <>
+        <h2 style="margin-top:0;">Results so far</h2>
+        <div class="metric-grid">
+          {doneMetrics.map((m) => (
+            <div class="metric">
+              <div class="muted small">{m.label} — {m.project.data.id.toUpperCase()}</div>
+              <div class="values">
+                <span class="before">{m.before}</span>
+                <span aria-hidden="true"> → </span>
+                <span class="after">{m.after}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    ) : (
+      <>
+        <h2 style="margin-top:0;">Results so far</h2>
+        <p style="margin-bottom:0;">
+          The lab is being built now. This strip will show the four strongest measured results once
+          the first projects are Done — every number backed by a screenshot, export or report in the
+          project repository.
+        </p>
+      </>
+    )}
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    <p class="muted small">
+      Ten projects in build order. <StatusBadge status="planned" /> → shown as coming soon; only
+      Done projects publish a full case study with metrics.
+    </p>
+    <div class="grid-cards">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    {cv?.experience.map((job) => (
+      <article>
+        <h3 style="margin-bottom:0.1em;">
+          {job.role} — {job.org}
+          <span class="muted small" style="font-weight:400;">
+            {' '}
+            {job.place ? `${job.place} · ` : ''}{formatPeriod(job.start, job.end)}
+          </span>
+        </h3>
+        <ul>
+          {job.bullets.map((bullet) => <li>{bullet}</li>)}
+        </ul>
+      </article>
+    ))}
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    {cv?.education.map((edu) => (
+      <article>
+        <h3 style="margin-bottom:0.1em;">{edu.degree} — {edu.org}</h3>
+        <p class="small muted" style="margin-top:0;">
+          {edu.start} – {edu.end}
+          {edu.notes && <><br />{edu.notes}</>}
+          {edu.fyp && <><br />Final Year Project: {edu.fyp}</>}
+        </p>
+      </article>
+    ))}
+  </section>
+
+  <p class="small muted">
+    Honesty note: everything on this site is a documented <strong>home lab</strong> built around a
+    fictional company. The projects are listed as Projects / Home Lab — never as employment
+    experience. <a href="/lab/">Read more about the lab</a>.
+  </p>
+</BaseLayout>

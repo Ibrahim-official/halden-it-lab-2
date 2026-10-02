@@ -1,0 +1,21 @@
+{
+  "_comment": "CA003 - Phishing-resistant MFA for privileged roles. Applies to: the Halden Microsoft Entra ID tenant (P2, lab only). Admin accounts are cloud-only (never synced) and must satisfy a phishing-resistant authentication strength. The id 00000000-0000-0000-0000-000000000004 is Microsoft's built-in 'Phishing-resistant MFA' authentication-strength policy, a public constant, not a tenant value. The token __ADMIN_ROLE_IDS__ is replaced at deploy time with the role template ids resolved from configs/privileged-roles.json, so no role ids are invented or hard-coded here. Deployed by 07-New-ConditionalAccessPolicies.ps1, report-only first.",
+  "displayName": "CA003 - Phishing-resistant MFA for admins",
+  "state": "enabledForReportingButNotEnforced",
+  "conditions": {
+    "users": {
+      "includeRoles": ["__ADMIN_ROLE_IDS__"],
+      "excludeUsers": ["__BREAKGLASS_UPNS__"]
+    },
+    "applications": {
+      "includeApplications": ["All"]
+    },
+    "clientAppTypes": ["all"]
+  },
+  "grantControls": {
+    "operator": "OR",
+    "authenticationStrength": {
+      "id": "00000000-0000-0000-0000-000000000004"
+    }
+  }
+}

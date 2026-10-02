@@ -1,0 +1,19 @@
+# Halden Distribution Ltd. — P7 log-source inventory
+# Applies to: SIEM01 (Wazuh manager) · Project: P7 · Domain: ad.halden.internal
+# Use-case driven, not "collect everything" (plan Phase 0). Priority 1 = collected first.
+# The `collected` column is EMPTY until the agent is confirmed reporting in the lab — it is not a
+# claim, it is a build checklist (AGENTS.md R2).
+priority,host,source,what,which_rule_or_why,collected
+1,DC01,"Security log 4624/4625/4672/4720/4728/4732/4740/4756/4768/4769/4771","Logon, group and Kerberos events","Identity is the #1 attack vector; base for D1-D4, D10, D11",
+1,DC02,"Security log (same set)","Second domain controller","Redundancy for identity telemetry if DC01 is unavailable",
+1,DC01/DC02,"Directory Service Access/Changes (4662, 5136)","AD object and replication changes","D11 (DCSync); supports the P10 change log",
+1,DC01/DC02/FS01/WS01/WS02,"Sysmon channel","Process create/access, network, image load, file, registry, DNS","D5, D6, D7, D9, D9b and lateral-movement context",
+1,DC01/DC02/FS01/WS01/WS02,"PowerShell Operational (4104)","Script block logging","D6 — living-off-the-land execution",
+1,FS01,"Security log (5140/5145)","File share access","Ransomware staging on the file server; needs Detailed File Share auditing",
+1,FW01,OPNsense syslog,"filterlog, OpenVPN, WireGuard","D12 (remote-access anomaly); perimeter visibility",
+1,FW02,OPNsense syslog,"filterlog","Warehouse site perimeter","Abnormal cross-site traffic after P6 segmentation",
+2,LNX01,"/var/log/auth.log, auditd","SSH and sudo","Brute force, sudo misuse on the app server",
+2,OPS01,"/var/log/auth.log, auditd","SSH and sudo","Service host integrity; also runs Uptime Kuma",
+2,BKP01,"/var/log/syslog, auditd","Backup job logs","D14 (backup failure); BKP01 is not domain-joined, so agent auth is by key",
+3,SIEM01,"Wazuh internal events","Agent keep-alive, rule engine","D15 (agent stopped reporting)",
+3,Cloud identity (M365 trial),"Entra ID sign-in logs (Wazuh Office365/Graph module)","Cloud sign-ins","Break-glass and impossible-travel context; optional if the P2 trial is live",

@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" agent="halden-it-lab" version="24.7.17">
+  <diagram id="p2-identity" name="P2 identity lifecycle">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Halden Distribution Ltd — P2 identity lifecycle and access governance&#10;Isolated home lab · HR file → AD → Microsoft Entra ID · domain ad.halden.internal" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1090" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hdrOn" value="1 · On-premises lifecycle (source of truth to access)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="500" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="hdrCloud" value="2 · Hybrid identity and enforcement" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="800" y="80" width="340" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="hr" value="HR system export&#10;data/hr-export.csv · nightly&#10;keyed on EmployeeID · SYNTHETIC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="230" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="exception" value="Exception request&#10;GLPI / request form&#10;approved by the department head" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="196" width="230" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="engine" value="Invoke-HaldenJML.ps1&#10;diffs HR desired state against AD&#10;&#10;-WhatIf dry run · circuit breaker &gt;10 % disables&#10;protected accounts · runs as a delegated gMSA&#10;&#10;JOINER · MOVER · LEAVER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="305" y="110" width="280" height="158" as="geometry" />
+        </mxCell>
+        <mxCell id="ad" value="Active Directory (P1)&#10;department OUs · AGDLP G_ / DL_ groups&#10;FS01 home drives and shares&#10;OU=Disabled for leavers&#10;extensionAttribute1 = JML-Managed&#10;identity-hygiene report (phase 2)&#10;access-review export (phase 4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="620" y="110" width="250" height="158" as="geometry" />
+        </mxCell>
+        <mxCell id="eHR" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="hr" target="engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eExc" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="exception" target="engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eEngineAd" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="engine" target="ad">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" value="Evidence and audit trail (append-only)&#10;logs/jml-audit.csv — timestamp, action, target, before, after, operator · logs/leavers/&lt;EmployeeID&gt;.json · reports/orphans.csv · reports/identity-hygiene-&lt;date&gt;.html" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="352" width="830" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="eAudit" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=none;strokeColor=#94a3b8;dashed=1;" edge="1" parent="1" source="ad" target="audit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sync" value="Entra Cloud Sync (FS01)&#10;scope: OU=Users,OU=Halden only&#10;excludes _Admin and ServiceAccounts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="905" y="110" width="255" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="eAdSync" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="ad" target="sync">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="entra" value="Microsoft Entra ID&#10;hybrid users · security groups · licences&#10;admin accounts stay cloud-only (Tier 0)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="905" y="196" width="255" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="eSyncEntra" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="sync" target="entra">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ca" value="Conditional Access CA001–CA005&#10;MFA for all users · block legacy auth&#10;phishing-resistant MFA for admins · locations&#10;report-only first, then enforced" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="905" y="294" width="255" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="eEntraCa" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#0f766e;" edge="1" parent="1" source="entra" target="ca">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="breakglass" value="2 break-glass accounts&#10;excluded · monitored" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="905" y="398" width="122" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="scuba" value="ScubaGear (CISA)&#10;before / after" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1038" y="398" width="122" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="eCaBg" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=none;strokeColor=#94a3b8;" edge="1" parent="1" source="ca" target="breakglass">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eCaScuba" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=none;strokeColor=#94a3b8;" edge="1" parent="1" source="ca" target="scuba">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hdrProcess" value="3 · Process: as-is to-be (joiner, mover and leaver)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="40" y="450" width="500" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="asis" value="AS-IS — manual, email-driven, not evidenced&#10;&#10;HR emails IT when someone joins, moves or leaves — sometimes.&#10;Joiner — HR to line manager to IT to the worker; new starters wait for access.&#10;Mover — a new role is added but the old department access is rarely removed.&#10;Leaver — the account stays enabled until somebody remembers to raise it.&#10;No 1-to-1 record of what a leaver could reach, and no MFA on the account.&#10;Failure points: hidden handoffs, no SLA, permission creep, orphaned accounts." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;align=left;spacingLeft=12;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="40" y="476" width="540" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="tobe" value="TO-BE — one source of truth, automated, audited&#10;&#10;HR updates the export; the engine reconciles AD to it and logs every change.&#10;Joiner — account, role groups, home drive and licence ready before day 1.&#10;Mover — old-department groups are removed and new ones added in the same run.&#10;Leaver — disabled, groups stripped and captured, sessions revoked, moved to Disabled.&#10;Departments review access quarterly and sign off every removal.&#10;Agreed SLAs: joiner by day −1 · mover same day · leaver within 15 minutes." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;fontSize=11;align=left;spacingLeft=12;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="620" y="476" width="540" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="footnote" value="Lab note: Halden Distribution Ltd. is a fictional company and the 85-user HR file is synthetic. Configurations are real; every figure published for this project comes from a real run in the isolated lab and is labelled &quot;not measured&quot; until then." style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="40" y="666" width="1090" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

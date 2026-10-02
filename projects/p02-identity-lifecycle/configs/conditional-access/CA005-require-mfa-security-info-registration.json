@@ -1,0 +1,19 @@
+{
+  "_comment": "CA005 - Require MFA to register security information. Applies to: the Halden Microsoft Entra ID tenant (P2, lab only). A user registering a new MFA method is the moment an attacker with a stolen password would enrol their own authenticator, so registration itself is protected. Deployed by 07-New-ConditionalAccessPolicies.ps1, report-only first.",
+  "displayName": "CA005 - Require MFA to register security info",
+  "state": "enabledForReportingButNotEnforced",
+  "conditions": {
+    "users": {
+      "includeUsers": ["All"],
+      "excludeUsers": ["__BREAKGLASS_UPNS__"]
+    },
+    "applications": {
+      "includeUserActions": ["urn:user:registersecurityinfo"]
+    },
+    "clientAppTypes": ["all"]
+  },
+  "grantControls": {
+    "operator": "OR",
+    "builtInControls": ["mfa"]
+  }
+}

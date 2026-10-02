@@ -1,0 +1,11 @@
+---
+import { STATUS_LABEL } from '../consts';
+
+interface Props {
+  status: 'planned' | 'in-progress' | 'done';
+}
+
+const { status } = Astro.props;
+---
+
+<span class={`badge badge-${status}`}>{STATUS_LABEL[status] ?? status}</span>

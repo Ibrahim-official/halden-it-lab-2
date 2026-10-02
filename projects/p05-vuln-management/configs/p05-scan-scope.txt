@@ -1,0 +1,34 @@
+# p05-scan-scope.txt — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the authoritative list of hosts the P5 vulnerability scanner (Greenbone CE) may target,
+#         grouped into Greenbone target sets. scripts/02-setup-targets.sh reads this file and
+#         refuses to create a target for any address that is not inside a Halden lab range.
+# Where:  scanner host LNX01. Read by scripts/02-setup-targets.sh and scripts/03-schedule-scan.sh.
+# Status: designed scope only. No scan has been run (AGENTS.md rule R2).
+#
+# AGENTS.md rule R1 — LAB ONLY. The scanner may only ever touch these three private ranges:
+#   192.168.10.0/24  SERVERS   (DC01, DC02, FS01, LNX01, OPS01, SIEM01, BKP01, gateway FW01)
+#   192.168.20.0/24  WAREHOUSE (FW02 and warehouse clients, added in P6)
+#   192.168.30.0/24  USERS-HQ  (workstations after P6 segmentation)
+# Any other address — a public IP, a home-router address, an employer's host — must be rejected.
+# The lab is isolated; nothing here is reachable from the internet.
+#
+# Format:  asset_group,host,ip,notes      (lines beginning with # are comments)
+
+# --- target set: servers -------------------------------------------------------------------
+servers,DC01,192.168.10.10,domain controller / DNS / DHCP primary (Tier 0)
+servers,DC02,192.168.10.11,domain controller / DNS / DHCP failover partner (Tier 0)
+servers,FS01,192.168.10.20,file services on Windows Server 2025
+servers,LNX01,192.168.10.30,Linux application server (also hosts the scanner in this build)
+servers,OPS01,192.168.10.40,tools host (GLPI / BookStack / Uptime Kuma)
+servers,SIEM01,192.168.10.41,Wazuh manager and indexer
+servers,BKP01,192.168.10.42,backup repository (not domain-joined)
+
+# --- target set: network --------------------------------------------------------------------
+network,FW01,192.168.10.1,OPNsense firewall and VPN endpoint (edge device)
+
+# --- target set: workstations ---------------------------------------------------------------
+workstations,WS01,192.168.10.120,Windows 11 user workstation (DHCP in the lab; reserved for scoping)
+workstations,WS02,192.168.10.121,Windows 11 admin workstation / PAW (reserved for scoping)
+
+# --- target set: warehouse (empty until P6 creates FW02 and the site-2 clients) --------------
+# warehouse,FW02,192.168.20.1,OPNsense warehouse firewall — add in P6

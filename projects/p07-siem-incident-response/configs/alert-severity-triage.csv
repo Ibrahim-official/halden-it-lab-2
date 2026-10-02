@@ -1,0 +1,15 @@
+# Halden Distribution Ltd. — P7 alert severity and triage matrix
+# Applies to: SIEM01 / on-call analyst · Project: P7
+# Maps a Wazuh rule level to a Halden incident severity, a response target and a notification route.
+# Triage = "what the analyst does in the first five minutes", not "what the tool does".
+#
+# SEVERITY IS BUSINESS IMPACT, NOT RULE LEVEL. A level-12 alert on a test workstation and the same
+# alert on a domain controller are not the same incident.
+rule_level,severity,response_target,notify_route,example_detections,triage_first_steps
+>=13,SEV1 — critical,immediate 24x7,Phone/Telegram push to on-call + Incident Lead; MD within 15 min,"D5 (LSASS), D7 (shadow deletion), D11 (DCSync)","Confirm the event is real; isolate the host from the network; preserve memory/disk before rebooting; open an incident record; follow the matching playbook"
+10-12,SEV2 — high,< 1 hour,Email + Telegram to on-call; ticket in GLPI,"D1, D2, D4, D6, D8, D14","Validate against the change log (P10) and the JML audit (P2); contain the account/host if unapproved; scope for related activity"
+7-9,SEV3 — medium,< 1 business day,Daily digest email; ticket in GLPI,"D9, D9b, D10, D12, D13, D15","Read the context rule (100101) and the host role; decide tuning vs investigation; log the decision with a reason"
+<=6,Informational,no response,Weekly digest,"Wazuh built-in informational rules","Sampled in the weekly review; used to build the baseline, not to alert"
+# SPECIAL: false-positive handling. Every suppression is recorded in docs/tuning-log.md with the
+# rule id, the narrow exception (process + path + host), the reason and the date. Rules are never
+# disabled to reduce noise (plan Phase 4).

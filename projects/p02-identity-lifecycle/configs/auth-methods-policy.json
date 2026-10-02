@@ -1,0 +1,25 @@
+{
+  "_comment": "Desired Microsoft Entra ID authentication-methods policy for Halden (P2, lab only). Applied by 08-Set-AuthenticationMethods.ps1. Number matching is required for the Authenticator so a push cannot be approved blind; SMS and voice are disabled where the tenant allows, because they are phishable; Temporary Access Pass is enabled so onboarding is not blocked while a new starter enrols a stronger method. Lifetimes are intentionally short.",
+  "authenticationMethodConfiguration": {
+    "microsoftAuthenticator": {
+      "state": "enabled",
+      "featureSettings": {
+        "displayAppInformationRequiredState": "enabled",
+        "displayLocationInformationRequiredState": "enabled",
+        "numberMatchingRequiredState": "enabled"
+      }
+    },
+    "sms": {
+      "state": "disabled"
+    },
+    "voice": {
+      "state": "disabled"
+    },
+    "temporaryAccessPass": {
+      "state": "enabled",
+      "defaultLifetimeInMinutes": 60,
+      "defaultLength": 8,
+      "isUsableOnce": true
+    }
+  }
+}

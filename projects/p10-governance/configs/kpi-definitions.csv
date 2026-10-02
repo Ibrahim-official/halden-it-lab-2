@@ -1,0 +1,29 @@
+# P10 KPI definitions. Applies to projects/p10-governance: scripts/collect_kpis.py computes the "repository-derived" class by reading the repository; the "lab-measured" class needs the lab to have been executed and is reported as "not measured" until then. rag_rule maps a value to green/amber/red. Nothing here is a result - it is a definition.
+kpi_id,area,kpi_name,formula,source,target,rag_rule,frequency,owner,class
+KPI-01,Identity,MFA coverage %,count(enabled users with MFA enforced)/count(enabled users)*100,P2 MFA coverage report / Entra sign-in report,100%,green=100; amber>=95; red<95,monthly,IT Lead,lab-measured
+KPI-02,Identity,Leavers revoked within SLA %,leavers disabled within 60 minutes/count(leavers)*100,P2 JML audit log,100%,green=100; amber>=90; red<90,monthly,IT Lead,lab-measured
+KPI-03,Identity,Stale enabled accounts,count(enabled accounts with no interactive logon in 45 days),P2 hygiene report,0,green=0; amber<=2; red>2,monthly,IT Lead,lab-measured
+KPI-04,AD security,PingCastle risk score value returned by the monthly PingCastle run,P3 PingCastle monthly report,<=20,green<=20; amber21-40; red>40,monthly,IT Lead,lab-measured
+KPI-05,Endpoint,Endpoint compliance %,compliant devices/total in-scope devices*100,P4 compliance report,>=95%,green>=95; amber85-94; red<85,monthly,IT Lead,lab-measured
+KPI-06,Endpoint,Unsupported OS devices,count(devices running an unsupported OS),P4 readiness report / P9 CMDB,0 by quarter end,green=0; amber<=3; red>3,monthly,IT Lead,lab-measured
+KPI-07,Patching,Patch compliance within 14 days %,devices patched within 14 days/total devices*100,P5 / WSUS compliance report,>=95%,green>=95; amber85-94; red<85,monthly,IT Lead,lab-measured
+KPI-08,Vulnerability,Open KEV vulnerabilities,count(open findings flagged as known exploited),P5 prioritizer dashboard,0,green=0; amber<=2; red>2,weekly,IT Lead,lab-measured
+KPI-09,Vulnerability,Findings overdue by tier,count(open findings past their tier SLA),P5 prioritizer dashboard,0,green=0; amber<=5; red>5,weekly,IT Lead,lab-measured
+KPI-10,Vulnerability,Mean time to remediate,mean(remediated_at - detected_at) across closed findings,P5 prioritizer dashboard,trend down,green=trend down; amber=flat; red=trend up,monthly,IT Lead,lab-measured
+KPI-11,Monitoring,High-severity alerts,count(alerts at severity high or above in the period),P7 Wazuh dashboard,trend,green=no unexplained rise; amber=explained rise; red=unexplained rise,monthly,IT Lead,lab-measured
+KPI-12,Monitoring,Incidents by severity,count(incidents grouped by severity),P7 Wazuh / IR register,trend,informational,monthly,IT Lead,lab-measured
+KPI-13,Monitoring,MTTD and MTTR,mean(detected_at - occurred_at) and mean(resolved_at - detected_at),P7 IR register,trend down,green=trend down; amber=flat; red=trend up,monthly,IT Lead,lab-measured
+KPI-14,Availability,Uptime % critical services,1 - (downtime minutes/monitored minutes),Uptime Kuma (P9),>=99.5%,green>=99.5; amber99.0-99.49; red<99.0,monthly,IT Lead,lab-measured
+KPI-15,Backup,Restore tests passed,passed restore tests/total restore tests*100,P8 restore-test history,100%,green=100; amber>=90; red<90,monthly,IT Lead,lab-measured
+KPI-16,Service desk,SLA compliance %,tickets resolved within SLA/total tickets*100,P9 GLPI reporting,>=90%,green>=90; amber80-89; red<80,monthly,Service Desk Lead,lab-measured
+KPI-17,Service desk,Backlog age,average age of open tickets and age of the oldest open ticket,P9 GLPI reporting,trend down,green=trend down; amber=flat; red=trend up,monthly,Service Desk Lead,lab-measured
+KPI-18,Change,Changes by type,count(change records grouped by change_type),data/change-log.csv,informational,informational,monthly,IT Lead,repository-derived
+KPI-19,Change,Emergency change share,count(change_type=emergency)/count(all changes)*100,data/change-log.csv,low (target <=10%),green<=10; amber11-20; red>20,monthly,IT Lead,repository-derived
+KPI-20,Change,Change success rate,implemented changes with no resulting incident/count(implemented changes)*100,data/change-log.csv + P9 incidents,>=95%,green>=95; amber90-94; red<90,monthly,IT Lead,lab-measured
+KPI-21,Change,Unauthorised changes detected,count(config drift alerts with no matching approved change),P9 config-as-code drift report,0,green=0; amber<=1; red>1,monthly,IT Lead,lab-measured
+KPI-22,Governance,CIS IG1 implementation %,sum(safeguard status 0-3)/(3 * count(scored safeguards))*100,data/cis-ig1-safeguards.csv,trend up (measured after the assessment),green=trend up; amber=flat; red=trend down,quarterly,IT Lead,repository-derived
+KPI-23,Governance,Safeguards with evidence present,count(safeguards whose expected artifact exists in the repository)/56*100,configs/cis-ig1-evidence-map.csv + repository,trend up,green=trend up; amber=flat; red=trend down,monthly,IT Lead,repository-derived
+KPI-24,Governance,Actions closed on time %,actions closed on or before due date/closed actions*100,data/action-tracker.csv,>=90%,green>=90; amber80-89; red<80,monthly,IT Lead,repository-derived
+KPI-25,Governance,Open Definition-of-Done items,count(rows in the PROGRESS.md Definition of Done table),PROGRESS.md,0,green=0; amber<=3; red>3,monthly,IT Lead,repository-derived
+KPI-26,Governance,Policies approved %,policies with a recorded approval/total policies*100,data/policy-register.csv,100%,green=100; amber>=50; red<50,quarterly,IT Lead,repository-derived
+KPI-27,Governance,Projects with measured results,count(projects whose README results table contains no "not measured" row)/10*100,projects/*/README.md,100%,green=100; amber>=50; red<50,monthly,IT Lead,repository-derived

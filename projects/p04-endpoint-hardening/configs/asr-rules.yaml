@@ -1,0 +1,167 @@
+# Defender Attack Surface Reduction rules - Halden approved set (P4 Phase 2)
+#
+# WHAT IT IS
+#   The 16 ASR rules P4 deploys, their intended mode, and the business rationale for each. This is
+#   the single list that scripts/02-Set-AsrAudit.ps1 and scripts/03-Set-AsrBlock.ps1 read their
+#   approved GUIDs from, and the list the ASR exception register refers to by ID.
+#
+# WHERE IT APPLIES
+#   Domain: ad.halden.internal  ·  Clients: WS01 then WS02 (pilot), then the Workstations OU
+#   Configured by: Set-MpPreference / Add-MpPreference (scripted) or the Defender GPO
+#   Event channel: Microsoft-Windows-Windows Defender/Operational
+#     Event ID 1122 = ASR rule audited (would have blocked, but was allowed)
+#     Event ID 1121 = ASR rule blocked
+#
+# SYNTHETIC / HONESTY NOTE
+#   The mode column is the DESIGNED mode. No rule is claimed as "blocking" in the lab until
+#   06-Get-EndpointCompliance.ps1 reports it as blocking on a real client. GUIDs change between
+#   Windows releases: verify every one against Microsoft Learn's "Attack surface reduction rules
+#   reference" before a phase runs, and record any change in DECISIONS.md.
+#
+# IMPORTANT
+#   The PSExec/WMI rule (guid d1e49aac-...) can conflict with management tooling. It is deployed in
+#   audit mode with the rest and reviewed deliberately before it is moved to block.
+
+default_mode: "AuditMode"      # phase 2a. Phase 2b moves the reviewed rules to block.
+review_period_days: 7          # minimum before 03-Set-AsrBlock.ps1 will run without -Force
+
+rules:
+  - id: "be9ba2d9-53ea-4cdc-84e5-9b1eeee46550"
+    name: "Block executable content from email client and webmail"
+    category: "Email and webmail"
+    designed_mode: "Block"
+    rationale: >
+      Phishing payloads arrive as attachments. Halden staff open mail all day; a user double-clicking
+      an attachment is the single most likely way this company gets infected.
+    business_impact_if_enforced: "Users can no longer launch attachments directly from Outlook."
+    exception_registered: false
+
+  - id: "d4f940ab-401b-4efc-aadc-ad5f3c50688a"
+    name: "Block Office apps from creating child processes"
+    category: "Office and productivity"
+    designed_mode: "Block"
+    rationale: "Stops macro and exploit chains that spawn a shell or downloader from Word or Excel."
+    business_impact_if_enforced: "Finance macros that shell out to a script would be blocked; audited first."
+    exception_registered: false
+
+  - id: "3b576869-a4ec-4529-8536-b80a7769e899"
+    name: "Block Office apps from creating executable content"
+    category: "Office and productivity"
+    designed_mode: "Block"
+    rationale: "Stops a document writing a dropper to disk, the classic macro-malware step."
+    business_impact_if_enforced: "None expected for normal document editing."
+    exception_registered: false
+
+  - id: "75668c1f-73b5-4cf0-bb93-3ecf5cb7cc84"
+    name: "Block Office apps from injecting code into other processes"
+    category: "Office and productivity"
+    designed_mode: "Block"
+    rationale: "Blocks process injection, a common technique used to hide malicious code from defenders."
+    business_impact_if_enforced: "None expected; audited first."
+    exception_registered: false
+
+  - id: "d3e037e1-3eb8-44c8-a917-57927947596d"
+    name: "Block JavaScript/VBScript from launching downloaded executable content"
+    category: "Script abuse"
+    designed_mode: "Block"
+    rationale: "Script-host downloaders are a standard phishing payload and are invisible in a mail body."
+    business_impact_if_enforced: "Legacy .js or .vbs business scripts would be blocked; audited first."
+    exception_registered: false
+
+  - id: "5beb7efe-fd9a-4556-801d-275e5ffc04cc"
+    name: "Block execution of potentially obfuscated scripts"
+    category: "Script abuse"
+    designed_mode: "Block"
+    rationale: "Obfuscated PowerShell is how most fileless ransomware arrives. Doubles the value of P7 logging."
+    business_impact_if_enforced: "Genuinely obfuscated admin scripts would be blocked; keep none in production."
+    exception_registered: false
+
+  - id: "92e97fa1-2edf-4476-bdd6-9dd0b4dddc7b"
+    name: "Block Win32 API calls from Office macros"
+    category: "Office and productivity"
+    designed_mode: "Block"
+    rationale: "Macros that call the Win32 API directly are almost always malicious."
+    business_impact_if_enforced: "Only applies to macros already using API calls; audited first."
+    exception_registered: false
+
+  - id: "9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2"
+    name: "Block credential stealing from the Windows local security authority subsystem (lsass.exe)"
+    category: "Credential theft"
+    designed_mode: "Block"
+    rationale: >
+      Credential abuse is consistently the most common breach vector, and Mimikatz-style LSASS
+      dumping is the usual way a foothold becomes a domain compromise.
+    business_impact_if_enforced: "Security or backup tools that read LSASS must be excluded by path."
+    exception_registered: false
+
+  - id: "d1e49aac-8f56-4280-b9ba-993a6d77406c"
+    name: "Block process creations originating from PSExec and WMI commands"
+    category: "Lateral movement"
+    designed_mode: "AuditMode-then-review"
+    rationale: >
+      Blocks a classic lateral-movement technique, but it is the rule most likely to conflict with
+      management tooling (for example Configuration Manager or remote admin scripts). Deployed in
+      audit mode deliberately; reviewed before any block.
+    business_impact_if_enforced: "Could break remote management tooling; hence the deliberate audit first."
+    exception_registered: false
+    note: "Decision recorded in DECISIONS.md."
+
+  - id: "b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4"
+    name: "Block untrusted and unsigned processes that run from USB"
+    category: "Removable media"
+    designed_mode: "Block"
+    rationale: >
+      Warehouse staff use USB stock guns, so USB is not blocked wholesale; this rule only stops
+      unsigned or untrusted executables running from removable media.
+    business_impact_if_enforced: "Unsigned portable tools on USB stop working; audited first."
+    exception_registered: false
+
+  - id: "c1db55ab-c21a-4637-bb3f-a12568109d35"
+    name: "Use advanced protection against ransomware"
+    category: "Ransomware"
+    designed_mode: "Block"
+    rationale: >
+      Ransomware appears in most SMB breaches and runs on endpoints. This rule targets the
+      behavioural patterns ransomware shares, without waiting for a signature.
+    business_impact_if_enforced: "Some bulk file-modification scripts could be flagged; audited first."
+    exception_registered: false
+
+  - id: "e6db77e5-3df2-4cf1-b95a-636979351e5b"
+    name: "Block persistence through Windows Management Instrumentation (WMI) event subscription"
+    category: "Persistence"
+    designed_mode: "Block"
+    rationale: "WMI event subscriptions survive reboots and are a favourite persistence mechanism."
+    business_impact_if_enforced: "Monitoring tooling that uses WMI event subscriptions is affected; audited first."
+    exception_registered: false
+
+  - id: "56a863a9-875e-4185-98a7-b882c64b5ce5"
+    name: "Block abuse of exploited vulnerable signed drivers"
+    category: "Privilege escalation"
+    designed_mode: "Block"
+    rationale: "Bring-Your-Own-Vulnerable-Driver is used to disable defences from the kernel; this blocks it."
+    business_impact_if_enforced: "Any vulnerable legacy driver must be updated or excluded."
+    exception_registered: false
+
+  - id: "26190899-1602-49e8-8b27-eb1d0a1ce869"
+    name: "Block Office communication application from creating child processes"
+    category: "Office and productivity"
+    designed_mode: "Block"
+    rationale: "Closes the same download-and-run path as the Word rule, via the mail and chat clients."
+    business_impact_if_enforced: "None expected; audited first."
+    exception_registered: false
+
+  - id: "7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c"
+    name: "Block Adobe Reader from creating child processes"
+    category: "Third-party productivity"
+    designed_mode: "Block"
+    rationale: "PDF exploits spawning a shell are a well-used phishing route, and Halden opens PDFs all day."
+    business_impact_if_enforced: "Reader features that shell out to another program stop working."
+    exception_registered: false
+
+  - id: "01443614-cd74-433a-b99e-2ecdc07bfc25"
+    name: "Block executable files unless they meet prevalence, age or trusted-list criteria"
+    category: "Ransomware"
+    designed_mode: "Block"
+    rationale: "Included with the ransomware-protection pair; blocks brand-new, rare executables."
+    business_impact_if_enforced: "Rare in-house utilities may be blocked; audited first, exceptions logged."
+    exception_registered: false

@@ -1,0 +1,134 @@
+<mxfile host="app.diagrams.net" modified="2026-10-02T00:00:00.000Z" agent="opencode" version="24.7.17" type="device">
+  <diagram id="p05-funnel" name="P5 prioritisation funnel">
+    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Halden Distribution Ltd — P5 risk-based vulnerability prioritisation" style="text;html=1;fontSize=20;fontStyle=1;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="820" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Isolated home lab · scanner targets lab ranges only (192.168.10.0/24, 192.168.20.0/24, 192.168.30.0/24)" style="text;html=1;fontSize=12;align=left;verticalAlign=middle;fontColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="40" y="52" width="820" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="srcLabel" value="DATA SOURCES" style="text;html=1;fontSize=12;fontStyle=1;align=left;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="40" y="84" width="196" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="scanner" value="Greenbone CE scanner&#10;weekly authenticated scan (LNX01)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="108" width="196" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="kev" value="CISA KEV catalogue&#10;is it exploited in the wild?" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="170" width="196" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="epss" value="FIRST EPSS&#10;exploit probability, 0-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="230" width="196" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cmdb" value="Asset CMDB (P9)&#10;exposure + criticality" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="290" width="196" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="psirt" value="Vendor PSIRT advisories&#10;firmware and edge devices" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#94a3b8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="350" width="196" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="flowArea" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="1">
+          <mxGeometry x="306" y="108" width="560" height="372" as="geometry" />
+        </mxCell>
+
+        <mxCell id="raw" value="Scanner findings (raw)&#10;everything the scanner reports — a workload, not a plan" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;direction=north;fillColor=#e2e8f0;strokeColor=#94a3b8;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="128" width="512" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="dedup" value="Deduplicated&#10;host + CVE + service + port = one task, not two" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;direction=north;fillColor=#cbd5e1;strokeColor=#94a3b8;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="370" y="210" width="432" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="scored" value="Risk-scored&#10;KEV 40 · EPSS 25 · exposure 15 · CVSS 12 · criticality 8 · ransomware 5" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;direction=north;fillColor=#99f6e4;strokeColor=#0f766e;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="404" y="290" width="364" height="52" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p0" value="P0&#10;Emergency&#10;KEV + exposed&#10;target 3 days" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#b91c1c;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="330" y="370" width="88" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" value="P1&#10;Critical&#10;KEV or EPSS 0.5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#c2410c;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="426" y="382" width="88" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" value="P2&#10;High · 30 days" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#a16207;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="522" y="394" width="88" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="P3&#10;Medium · 60 days" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0e7490;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="618" y="404" width="88" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="P4&#10;Low · next cycle" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#475569;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="714" y="414" width="88" height="52" as="geometry" />
+        </mxCell>
+
+        <mxCell id="outLabel" value="OUTCOMES" style="text;html=1;fontSize=12;fontStyle=1;align=left;fontColor=#0f766e;" vertex="1" parent="1">
+          <mxGeometry x="884" y="186" width="276" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="worklist" value="Ranked work list&#10;prioritized-work-list.csv / .json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="884" y="212" width="276" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="tickets" value="Service-desk tickets (P9)&#10;P0/P1 only, with owner and due date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="884" y="288" width="276" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="patched" value="Patched / config changed&#10;with a change record and a snapshot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="884" y="364" width="276" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="closed" value="Verified closed (rescan)&#10;ticket may now close · MTTR derived" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdfa;strokeColor=#0f766e;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="884" y="440" width="276" height="52" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dec1" value="HUMAN DECISION — pilot gate&#10;broader patch rings approved only when the pilot is healthy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="884" y="120" width="276" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="dec2" value="HUMAN DECISION — accept or fix&#10;management signs risk acceptance; IT records the control" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="884" y="512" width="276" height="52" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend" value="Legend: grey = raw/deduplicated · teal = risk-scored · red/amber = tier · yellow = human decision · teal arrow = data/process flow" style="text;html=1;fontSize=11;align=left;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="40" y="446" width="820" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="foot" value="Footnote: Halden Distribution Ltd. is a fictional company. This diagram is a design, not measured evidence; no scan has been run and no figure here is a result. The bundled sample data used by the interactive demo is synthetic, and the scanner is scoped to the isolated lab ranges only. Model inspired by the risk-tier concept in CISA BOD 26-04 (June 2026); an independent adaptation, not a claim of compliance." style="text;html=1;fontSize=10;align=left;verticalAlign=top;fontColor=#64748b;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="1120" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="scanner" target="flowArea">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="kev" target="flowArea">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="epss" target="flowArea">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="cmdb" target="flowArea">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="psirt" target="flowArea">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="raw" target="dedup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="dedup" target="scored">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="scored" target="p0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="p0" target="worklist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="worklist" target="tickets">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="tickets" target="patched">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#0f766e;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="patched" target="closed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

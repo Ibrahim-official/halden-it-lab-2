@@ -1,0 +1,11 @@
+Department,Share,DL_Group,Finance,HR,Sales,Operations,Management,IT,AllStaff
+Finance,Finance,DL_Share-Finance_RW,RW,-,-,-,-,-,-
+Finance,Finance,DL_Share-Finance_RO,-,-,-,-,RO,RO,-
+HR,HR,DL_Share-HR_RW,-,RW,-,-,-,-,-
+HR,HR,DL_Share-HR_RO,-,-,-,-,RO,RO,-
+Sales,Sales,DL_Share-Sales_RW,-,-,RW,-,-,-,-
+Sales,Sales,DL_Share-Sales_RO,-,-,-,-,RO,RO,-
+Operations,Operations,DL_Share-Operations_RW,-,-,-,RW,-,-,-
+Operations,Operations,DL_Share-Operations_RO,-,-,-,-,RO,RO,-
+Company,Company,DL_Share-Company_RO,RO,RO,RO,RO,RO,RO,RO
+Users,Users$,DL_Share-Users_Home,Own folder only,-,-,-,-,-,-

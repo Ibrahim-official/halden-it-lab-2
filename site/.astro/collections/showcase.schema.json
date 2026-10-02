@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^p\\d{2}$"
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "title": {
+      "type": "string"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "in-progress",
+        "done"
+      ]
+    },
+    "started": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "roles": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "sysadmin",
+          "it-support"
+        ]
+      }
+    },
+    "skills": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "jd_bullets": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metrics": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "before": {
+            "type": "string"
+          },
+          "after": {
+            "type": "string"
+          },
+          "better": {
+            "type": "string",
+            "enum": [
+              "lower",
+              "higher"
+            ]
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "before",
+          "after",
+          "source"
+        ]
+      }
+    },
+    "hero": {
+      "type": "string"
+    },
+    "gallery": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "src": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "src",
+          "alt"
+        ]
+      }
+    },
+    "documents": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "href"
+        ]
+      }
+    },
+    "repo_path": {
+      "type": "string"
+    },
+    "video": {
+      "type": "string"
+    },
+    "cv_bullets": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lab_note": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "order",
+    "title",
+    "tagline",
+    "status",
+    "repo_path",
+    "lab_note"
+  ]
+}

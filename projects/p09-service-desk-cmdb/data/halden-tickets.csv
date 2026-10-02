@@ -1,0 +1,151 @@
+synthetic,reference,subject,category,priority,requester,technician,status,created,resolution_minutes
+True,SYN-20261002-0001,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P4,hamza.bhatti,it.support.officer,Closed,2026-10-12 10:24:00,1519
+True,SYN-20261002-0002,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P1,maya.qureshi,sysadmin,Solved,2026-10-26 12:33:00,119
+True,SYN-20261002-0003,[SYNTHETIC] New starter: setup for Monday start,New starter,P3,maya.qureshi,it.support.officer,Closed,2026-10-27 09:25:00,1237
+True,SYN-20261002-0004,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P4,faisal.javed,sysadmin,Closed,2026-10-07 08:52:00,1074
+True,SYN-20261002-0005,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P3,tariq.raza,sysadmin,Closed,2026-10-26 12:05:00,1043
+True,SYN-20261002-0006,[SYNTHETIC] Laptop / desktop: screen flickers,Laptop / desktop,P4,iqra.nawaz,it.support.officer,Closed,2026-10-26 13:56:00,1666
+True,SYN-20261002-0007,[SYNTHETIC] Install request: please install the approved PDF tool,Install request,P3,noor.iqbal,sysadmin,Closed,2026-10-29 17:15:00,1097
+True,SYN-20261002-0008,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P2,hira.butt,it.support.officer,Closed,2026-10-22 16:04:00,275
+True,SYN-20261002-0009,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P2,usman.rauf,it.support.officer,Processing (assigned),2026-10-09 12:15:00,
+True,SYN-20261002-0010,[SYNTHETIC] New account: account for new starter,New account,P3,iqra.nawaz,sysadmin,Solved,2026-10-08 13:34:00,1114
+True,SYN-20261002-0011,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P3,usman.rauf,sysadmin,Closed,2026-10-21 14:42:00,1282
+True,SYN-20261002-0012,[SYNTHETIC] Teams / SharePoint: cannot open the team site,Teams / SharePoint,P3,usman.rauf,sysadmin,Closed,2026-10-21 08:20:00,968
+True,SYN-20261002-0013,"[SYNTHETIC] MFA re-registration: new phone, need MFA reset",MFA re-registration,P3,hira.butt,sysadmin,Closed,2026-10-14 14:56:00,869
+True,SYN-20261002-0014,[SYNTHETIC] Spam / phishing: suspicious email reported,Spam / phishing,P4,sara.khan,sysadmin,Closed,2026-10-22 08:01:00,1395
+True,SYN-20261002-0015,[SYNTHETIC] Hardware quote: quote for two monitors,Hardware quote,P4,hira.butt,sysadmin,Closed,2026-10-21 12:46:00,2018
+True,SYN-20261002-0016,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P4,kamran.hashmi,sysadmin,Processing (assigned),2026-10-13 13:06:00,
+True,SYN-20261002-0017,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P4,tariq.raza,sysadmin,Processing (assigned),2026-10-21 15:28:00,
+True,SYN-20261002-0018,[SYNTHETIC] Mailbox: mailbox full,Mailbox,P3,rida.dar,it.support.officer,Closed,2026-10-09 13:23:00,723
+True,SYN-20261002-0019,[SYNTHETIC] Teams / SharePoint: cannot open the team site,Teams / SharePoint,P3,bilal.siddiqui,it.support.officer,Processing (assigned),2026-10-15 13:09:00,
+True,SYN-20261002-0020,[SYNTHETIC] Warranty claim: keyboard key broken,Warranty claim,P4,noor.iqbal,sysadmin,Closed,2026-10-05 08:54:00,2635
+True,SYN-20261002-0021,[SYNTHETIC] Wi-Fi: cannot join the office Wi-Fi,Wi-Fi,P3,kamran.hashmi,sysadmin,Closed,2026-10-30 11:45:00,814
+True,SYN-20261002-0022,"[SYNTHETIC] Leaver: last day today, offboard",Leaver,P3,sara.khan,sysadmin,Closed,2026-10-26 12:19:00,1236
+True,SYN-20261002-0023,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P4,sana.aslam,sysadmin,Closed,2026-10-20 14:44:00,1345
+True,SYN-20261002-0024,[SYNTHETIC] VPN access: VPN access for remote work,VPN access,P4,usman.rauf,it.support.officer,Closed,2026-10-12 08:16:00,2039
+True,SYN-20261002-0025,[SYNTHETIC] Teams / SharePoint: cannot open the team site,Teams / SharePoint,P4,hamza.bhatti,sysadmin,Closed,2026-10-14 15:09:00,2713
+True,SYN-20261002-0026,[SYNTHETIC] Password reset / unlock: account locked out,Password reset / unlock,P3,aisha.chaudhry,sysadmin,Solved,2026-10-28 14:40:00,1151
+True,SYN-20261002-0027,[SYNTHETIC] Hardware quote: quote for two monitors,Hardware quote,P3,adil.gill,it.support.officer,Closed,2026-10-19 09:09:00,1104
+True,SYN-20261002-0028,[SYNTHETIC] Teams / SharePoint: cannot open the team site,Teams / SharePoint,P3,bilal.siddiqui,it.support.officer,Closed,2026-10-12 10:32:00,683
+True,SYN-20261002-0029,[SYNTHETIC] Password reset / unlock: account locked out,Password reset / unlock,P2,faisal.javed,sysadmin,Solved,2026-10-05 15:16:00,251
+True,SYN-20261002-0030,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P4,maya.qureshi,sysadmin,Closed,2026-10-23 14:16:00,1481
+True,SYN-20261002-0031,[SYNTHETIC] Peripherals: docking station not detected,Peripherals,P3,imran.sheikh,it.support.officer,Closed,2026-10-21 08:28:00,578
+True,SYN-20261002-0032,[SYNTHETIC] VPN access: VPN access for remote work,VPN access,P4,sana.aslam,it.support.officer,Closed,2026-10-30 14:32:00,1632
+True,SYN-20261002-0033,[SYNTHETIC] Mailbox: mailbox full,Mailbox,P4,hamza.bhatti,it.support.officer,Closed,2026-10-21 12:21:00,2896
+True,SYN-20261002-0034,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P4,lena.hussain,sysadmin,Closed,2026-10-06 16:53:00,1377
+True,SYN-20261002-0035,[SYNTHETIC] Wi-Fi: cannot join the office Wi-Fi,Wi-Fi,P4,sara.khan,sysadmin,Closed,2026-10-29 08:26:00,1875
+True,SYN-20261002-0036,[SYNTHETIC] Laptop / desktop: screen flickers,Laptop / desktop,P3,bilal.siddiqui,it.support.officer,Processing (assigned),2026-10-14 16:52:00,
+True,SYN-20261002-0037,"[SYNTHETIC] MFA re-registration: new phone, need MFA reset",MFA re-registration,P4,usman.rauf,it.support.officer,Closed,2026-10-20 17:14:00,1524
+True,SYN-20261002-0038,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P3,faisal.javed,it.support.officer,Closed,2026-10-30 09:14:00,1390
+True,SYN-20261002-0039,[SYNTHETIC] New starter: setup for Monday start,New starter,P3,rida.dar,it.support.officer,Closed,2026-10-14 09:11:00,912
+True,SYN-20261002-0040,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P2,imran.sheikh,sysadmin,Closed,2026-10-30 12:06:00,223
+True,SYN-20261002-0041,[SYNTHETIC] Laptop / desktop: screen flickers,Laptop / desktop,P3,bilal.siddiqui,it.support.officer,Closed,2026-10-27 15:34:00,1025
+True,SYN-20261002-0042,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P3,hamza.bhatti,sysadmin,Closed,2026-10-09 13:04:00,705
+True,SYN-20261002-0043,[SYNTHETIC] Peripherals: docking station not detected,Peripherals,P3,omar.malik,it.support.officer,Closed,2026-10-06 15:23:00,542
+True,SYN-20261002-0044,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P4,tariq.raza,it.support.officer,Closed,2026-10-12 11:23:00,614
+True,SYN-20261002-0045,[SYNTHETIC] Report phishing: phishing email forwarded,Report phishing,P3,mina.anwar,it.support.officer,Closed,2026-10-19 13:06:00,1046
+True,SYN-20261002-0046,[SYNTHETIC] Peripherals: docking station not detected,Peripherals,P3,hamza.bhatti,sysadmin,Closed,2026-10-30 11:38:00,305
+True,SYN-20261002-0047,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P3,adil.gill,it.support.officer,Closed,2026-10-09 14:45:00,15
+True,SYN-20261002-0048,[SYNTHETIC] New starter: setup for Monday start,New starter,P3,rida.dar,sysadmin,New,2026-10-20 16:06:00,
+True,SYN-20261002-0049,[SYNTHETIC] VPN access: VPN access for remote work,VPN access,P3,bilal.siddiqui,sysadmin,Closed,2026-10-08 09:19:00,403
+True,SYN-20261002-0050,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P3,omar.malik,it.support.officer,Closed,2026-10-08 16:33:00,810
+True,SYN-20261002-0051,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P3,bilal.siddiqui,it.support.officer,Closed,2026-10-19 08:41:00,640
+True,SYN-20261002-0052,[SYNTHETIC] Suspected incident: possible malware alert,Suspected incident,P3,zain.mirza,it.support.officer,Processing (assigned),2026-10-15 14:57:00,
+True,SYN-20261002-0053,[SYNTHETIC] Teams / SharePoint: cannot open the team site,Teams / SharePoint,P2,faisal.javed,sysadmin,Closed,2026-10-09 12:08:00,242
+True,SYN-20261002-0054,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P1,tariq.raza,it.support.officer,New,2026-10-12 08:47:00,
+True,SYN-20261002-0055,[SYNTHETIC] Licence question: how many seats do we have,Licence question,P2,usman.rauf,it.support.officer,Closed,2026-10-06 08:58:00,599
+True,SYN-20261002-0056,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P4,faisal.javed,it.support.officer,Closed,2026-10-07 17:50:00,1803
+True,SYN-20261002-0057,[SYNTHETIC] Warranty claim: keyboard key broken,Warranty claim,P3,hira.butt,it.support.officer,Closed,2026-10-21 15:50:00,855
+True,SYN-20261002-0058,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P4,mina.anwar,it.support.officer,Closed,2026-10-23 16:27:00,1626
+True,SYN-20261002-0059,[SYNTHETIC] New starter: setup for Monday start,New starter,P2,tariq.raza,sysadmin,Processing (assigned),2026-10-16 14:54:00,
+True,SYN-20261002-0060,[SYNTHETIC] VPN access: VPN access for remote work,VPN access,P4,faisal.javed,sysadmin,Closed,2026-10-26 12:30:00,2837
+True,SYN-20261002-0061,[SYNTHETIC] New account: account for new starter,New account,P3,faisal.javed,sysadmin,Closed,2026-10-08 08:08:00,985
+True,SYN-20261002-0062,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P3,imran.sheikh,it.support.officer,Solved,2026-10-05 09:53:00,967
+True,SYN-20261002-0063,[SYNTHETIC] Report phishing: phishing email forwarded,Report phishing,P4,mina.anwar,it.support.officer,Closed,2026-10-19 14:05:00,1236
+True,SYN-20261002-0064,[SYNTHETIC] New account: account for new starter,New account,P3,faisal.javed,sysadmin,Closed,2026-10-27 12:05:00,719
+True,SYN-20261002-0065,[SYNTHETIC] Cannot print: nothing prints from Excel,Cannot print,P3,aisha.chaudhry,sysadmin,Processing (assigned),2026-10-14 12:27:00,
+True,SYN-20261002-0066,[SYNTHETIC] Suspected incident: possible malware alert,Suspected incident,P3,zain.mirza,it.support.officer,Closed,2026-10-20 10:50:00,352
+True,SYN-20261002-0067,[SYNTHETIC] Change request: add a firewall rule,Change request,P3,zain.mirza,it.support.officer,Closed,2026-10-09 12:39:00,721
+True,SYN-20261002-0068,[SYNTHETIC] Peripherals: docking station not detected,Peripherals,P3,omar.malik,sysadmin,Closed,2026-10-06 09:12:00,927
+True,SYN-20261002-0069,[SYNTHETIC] Laptop / desktop: laptop will not boot,Laptop / desktop,P3,omar.malik,sysadmin,Solved,2026-10-09 08:24:00,940
+True,SYN-20261002-0070,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P4,imran.sheikh,it.support.officer,Closed,2026-10-07 12:26:00,2151
+True,SYN-20261002-0071,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P4,tariq.raza,sysadmin,Solved,2026-10-16 14:26:00,1983
+True,SYN-20261002-0072,[SYNTHETIC] Toner / consumables: toner low on floor 2,Toner / consumables,P4,lena.hussain,it.support.officer,Solved,2026-10-21 14:18:00,2041
+True,SYN-20261002-0073,[SYNTHETIC] Password reset / unlock: account locked out,Password reset / unlock,P3,aisha.chaudhry,it.support.officer,Closed,2026-10-21 11:00:00,1104
+True,SYN-20261002-0074,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P3,lena.hussain,sysadmin,Closed,2026-10-26 08:06:00,709
+True,SYN-20261002-0075,[SYNTHETIC] Suspected incident: possible malware alert,Suspected incident,P4,adil.gill,sysadmin,Closed,2026-10-08 11:51:00,1388
+True,SYN-20261002-0076,[SYNTHETIC] Cannot print: nothing prints from Excel,Cannot print,P4,adil.gill,sysadmin,Closed,2026-10-26 16:46:00,1831
+True,SYN-20261002-0077,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P4,omar.malik,sysadmin,Closed,2026-10-21 17:07:00,1946
+True,SYN-20261002-0078,[SYNTHETIC] VPN access: VPN access for remote work,VPN access,P3,hira.butt,it.support.officer,Closed,2026-10-20 12:31:00,978
+True,SYN-20261002-0079,[SYNTHETIC] Spam / phishing: suspicious email reported,Spam / phishing,P3,adil.gill,it.support.officer,Closed,2026-10-13 08:33:00,892
+True,SYN-20261002-0080,[SYNTHETIC] Printer: paper jam not clearing,Printer,P3,lena.hussain,sysadmin,Processing (assigned),2026-10-14 17:28:00,
+True,SYN-20261002-0081,[SYNTHETIC] VPN access: VPN access for remote work,VPN access,P3,faisal.javed,it.support.officer,Closed,2026-10-28 16:51:00,591
+True,SYN-20261002-0082,[SYNTHETIC] Spam / phishing: suspicious email reported,Spam / phishing,P3,omar.malik,sysadmin,Closed,2026-10-14 16:28:00,445
+True,SYN-20261002-0083,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P2,tariq.raza,sysadmin,Closed,2026-10-23 09:36:00,380
+True,SYN-20261002-0084,[SYNTHETIC] Printer: paper jam not clearing,Printer,P4,sana.aslam,it.support.officer,Closed,2026-10-26 08:28:00,151
+True,SYN-20261002-0085,[SYNTHETIC] Licence question: how many seats do we have,Licence question,P3,imran.sheikh,sysadmin,Solved,2026-10-22 16:38:00,16
+True,SYN-20261002-0086,[SYNTHETIC] Spam / phishing: suspicious email reported,Spam / phishing,P1,rida.dar,sysadmin,Closed,2026-10-22 11:39:00,223
+True,SYN-20261002-0087,[SYNTHETIC] Mailbox: mailbox full,Mailbox,P3,iqra.nawaz,it.support.officer,Closed,2026-10-07 10:14:00,940
+True,SYN-20261002-0088,[SYNTHETIC] Install request: please install the approved PDF tool,Install request,P4,hira.butt,sysadmin,Closed,2026-10-22 15:09:00,1686
+True,SYN-20261002-0089,[SYNTHETIC] Wi-Fi: cannot join the office Wi-Fi,Wi-Fi,P2,maya.qureshi,it.support.officer,Processing (assigned),2026-10-07 11:09:00,
+True,SYN-20261002-0090,[SYNTHETIC] Printer: paper jam not clearing,Printer,P4,hira.butt,it.support.officer,Solved,2026-10-22 15:09:00,1514
+True,SYN-20261002-0091,[SYNTHETIC] Peripherals: docking station not detected,Peripherals,P4,sana.aslam,sysadmin,Processing (assigned),2026-10-29 15:42:00,
+True,SYN-20261002-0092,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P4,usman.rauf,sysadmin,Solved,2026-10-19 12:43:00,1821
+True,SYN-20261002-0093,[SYNTHETIC] Laptop / desktop: screen flickers,Laptop / desktop,P2,noor.iqbal,sysadmin,Closed,2026-10-26 17:16:00,588
+True,SYN-20261002-0094,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P3,bilal.siddiqui,it.support.officer,Closed,2026-10-20 17:06:00,187
+True,SYN-20261002-0095,[SYNTHETIC] Spam / phishing: suspicious email reported,Spam / phishing,P2,maya.qureshi,it.support.officer,Closed,2026-10-27 14:23:00,330
+True,SYN-20261002-0096,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P2,mina.anwar,sysadmin,Closed,2026-10-20 15:19:00,468
+True,SYN-20261002-0097,[SYNTHETIC] New starter: setup for Monday start,New starter,P2,sara.khan,it.support.officer,Closed,2026-10-08 11:15:00,176
+True,SYN-20261002-0098,[SYNTHETIC] Mailbox: mailbox full,Mailbox,P3,hamza.bhatti,it.support.officer,Closed,2026-10-15 08:54:00,1083
+True,SYN-20261002-0099,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P3,aisha.chaudhry,sysadmin,Processing (assigned),2026-10-05 09:07:00,
+True,SYN-20261002-0100,[SYNTHETIC] Cannot print: nothing prints from Excel,Cannot print,P4,imran.sheikh,sysadmin,Closed,2026-10-09 08:55:00,2236
+True,SYN-20261002-0101,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P4,aisha.chaudhry,it.support.officer,Closed,2026-10-29 10:48:00,2480
+True,SYN-20261002-0102,[SYNTHETIC] New account: account for new starter,New account,P3,hira.butt,it.support.officer,New,2026-10-07 13:24:00,
+True,SYN-20261002-0103,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P3,noor.iqbal,sysadmin,Closed,2026-10-30 17:49:00,762
+True,SYN-20261002-0104,[SYNTHETIC] Mailbox: mailbox full,Mailbox,P4,rida.dar,it.support.officer,Closed,2026-10-12 14:43:00,1724
+True,SYN-20261002-0105,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P3,tariq.raza,it.support.officer,Closed,2026-10-07 15:43:00,764
+True,SYN-20261002-0106,[SYNTHETIC] Report phishing: phishing email forwarded,Report phishing,P3,kamran.hashmi,sysadmin,Processing (assigned),2026-10-09 13:14:00,
+True,SYN-20261002-0107,[SYNTHETIC] Change request: add a firewall rule,Change request,P4,tariq.raza,it.support.officer,Processing (assigned),2026-10-07 10:49:00,
+True,SYN-20261002-0108,[SYNTHETIC] Printer: printer offline,Printer,P2,maya.qureshi,it.support.officer,Closed,2026-10-26 09:50:00,210
+True,SYN-20261002-0109,[SYNTHETIC] Teams / SharePoint: cannot open the team site,Teams / SharePoint,P2,sana.aslam,sysadmin,Closed,2026-10-13 10:11:00,322
+True,SYN-20261002-0110,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P4,omar.malik,sysadmin,Closed,2026-10-27 15:23:00,2639
+True,SYN-20261002-0111,[SYNTHETIC] Change request: add a firewall rule,Change request,P3,kamran.hashmi,it.support.officer,Closed,2026-10-05 12:40:00,921
+True,SYN-20261002-0112,[SYNTHETIC] Fault / error: application crashes on open,Fault / error,P4,faisal.javed,it.support.officer,Closed,2026-10-06 16:44:00,2894
+True,SYN-20261002-0113,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P3,iqra.nawaz,sysadmin,Processing (assigned),2026-10-21 15:38:00,
+True,SYN-20261002-0114,[SYNTHETIC] Fault / error: application crashes on open,Fault / error,P4,faisal.javed,it.support.officer,Processing (assigned),2026-10-28 14:06:00,
+True,SYN-20261002-0115,[SYNTHETIC] Suspected incident: possible malware alert,Suspected incident,P3,lena.hussain,it.support.officer,Closed,2026-10-20 10:38:00,906
+True,SYN-20261002-0116,[SYNTHETIC] Hardware quote: quote for two monitors,Hardware quote,P3,tariq.raza,it.support.officer,Closed,2026-10-29 14:05:00,811
+True,SYN-20261002-0117,[SYNTHETIC] Install request: please install the approved PDF tool,Install request,P4,imran.sheikh,sysadmin,Closed,2026-10-20 09:25:00,2300
+True,SYN-20261002-0118,[SYNTHETIC] Teams / SharePoint: cannot open the team site,Teams / SharePoint,P2,iqra.nawaz,sysadmin,Closed,2026-10-21 16:15:00,385
+True,SYN-20261002-0119,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P2,sara.khan,sysadmin,Closed,2026-10-15 15:19:00,368
+True,SYN-20261002-0120,[SYNTHETIC] Change request: add a firewall rule,Change request,P4,usman.rauf,it.support.officer,Closed,2026-10-16 17:20:00,1543
+True,SYN-20261002-0121,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P2,tariq.raza,sysadmin,Closed,2026-10-12 17:11:00,617
+True,SYN-20261002-0122,[SYNTHETIC] Warranty claim: keyboard key broken,Warranty claim,P4,omar.malik,it.support.officer,Closed,2026-10-23 16:02:00,2668
+True,SYN-20261002-0123,[SYNTHETIC] Hardware quote: quote for two monitors,Hardware quote,P3,maya.qureshi,sysadmin,Closed,2026-10-29 16:29:00,718
+True,SYN-20261002-0124,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P3,noor.iqbal,it.support.officer,Closed,2026-10-27 09:48:00,874
+True,SYN-20261002-0125,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P4,imran.sheikh,sysadmin,Closed,2026-10-23 17:25:00,2003
+True,SYN-20261002-0126,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P2,imran.sheikh,it.support.officer,Closed,2026-10-09 13:22:00,647
+True,SYN-20261002-0127,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P4,iqra.nawaz,sysadmin,Closed,2026-10-13 17:08:00,2322
+True,SYN-20261002-0128,[SYNTHETIC] Toner / consumables: toner low on floor 2,Toner / consumables,P3,sana.aslam,it.support.officer,Closed,2026-10-20 14:08:00,606
+True,SYN-20261002-0129,[SYNTHETIC] Printer: paper jam not clearing,Printer,P3,hamza.bhatti,sysadmin,Closed,2026-10-12 09:11:00,709
+True,SYN-20261002-0130,"[SYNTHETIC] Leaver: last day today, offboard",Leaver,P1,zain.mirza,sysadmin,Processing (assigned),2026-10-08 15:53:00,
+True,SYN-20261002-0131,[SYNTHETIC] Laptop / desktop: screen flickers,Laptop / desktop,P4,iqra.nawaz,sysadmin,Closed,2026-10-26 09:55:00,1648
+True,SYN-20261002-0132,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P3,usman.rauf,it.support.officer,Closed,2026-10-26 17:34:00,1419
+True,SYN-20261002-0133,[SYNTHETIC] Mapped drives: department drive not mapped,Mapped drives,P3,sara.khan,it.support.officer,Closed,2026-10-12 15:54:00,1234
+True,SYN-20261002-0134,"[SYNTHETIC] MFA re-registration: new phone, need MFA reset",MFA re-registration,P4,kamran.hashmi,it.support.officer,Closed,2026-10-06 11:31:00,1910
+True,SYN-20261002-0135,"[SYNTHETIC] MFA re-registration: new phone, need MFA reset",MFA re-registration,P4,omar.malik,sysadmin,Solved,2026-10-06 15:53:00,3410
+True,SYN-20261002-0136,[SYNTHETIC] Connectivity: no network in meeting room,Connectivity,P4,adil.gill,sysadmin,Closed,2026-10-21 15:08:00,2467
+True,SYN-20261002-0137,[SYNTHETIC] Install request: please install the approved PDF tool,Install request,P2,imran.sheikh,sysadmin,Closed,2026-10-26 10:48:00,311
+True,SYN-20261002-0138,[SYNTHETIC] Cannot print: nothing prints from Excel,Cannot print,P4,hira.butt,sysadmin,Processing (assigned),2026-10-15 09:04:00,
+True,SYN-20261002-0139,[SYNTHETIC] Hardware quote: quote for two monitors,Hardware quote,P4,adil.gill,it.support.officer,Closed,2026-10-09 14:00:00,2089
+True,SYN-20261002-0140,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P3,maya.qureshi,sysadmin,Processing (assigned),2026-10-15 08:37:00,
+True,SYN-20261002-0141,[SYNTHETIC] Print queue: jobs stuck in the queue,Print queue,P3,imran.sheikh,sysadmin,Closed,2026-10-27 15:29:00,986
+True,SYN-20261002-0142,[SYNTHETIC] VPN access: VPN access for remote work,VPN access,P4,usman.rauf,it.support.officer,Processing (assigned),2026-10-12 10:39:00,
+True,SYN-20261002-0143,"[SYNTHETIC] Leaver: last day today, offboard",Leaver,P3,sana.aslam,sysadmin,Closed,2026-10-19 16:19:00,379
+True,SYN-20261002-0144,[SYNTHETIC] Suspected incident: possible malware alert,Suspected incident,P3,usman.rauf,it.support.officer,Closed,2026-10-06 09:57:00,1013
+True,SYN-20261002-0145,[SYNTHETIC] Suspected incident: possible malware alert,Suspected incident,P4,aisha.chaudhry,sysadmin,Closed,2026-10-07 16:35:00,2601
+True,SYN-20261002-0146,"[SYNTHETIC] MFA re-registration: new phone, need MFA reset",MFA re-registration,P3,zain.mirza,it.support.officer,Closed,2026-10-27 08:29:00,1011
+True,SYN-20261002-0147,[SYNTHETIC] Lost / stolen device: laptop left on a train,Lost / stolen device,P3,lena.hussain,it.support.officer,Closed,2026-10-23 10:08:00,919
+True,SYN-20261002-0148,"[SYNTHETIC] MFA re-registration: new phone, need MFA reset",MFA re-registration,P3,imran.sheikh,it.support.officer,Closed,2026-10-13 15:43:00,605
+True,SYN-20261002-0149,[SYNTHETIC] Fault / error: application crashes on open,Fault / error,P4,kamran.hashmi,it.support.officer,New,2026-10-26 11:45:00,
+True,SYN-20261002-0150,[SYNTHETIC] Group / folder access: access to the Finance share,Group / folder access,P4,bilal.siddiqui,sysadmin,Closed,2026-10-13 16:49:00,1921

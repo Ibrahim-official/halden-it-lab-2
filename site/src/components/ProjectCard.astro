@@ -1,0 +1,43 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import { assetUrl } from '../lib/assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'showcase'>;
+  compact?: boolean;
+}
+
+const { project, compact = false } = Astro.props;
+const { data } = project;
+const topMetric = data.metrics[0];
+---
+
+<article class="card stack">
+  <div style="display:flex;justify-content:space-between;gap:0.6rem;align-items:flex-start;">
+    <span class="small muted">#{data.order} in build order</span>
+    <StatusBadge status={data.status} />
+  </div>
+
+  <h3 style="margin:0;">
+    <a href={`/projects/${data.id}/`}>{data.title}</a>
+  </h3>
+
+  <p class="small muted" style="margin:0;">{data.tagline}</p>
+
+  {topMetric && (
+    <p class="small" style="margin:0;">
+      <strong>{topMetric.label}:</strong>{' '}
+      <span class="muted">{topMetric.before}</span> → <strong class="after" style="color:var(--good);">{topMetric.after}</strong>
+    </p>
+  )}
+
+  {!compact && (
+    <p style="margin:0;">
+      {data.skills.slice(0, 4).map((skill) => (
+        <span class="tag">{skill}</span>
+      ))}
+      {data.skills.length > 4 && <span class="tag">+{data.skills.length - 4}</span>}
+    </p>
+  )}
+</article>

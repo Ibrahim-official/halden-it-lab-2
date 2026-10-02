@@ -1,0 +1,83 @@
+# p05-tier-rules.yml — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the risk-based prioritisation model used by scripts/05-prioritize.py. It documents the
+#         P0–P4 tier rules (inspired by CISA BOD 26-04's four variables: public exposure, KEV
+#         status, whether exploitation is automatable, and technical impact), the remediation SLA
+#         targets attached to each tier, and the 0–100 priority score used to rank *within* a tier.
+# Where:  consumed on the scanner host LNX01 (and on the owner's workstation) by
+#         scripts/05-prioritize.py, which overlays these thresholds/weights on its built-in defaults
+#         when PyYAML is available. The tier *rule order* lives in code (see docs/00-design.md §3)
+#         so it can be unit-tested; this file is the human-readable spec it mirrors.
+# Status: designed values only. No scan has been run, so no tier count, SLA percentage or MTTR in
+#         any document has been measured (AGENTS.md rule R2). SLAs below are *targets*, never claims.
+# Scope:  lab hosts only — 192.168.10.0/24, 192.168.20.0/24, 192.168.30.0/24 (AGENTS.md rule R1).
+
+version: 1
+
+# --- Tier rules (first match wins) -----------------------------------------------------------
+# The tables are the spec; scripts/05-prioritize.py implements exactly this order.
+rules:
+  - tier: P0
+    label: Emergency
+    sla_days: 3
+    condition: in_kev AND exposure == internet
+    rationale: >-
+      Known-exploited vulnerability on a host reachable from the internet. Fix first, and check both
+      before and after patching for signs of compromise (CISA BOD 26-04 style).
+  - tier: P1
+    label: Critical
+    sla_days: 7
+    condition: in_kev OR (exposure == internet AND epss >= 0.5)
+    rationale: >-
+      Either the vulnerability is already exploited in the wild on an internal host, or an
+      internet-facing service has a high probability of exploitation.
+  - tier: P2
+    label: High
+    sla_days: 30
+    condition: epss >= 0.1 OR (cvss >= 9.0 AND criticality == 3)
+    rationale: >-
+      Meaningful exploit likelihood, or a critical CVSS score on a business-critical asset. Scheduled
+      into the next monthly patch cycle.
+  - tier: P3
+    label: Medium
+    sla_days: 60
+    condition: cvss >= 7.0
+    rationale: High CVSS but no evidence of exploitation and no elevated EPSS. Batched with routine updates.
+  - tier: P4
+    label: Low
+    sla_days: 180
+    condition: everything else
+    rationale: Low likelihood and low impact. Handled at the next upgrade or maintenance cycle.
+
+# --- Thresholds used by the tier() function --------------------------------------------------
+thresholds:
+  epss_critical: 0.5    # exposed host at or above this EPSS -> P1
+  epss_high: 0.1        # any host at or above this EPSS -> P2
+  cvss_critical: 9.0    # CVSS at/above this on a criticality-3 asset -> P2
+  cvss_high: 7.0        # CVSS at/above this -> P3
+
+# --- Remediation SLA targets, in days, from the date a finding was first seen ------------------
+# Targets per the policy (business/p05-patch-vuln-policy.md) — not measured achievement.
+sla_days:
+  P0: 3
+  P1: 7
+  P2: 30
+  P3: 60
+  P4: 180
+
+# --- Priority score weights (sum = 100, plus a 5-point capped ransomware bonus) ----------------
+# Used only to order findings *inside* a tier and to show management why the top of the P1 list
+# starts where it does. The tier itself is decided by the rules above, not by the score.
+scoring_weights:
+  kev: 40          # the strongest single signal: known exploitation
+  epss: 25         # scaled by the EPSS probability (0.0–1.0)
+  exposure: 15     # internet-facing assets score higher
+  cvss: 12         # scaled by CVSS / 10
+  criticality: 8   # scaled by (criticality - 1) / 2, so 1 -> 0 and 3 -> full weight
+  ransomware_bonus: 5  # KEV entries linked to known ransomware campaigns
+
+# --- Input provenance -------------------------------------------------------------------------
+# The live program fetches these; the offline sample in data/ carries synthetic stand-ins that are
+# labelled as such. No feed value is copied into a claim in any report.
+feeds:
+  cisa_kev: "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+  first_epss: "https://api.first.org/data/v1/epss"

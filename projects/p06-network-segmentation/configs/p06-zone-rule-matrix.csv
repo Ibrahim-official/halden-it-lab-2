@@ -1,0 +1,32 @@
+# P6 zone rule matrix - ordered inter-zone firewall rule set for FW01 (OPNsense, HQ).
+# Applies to: FW01 only. Rules are evaluated top-down; the first match wins, so the order matters.
+# Read by: scripts/01-Apply-OpnSenseNetworks.sh (applies or prints the GUI steps) and
+#          scripts/report/segmentation_report.py (expected-result cross-check). Lines starting
+#          with '#' are comments and are ignored by both.
+# Companion documents: ./p06-zone-rule-matrix.md (narrative), ../docs/00-design.md (why).
+# No credentials, no WAN address and no secrets belong in this file.
+rule_id,source_zone,destination_zone,service,port,action,owner,justification
+1,MGMT,ANY-INTERNAL,ANY,any,allow,IT,Tier-0 administration from the PAW (WS02) only
+2,USERS-HQ,SERVERS,DNS,53,allow,IT,AD name resolution through the domain controllers
+3,USERS-HQ,SERVERS,Kerberos,88,allow,IT,AD authentication and service tickets
+4,USERS-HQ,SERVERS,kpasswd,464,allow,IT,Password change for domain accounts
+5,USERS-HQ,SERVERS,LDAP-GC,389,636,3268,3269,allow,IT,Directory lookups and global catalogue
+6,USERS-HQ,SERVERS,SMB,445,allow,IT,SYSVOL-Netlogon and department file shares
+7,USERS-HQ,SERVERS,RPC,135,49152-65535,allow,IT,Group Policy processing and remote management
+8,USERS-HQ,OPS01,HTTPS,443,allow,IT,Service desk and self-service portal
+9,USERS-HQ,INTERNET,Web,80,443,allow,IT,Business web access
+10,VPN-USERS,SERVERS,AD-and-files,53,88,135,389,445,464,636,3268,3269,49152-65535,allow,IT,Remote-work parity with the USERS-HQ zone
+11,VPN-USERS,OPS01,HTTPS,443,allow,IT,Service desk access from home
+12,WAREHOUSE,SERVERS,AD-and-files,53,88,135,389,445,464,636,3268,3269,49152-65535,allow,IT,Cross-site authentication and file access over the WireGuard tunnel
+13,WAREHOUSE,INTERNET,Web,80,443,allow,IT,Web access at site 2
+14,IOT,FS01,SMB,445,allow,Ops,Scan-to-folder only
+15,IOT,SERVERS,DNS,53,allow,IT,Name resolution for scanners and cameras
+16,GUEST,INTERNET,Web,80,443,allow,IT,Internet-only guest access
+17,ANY-INTERNAL-EXCEPT-DCS,INTERNET,DNS,53,853,deny,IT,Force DNS through the domain resolvers so filtering and logging apply
+18,ANY-INTERNAL,INTERNET,SMB-RDP,445,3389,deny,IT,Remove the usual lateral-movement and exfiltration routes
+19,GUEST,ANY-INTERNAL,ANY,any,deny,IT,Guest isolation from every company system
+20,IOT,ANY-INTERNAL,ANY,any,deny,Ops,Printers and cameras need no internal access beyond rules 14 and 15
+21,IOT,INTERNET,ANY,any,deny,Ops,Only the FS01 SMB exception is granted to the IOT zone
+22,ANY,MGMT,ANY,any,deny,IT,The management zone is reachable only from MGMT itself (matched by rule 1)
+23,VPN-USERS,MGMT,ANY,any,deny,IT,Remote staff must not reach the management zone
+24,ANY,ANY,ANY,any,deny-and-log,IT,Default deny: everything not explicitly allowed above

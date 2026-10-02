@@ -1,0 +1,23 @@
+{
+  "_comment": "CA004 - Block sign-in from unapproved locations. Applies to: the Halden Microsoft Entra ID tenant (P2, lab only). Every location except 'AllTrusted' is treated as unapproved, so sign-ins from anywhere that has not been explicitly trusted are blocked. The trusted named location is created and named in the tenant before this policy is enforced; in the lab the trusted entry is optional and the policy is reviewed in report-only first. Deployed by 07-New-ConditionalAccessPolicies.ps1.",
+  "displayName": "CA004 - Block sign-in from unapproved countries",
+  "state": "enabledForReportingButNotEnforced",
+  "conditions": {
+    "users": {
+      "includeUsers": ["All"],
+      "excludeUsers": ["__BREAKGLASS_UPNS__"]
+    },
+    "applications": {
+      "includeApplications": ["All"]
+    },
+    "clientAppTypes": ["all"],
+    "locations": {
+      "includeLocations": ["All"],
+      "excludeLocations": ["AllTrusted"]
+    }
+  },
+  "grantControls": {
+    "operator": "OR",
+    "builtInControls": ["block"]
+  }
+}

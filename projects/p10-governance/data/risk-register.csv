@@ -1,0 +1,2 @@
+# P10 risk register (empty on purpose until real risks are assessed). Applies to projects/p10-governance. Methodology and column meanings are in ../business/p10-risk-register.md. The business_owner column must name a business owner, never IT.
+risk_id,"risk_statement (If ... then ... resulting in ...)",likelihood,impact,score,business_owner,existing_controls,treatment,actions,residual_score,review_date,source

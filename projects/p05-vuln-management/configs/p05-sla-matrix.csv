@@ -1,0 +1,15 @@
+# p05-sla-matrix.csv — Halden Distribution Ltd. (fictional, isolated home lab)
+# What:   the remediation SLA matrix: which tier must be fixed within how many days of the finding
+#         being first seen, in which maintenance window, and what evidence closes it. These are
+#         **targets** the business agreed to, not measured results.
+# Where:  referenced by scripts/05-prioritize.py (the sla_days values mirror it), by
+#         business/p05-patch-vuln-policy.md and by the monthly report template.
+# Status: targets only. No SLA achievement, compliance percentage, MTTR or overdue count has been
+#         measured (AGENTS.md rule R2). An SLA is only "met" once the rescan in 07-verify-closure.sh
+#         shows the finding is gone.
+tier,label,rule_summary,target_days,maintenance_window,escalation,accountable_owner,closure_evidence
+P0,Emergency,KEV on an internet-exposed host,3,Immediate out-of-band change (no window),IT manager and business owner notified immediately,IT (remediation) / asset owner (downtime),Rescan shows the finding gone plus a compromise-check note before and after
+P1,Critical,KEV internal or high EPSS on an exposed host,7,Next Wednesday workstation window or Saturday server window,Raised to IT manager at day 5,IT (remediation) / asset owner (downtime),Rescan shows the finding gone and the change record is closed
+P2,High,EPSS at or above 0.1 or critical CVSS on a criticality-3 asset,30,Next monthly patch cycle,Raised in the monthly vulnerability report,IT (remediation),Rescan shows the finding gone in the monthly verification scan
+P3,Medium,CVSS at or above 7.0,60,Next monthly patch cycle or upgrade window,Listed in the monthly report if still open,IT (remediation),Rescan shows the finding gone or the item is accepted with a risk owner
+P4,Low,Everything else,180,Next upgrade or maintenance cycle,None; batched,IT (remediation),Closed at the next cycle or accepted as routine

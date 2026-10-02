@@ -1,0 +1,7 @@
+{
+  "_comment": "Guard file for the Halden P2 cloud scripts (06-New-BreakGlassAccounts.ps1, 07-New-ConditionalAccessPolicies.ps1, 08-Set-AuthenticationMethods.ps1, 09-Invoke-ScubaGear.ps1). Applies to: the lab machine only. Get-ADDomain cannot verify a cloud tenant, so before any Graph call the script checks that (a) the C:\\halden-lab-marker file exists on this host and (b) the tenant domain below matches the tenant that is actually signed in. Fill labTenantDomain in AFTER the Microsoft 365 Business Premium trial is created at the start of Phase 3, then keep this file accurate. It is a domain name, never a tenant ID, client secret or certificate - no secrets belong in this repository (AGENTS.md rule R3).",
+  "labTenantDomain": "",
+  "signInAuditNote": "If labTenantDomain is empty, the cloud scripts refuse to run: connect with Connect-MgGraph, run (Get-MgOrganization).VerifiedDomains, and paste the onmicrosoft.com domain here.",
+  "expectedOwner": "Muhammad Ibrahim Akmal (lab owner)",
+  "trialNote": "Microsoft 365 Business Premium trial. Start it on the day Phase 3 begins and finish all cloud work inside the 30-day window (docs/plan/01-candidate-fit-and-tailored-roadmap.md)."
+}

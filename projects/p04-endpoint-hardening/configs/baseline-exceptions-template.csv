@@ -1,0 +1,24 @@
+# Baseline exceptions register - P4
+#
+# WHAT IT IS
+#   The template for configs/baseline-exceptions.csv: every approved deviation from the Microsoft
+#   baseline or from the ASR rule set, with a business reason, a risk, an owner and an expiry.
+#   The ASR exception register (business/p04-asr-exceptions.md) is the human-readable twin of the
+#   rows that have asr_rule filled in.
+#
+# WHERE IT APPLIES
+#   Domain: ad.halden.internal  ·  Deviations are delivered in "WKS - Halden Overrides - v1",
+#   which has higher link precedence than the baseline GPO.
+#
+# STATUS
+#   EMPTY BY DESIGN. This register is completed from the audit-mode run (P4 Phase 2) and from any
+#   application that a baseline control breaks. An exception written before anything was measured
+#   would be a guess, so the header row is currently the only content.
+#
+# RULES
+#   - Every exception needs a ticket, a business owner and an expiry date. "Permanent" is not a reason.
+#   - A path or process exclusion in Defender must have a row here before it is added by a script.
+#   - The compliance report counts a device as non-compliant while an exception is unresolved;
+#     exceptions are reported to management, not hidden inside the average.
+
+ExceptionID,DateRaised,RaisedBy,Setting,Scope,asr_rule,Reason,Risk,ApprovedBy,ExpiryDate,Status,RemovalPlan

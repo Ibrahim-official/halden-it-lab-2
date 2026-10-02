@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Network Segmentation, Secure Remote Access VPN and Enterprise Wi-Fi | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="From one flat network to six firewall-enforced zones, an MFA VPN and certificate-based Wi-Fi"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p06/"><meta property="og:title" content="Network Segmentation, Secure Remote Access VPN and Enterprise Wi-Fi | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="From one flat network to six firewall-enforced zones, an MFA VPN and certificate-based Wi-Fi"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p06/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#8 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>Network Segmentation, Secure Remote Access VPN and Enterprise Wi-Fi</h1><p style="font-size:1.1rem;">From one flat network to six firewall-enforced zones, an MFA VPN and certificate-based Wi-Fi</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">OPNsense</span><span class="tag">VLANs</span><span class="tag">Firewall rule design</span><span class="tag">WireGuard</span><span class="tag">OpenVPN</span><span class="tag">NPS/RADIUS</span><span class="tag">AD CS</span><span class="tag">802.1X / EAP-TLS</span><span class="tag">DNS filtering</span><span class="tag">nmap</span><span class="tag">PowerShell</span><span class="tag">Bash</span></p></header><img src="/projects/p06-network-segmentation/p06-architecture.svg" alt="Network Segmentation, Secure Remote Access VPN and Enterprise Wi-Fi — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>Halden runs guest Wi-Fi, the CCTV recorder, printers, warehouse scanners, staff laptops and the servers
+on one flat subnet — so one infected laptop can talk directly to the domain controllers, the file
+server and the backup server. The Wi-Fi password has been unchanged for three years and is written on
+the break-room wall, so everyone who ever asked for it still knows it, and remote staff reach the file
+server through a remote desktop port exposed to the internet. Exploitation of edge devices and VPNs was
+a leading growth vector in the Verizon DBIR 2025, and exposed remote desktop is one of the most common
+ransomware entry points. (<code>docs/plan/00-research-and-selection.md</code>.)</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>Six firewall-enforced VLAN zones</strong> (servers, warehouse, staff, management, guest, devices) plus a
+VPN pool, replacing a single flat subnet, with <strong>deny by default</strong> between all of them.</li>
+<li><strong>A rule matrix where every exception has a number, an owner and a justification</strong> — 24 rules applied
+in a documented order, because the firewall evaluates top-down and the first match wins. Aliases
+(<code>DCs</code>, <code>AD_PORTS</code>, <code>RFC1918</code>) keep the rules readable and a subnet change to a single edit.</li>
+<li><strong>DNS and egress control</strong>: clients resolve names only through the domain controllers, outbound DNS
+to anyone else is blocked and logged, and outbound file-sharing and remote-desktop traffic to the
+internet is blocked outright.</li>
+<li><strong>The exposed remote desktop is gone</strong>, replaced by a road-warrior VPN with a certificate per device,
+authenticated through RADIUS against an AD group and protected by a second factor on the user’s
+phone.</li>
+<li><strong>Least-privilege remote access</strong>: a remote user gets the same access as being in the office and is
+explicitly denied the management zone, where the admin workstation, the hypervisor and the backup
+repository live.</li>
+<li><strong>A WireGuard site-to-site tunnel</strong> joining the warehouse firewall to HQ, carrying DHCP relay
+traffic, AD authentication and file access for site 2 over one restricted peer relationship.</li>
+<li><strong>Certificate-based 802.1X Wi-Fi (EAP-TLS)</strong> on an internal certificate authority, with certificates
+autoenrolled by Group Policy — no password on the air for an evil-twin access point to harvest.</li>
+<li><strong>An isolated guest network</strong> with client isolation, a voucher process at reception and a written
+acceptable-use notice.</li>
+<li><strong>An automated segmentation test suite</strong>: 47 defined connections across the zones, run from a host in
+each zone, written to a results file, plus a separate guest and IoT isolation test. Configuration is
+not proof; the test is.</li>
+<li><strong>Documentation as a deliverable</strong>: design and as-built documents, four runbooks, an L3 diagram, an
+IP plan, and a business layer from executive brief to staff VPN guide.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P6 zone architecture" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p06-architecture.Bgm2SUIm_Z4lz9b.svg"></p>
+<p>Six VLAN zones hang off one 802.1Q trunk on the HQ firewall, and every flow between them is a
+documented exception to a default deny. The three flows that matter most: a staff workstation reaches
+the domain controllers on a specific port list; a remote user reaches the same services over the VPN
+but nothing in the management zone; and a guest reaches the internet and nothing else at all. The
+warehouse is carried across one restricted WireGuard peer relationship rather than a copy of the HQ
+rule set.</p>
+<p>The whole design reduces to a few lines an auditor can challenge, taken from the rule matrix:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>18,ANY-INTERNAL,INTERNET,SMB-RDP,445,3389,deny,IT,Remove the usual lateral-movement and exfiltration routes</span></span>
+<span class="line"><span>19,GUEST,ANY-INTERNAL,ANY,any,deny,IT,Guest isolation from every company system</span></span>
+<span class="line"><span>22,ANY,MGMT,ANY,any,deny,IT,The management zone is reachable only from MGMT itself</span></span>
+<span class="line"><span>24,ANY,ANY,ANY,any,deny-and-log,IT,Default deny: everything not explicitly allowed above</span></span></code></pre>
+<p>Order is the design: rule 1 allows the management zone to reach everything, and rules 22 and 23 deny
+everything else from reaching it — which works because the first matching rule wins.</p>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit — scripts, rule matrix, configs, runbooks, business artefacts and
+test suite — is complete, and lab execution is pending. I am deliberately not publishing numbers before
+they exist: the metrics will be filled from real lab runs, each with a file in <code>evidence/public/</code> as its
+source. The segmentation suite is written and ready, and its results file stays empty until it is run
+from a host in each zone.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Segmentation test outcomes (hosts in every zone)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Guest and IoT isolation outcomes</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Remote desktop reachable from the lab WAN</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>VPN logon denied for a non-member (NPS event 6273)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>VPN logon granted with a second factor (NPS event 6272)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td><code>eapol_test</code> result against NPS (EAP-TLS)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<h2 id="business-side">Business side</h2>
+<p>The technical work is half of a network project; the other half is what the business receives and
+approves:</p>
+<ul>
+<li><strong>Executive brief (1 page)</strong> — why segmentation matters, framed as “one compromised laptop versus the
+whole company”, with the market evidence and what the change does <em>not</em> fix.</li>
+<li><strong>Network access policy</strong> — who may reach what, how remote access is requested and approved, the
+guest terms, and how an exception is raised so it cannot quietly become permanent.</li>
+<li><strong>Zone and service matrix in business language</strong> — the same decisions with no ports to decode, so a
+manager can check them without an engineer in the room.</li>
+<li><strong>Guest Wi-Fi acceptable-use notice</strong> — displayed before a voucher is issued, with clear rules and a
+short note telling reception not to improvise.</li>
+<li><strong>Change record</strong> — risk, impact, phase plan, test plan, comms plan and backout, written for the
+most dangerous change in the portfolio: the one that can break sign-in, file access and Group Policy
+at once, and can lock IT out of its own firewall.</li>
+<li><strong>Working-from-home VPN guide</strong> — a one-page setup and troubleshooting sheet for staff, which is
+what turns a technical control into something people can actually use.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>The rule matrix is a design tool, not documentation.</strong> Writing it before configuring anything
+forced the awkward questions early — which zone needs which port, who owns the exception, what
+happens when someone forgets one. Written afterwards, it would have described whatever I happened to
+build.</li>
+<li><strong>I would automate the firewall rules from the matrix on day one.</strong> Applying rules through a GUI and
+keeping the matrix in a file means the two can drift; driving the rules from the matrix through the
+API makes the file the source of truth, which is what P9’s config-as-code work then keeps honest.</li>
+<li><strong>Order of operations is a safety control, not a preference.</strong> VLANs, interfaces, anti-lockout path,
+aliases, then rules. I would also test the relay and a lease in a zone before moving the next zone,
+rather than after the change.</li>
+<li><strong>Proving it changed how I think about the project.</strong> Designing the test suite up front — deciding
+which paths must be open and which must be blocked, from whose perspective — was more valuable than
+any single firewall rule, because it is the only thing that turns “segmented” from a claim into a
+result.</li>
+</ul>
+<blockquote>
+<p>complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p06-network-segmentation/_index.pdf"> Index</a></li><li><a href="/projects/p06-network-segmentation/p06-change-record.pdf">Change Record</a></li><li><a href="/projects/p06-network-segmentation/p06-exec-brief.pdf">Exec Brief</a></li><li><a href="/projects/p06-network-segmentation/p06-guest-wifi-notice.pdf">Guest Wifi Notice</a></li><li><a href="/projects/p06-network-segmentation/p06-network-access-policy.pdf">Network Access Policy</a></li><li><a href="/projects/p06-network-segmentation/p06-remote-access-user-guide.pdf">Remote Access User Guide</a></li><li><a href="/projects/p06-network-segmentation/p06-zone-service-matrix-business.pdf">Zone Service Matrix Business</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p06-network-segmentation">projects/p06-network-segmentation/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd.). The lab exposes nothing to the internet and no wide-area address is recorded. This page shows a working build kit that is being executed in the lab phase by phase: the rule matrix, scripts, runbooks and business artefacts are written, and numbers appear here only once they have actually been measured. Results are deliberately empty until then.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

@@ -1,0 +1,11 @@
+{
+  "_comment": "Privileged Entra ID roles subject to CA003 (phishing-resistant MFA for admins). Applies to: the Halden Microsoft Entra ID tenant (P2, lab only). Listed by role display name; 07-New-ConditionalAccessPolicies.ps1 resolves each name to its role template id at deploy time with Get-MgDirectoryRoleTemplate, so this file carries no tenant-specific ids. The two break-glass accounts are deliberately NOT members of these roles where avoidable; if they must be, CA003 excludes them explicitly.",
+  "roles": [
+    "Global Administrator",
+    "Privileged Role Administrator",
+    "Privileged Authentication Administrator",
+    "Cloud Application Administrator",
+    "Application Administrator",
+    "User Administrator"
+  ]
+}

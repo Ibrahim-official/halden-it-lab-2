@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>P5 vulnerability prioritizer — synthetic sample — Halden IT lab</title>
+  <meta name="description" content="Interactive demo of the P5 risk-based vulnerability prioritizer running on synthetic sample data in the browser. No backend, no network." />
+  <style>
+    :root {
+      --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #475569; --line: #cbd5e1;
+      --accent: #0f766e; --p0: #b91c1c; --p1: #c2410c; --p2: #a16207; --p3: #0e7490; --p4: #475569;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0b1220; --card: #111a2b; --ink: #e2e8f0; --muted: #94a3b8; --line: #263449; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; }
+    header, main, footer { max-width: 1100px; margin: 0 auto; padding: 16px 20px; }
+    h1 { font-size: 1.5rem; margin: 0 0 4px; }
+    h2 { font-size: 1.05rem; margin: 28px 0 8px; }
+    p { color: var(--muted); margin: 4px 0; }
+    .banner { background: #fef3c7; color: #78350f; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 10px 12px; font-size: 0.9rem; }
+    .banner strong { color: #78350f; }
+    @media (prefers-color-scheme: dark) { .banner { background: #422006; color: #fde68a; border-color: #854d0e; } .banner strong { color: #fde68a; } }
+    .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 16px 0; }
+    label { font-size: 0.9rem; color: var(--muted); }
+    select, input, button { font: inherit; padding: 6px 8px; border: 1px solid var(--line);
+      border-radius: 6px; background: var(--card); color: var(--ink); }
+    button { cursor: pointer; }
+    button.reset { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .strip { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+      padding: 10px 14px; min-width: 120px; }
+    .stat b { display: block; font-size: 1.4rem; }
+    .stat span { font-size: 0.8rem; color: var(--muted); }
+    nav.tiers { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+    .tierbtn { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: var(--card); }
+    .tierbtn[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+    .tierbtn.P0 { color: var(--p0); } .tierbtn.P1 { color: var(--p1); }
+    .tierbtn.P2 { color: var(--p2); } .tierbtn.P3 { color: var(--p3); } .tierbtn.P4 { color: var(--p4); }
+    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); font-size: 0.88rem; vertical-align: top; }
+    th { background: color-mix(in srgb, var(--accent) 10%, transparent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; }
+    .chip { font-weight: 700; border-radius: 6px; padding: 1px 7px; color: #fff; }
+    .chip.P0 { background: var(--p0); } .chip.P1 { background: var(--p1); }
+    .chip.P2 { background: var(--p2); } .chip.P3 { background: var(--p3); } .chip.P4 { background: var(--p4); }
+    .overdue { color: var(--p0); font-weight: 600; }
+    code { background: color-mix(in srgb, var(--accent) 12%, transparent); padding: 1px 4px; border-radius: 4px; }
+    details.treemap { margin: 8px 0 0; }
+    .note { font-size: 0.82rem; }
+    footer { border-top: 1px solid var(--line); margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>P5 — risk-based vulnerability prioritizer</h1>
+    <p>Halden Distribution Ltd. (fictional) · home-lab project · runs entirely in your browser</p>
+    <p class="banner" role="note">
+      <strong>Synthetic sample data.</strong> Every finding, EPSS value, KEV flag and host below belongs
+      to <strong>invented sample data</strong> for a fictional company. It is <strong>not</strong> a scan
+      of any real network and is not a claim about any system. The CVE identifiers are real public
+      identifiers; their placement and scores here are made up to exercise the model. The live program
+      fetches the real CISA KEV and FIRST EPSS feeds, and only ever scans the isolated Halden lab ranges
+      (192.168.10.0/24, 192.168.20.0/24, 192.168.30.0/24).
+    </p>
+  </header>
+
+  <main>
+    <p class="note" id="source-note">Loading the bundled sample…</p>
+
+    <div class="controls">
+      <label for="tier-filter">Tier</label>
+      <select id="tier-filter">
+        <option value="">All tiers</option>
+        <option value="P0">P0 — Emergency</option>
+        <option value="P1">P1 — Critical</option>
+        <option value="P2">P2 — High</option>
+        <option value="P3">P3 — Medium</option>
+        <option value="P4">P4 — Low</option>
+      </select>
+      <label for="search">Search host / CVE</label>
+      <input id="search" type="search" placeholder="e.g. dc01 or CVE-2021-44228" />
+      <label for="sort">Sort by</label>
+      <select id="sort">
+        <option value="tier">Tier, then score</option>
+        <option value="score">Priority score</option>
+        <option value="epss">EPSS</option>
+        <option value="cvss">CVSS</option>
+        <option value="host">Host</option>
+      </select>
+      <button class="reset" id="reset" type="button">Reset filters</button>
+    </div>
+
+    <div class="strip" id="stats"></div>
+
+    <h2>The funnel: many findings in, few urgent actions out</h2>
+    <p class="note">Bars show the tier distribution over the synthetic sample. This is what a small team uses to decide how much they can realistically fix this cycle.</p>
+    <div id="funnel"></div>
+
+    <h2>Tiered work list</h2>
+    <nav class="tiers" id="tier-chips" aria-label="Filter by tier"></nav>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th><th>Score</th><th>Host</th><th>Finding</th><th>CVSS</th><th>EPSS</th>
+          <th>KEV</th><th>SLA / due</th><th>Owner</th><th>Why this priority</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="note" id="row-note"></p>
+
+    <details class="treemap">
+      <summary>Scoring rule (identical to the Python prioritizer)</summary>
+      <p class="note" id="rule-note"></p>
+    </details>
+  </main>
+
+  <footer>
+    <p class="note">
+      Static demo — no backend, no network calls, no tracking. Model: <code>demo/prioritizer.js</code>;
+      production logic: <code>scripts/05-prioritize.py</code> with unit tests in
+      <code>scripts/tests/test_prioritize.py</code>. See <code>docs/00-design.md</code> for why
+      exploitation and exposure outrank raw CVSS.
+    </p>
+  </footer>
+
+  <script src="sample-findings.js" onerror="loadFallback()"></script>
+  <script src="prioritizer.js"></script>
+  <script>
+    'use strict';
+
+    function loadFallback() {
+      // When the page is opened straight from disk some browsers block the .js data file; fall back
+      // to fetching the JSON beside it. Both files are generated by scripts/05-prioritize.py.
+      fetch('sample-findings.json').then(function (r) { return r.json(); }).then(function (data) {
+        window.P05_DATA = data; boot();
+      }).catch(function () {
+        document.getElementById('source-note').textContent =
+          'Could not load the sample bundle. Re-generate it with: python3 scripts/05-prioritize.py run ' +
+          '--findings data/sample-scanner-export.csv --assets data/asset-criticality.csv ' +
+          '--enrichment data/sample-enrichment.json --json-bundle demo/sample-findings.json ' +
+          '--js-bundle demo/sample-findings.js';
+      });
+    }
+
+    var state = { result: null, tier: '', query: '', sort: 'tier' };
+
+    function boot() {
+      var bundle = window.P05_DATA;
+      if (!bundle || !bundle.findings) { loadFallback(); return; }
+      state.result = window.P05_MODEL.run(bundle);
+      document.getElementById('source-note').textContent =
+        'Sample bundle: ' + bundle.findings.length + ' findings across ' + bundle.assets.length +
+        ' synthetic assets · reference date ' + bundle.as_of + ' · generated by ' + bundle.generated_by;
+      document.getElementById('rule-note').innerHTML =
+        'Tier rules (first match wins): <b>P0</b> KEV + internet-exposed · ' +
+        '<b>P1</b> KEV internal or exposed with EPSS ≥ ' + bundle.rules.thresholds.epss_critical + ' · ' +
+        '<b>P2</b> EPSS ≥ ' + bundle.rules.thresholds.epss_high + ' or CVSS ≥ ' +
+        bundle.rules.thresholds.cvss_critical + ' on a criticality-3 asset · <b>P3</b> CVSS ≥ ' +
+        bundle.rules.thresholds.cvss_high + ' · <b>P4</b> everything else. Weighted score (0–100): ' +
+        'KEV ' + bundle.rules.weights.kev + ', EPSS ' + bundle.rules.weights.epss + ', exposure ' +
+        bundle.rules.weights.exposure + ', CVSS ' + bundle.rules.weights.cvss + ', criticality ' +
+        bundle.rules.weights.criticality + ', ransomware bonus ' + bundle.rules.weights.ransomware_bonus + '.';
+      renderStats();
+      renderFunnel();
+      renderChips();
+      renderRows();
+    }
+
+    function renderStats() {
+      var r = state.result;
+      var stats = [
+        { v: r.total, l: 'findings in the sample' },
+        { v: r.urgent, l: 'urgent (P0 + P1)' },
+        { v: r.urgentPct + '%', l: 'of findings that are urgent' },
+        { v: r.kev, l: 'findings in CISA KEV' },
+        { v: r.counts.P0, l: 'P0 — emergency' },
+        { v: r.overdue.P0 + r.overdue.P1, l: 'P0/P1 past the SLA target' }
+      ];
+      document.getElementById('stats').innerHTML = stats.map(function (s) {
+        return '<div class="stat"><b>' + s.v + '</b><span>' + s.l + '</span></div>';
+      }).join('');
+    }
+
+    function renderFunnel() {
+      var counts = state.result.counts;
+      var total = state.result.total || 1;
+      var order = ['P0', 'P1', 'P2', 'P3', 'P4'];
+      var labels = { P0: 'Emergency', P1: 'Critical', P2: 'High', P3: 'Medium', P4: 'Low' };
+      document.getElementById('funnel').innerHTML = order.map(function (t) {
+        var pct = Math.round(1000 * counts[t] / total) / 10;
+        return '<div style="display:flex;align-items:center;gap:10px;margin:4px 0">' +
+          '<span style="width:120px;font-size:.85rem"><span class="chip ' + t + '">' + t + '</span> ' + labels[t] + '</span>' +
+          '<span style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:6px;height:18px;overflow:hidden">' +
+          '<span style="display:block;height:100%;width:' + pct + '%;background:' + TIER_COLOURS[t] + '"></span></span>' +
+          '<span style="width:90px;text-align:right;font-size:.85rem">' + counts[t] + ' (' + pct + '%)</span></div>';
+      }).join('');
+    }
+
+    function renderChips() {
+      var counts = state.result.counts;
+      var html = '<button class="tierbtn" type="button" data-tier="" aria-pressed="' + (state.tier === '') + '">All (' + state.result.total + ')</button>';
+      ['P0', 'P1', 'P2', 'P3', 'P4'].forEach(function (t) {
+        html += '<button class="tierbtn ' + t + '" type="button" data-tier="' + t + '" aria-pressed="' + (state.tier === t) + '">' +
+          t + ' (' + counts[t] + ')</button>';
+      });
+      document.getElementById('tier-chips').innerHTML = html;
+      Array.prototype.forEach.call(document.querySelectorAll('#tier-chips button'), function (b) {
+        b.addEventListener('click', function () { state.tier = b.getAttribute('data-tier'); renderChips(); renderRows(); });
+      });
+    }
+
+    var TIER_COLOURS = { P0: '#b91c1c', P1: '#c2410c', P2: '#a16207', P3: '#0e7490', P4: '#475569' };
+
+    function visibleItems() {
+      var items = state.result.items.slice();
+      if (state.tier) items = items.filter(function (i) { return i.tier === state.tier; });
+      if (state.query) {
+        var q = state.query.toLowerCase();
+        items = items.filter(function (i) {
+          return i.finding.host.indexOf(q) >= 0 || (i.finding.cve || '').toLowerCase().indexOf(q) >= 0 ||
+            i.finding.title.toLowerCase().indexOf(q) >= 0;
+        });
+      }
+      if (state.sort === 'score') items.sort(function (a, b) { return b.priority_score - a.priority_score; });
+      if (state.sort === 'epss') items.sort(function (a, b) { return b.finding.epss - a.finding.epss; });
+      if (state.sort === 'cvss') items.sort(function (a, b) { return b.finding.cvss - a.finding.cvss; });
+      if (state.sort === 'host') items.sort(function (a, b) { return a.finding.host.localeCompare(b.finding.host); });
+      if (state.sort === 'tier') {
+        var order = { P0: 0, P1: 1, P2: 2, P3: 3, P4: 4 };
+        items.sort(function (a, b) {
+          if (order[a.tier] !== order[b.tier]) return order[a.tier] - order[b.tier];
+          return b.priority_score - a.priority_score;
+        });
+      }
+      return items;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function renderRows() {
+      var items = visibleItems();
+      document.getElementById('rows').innerHTML = items.map(function (i) {
+        var f = i.finding;
+        return '<tr>' +
+          '<td><span class="chip ' + i.tier + '">' + i.tier + '</span></td>' +
+          '<td>' + i.priority_score.toFixed(1) + '</td>' +
+          '<td>' + escapeHtml(f.host) + '</td>' +
+          '<td>' + escapeHtml(f.cve || '(config weakness)') + ' — ' + escapeHtml(f.title) + '</td>' +
+          '<td>' + f.cvss.toFixed(1) + '</td>' +
+          '<td>' + f.epss.toFixed(2) + '</td>' +
+          '<td>' + (f.in_kev ? 'yes' : '') + (f.ransomware ? ' (ransomware)' : '') + '</td>' +
+          '<td>' + i.sla_days + 'd → ' + i.due + (i.overdue ? ' <span class="overdue">overdue</span>' : '') + '</td>' +
+          '<td>' + escapeHtml(i.asset.owner) + '</td>' +
+          '<td>' + escapeHtml(i.reasons) + '</td>' +
+          '</tr>';
+      }).join('');
+      document.getElementById('row-note').textContent =
+        'Showing ' + items.length + ' of ' + state.result.total + ' findings in the synthetic sample.';
+    }
+
+    document.getElementById('tier-filter').addEventListener('change', function (e) { state.tier = e.target.value; renderChips(); renderRows(); });
+    document.getElementById('search').addEventListener('input', function (e) { state.query = e.target.value; renderRows(); });
+    document.getElementById('sort').addEventListener('change', function (e) { state.sort = e.target.value; renderRows(); });
+    document.getElementById('reset').addEventListener('click', function () {
+      state = { result: state.result, tier: '', query: '', sort: 'tier' };
+      document.getElementById('tier-filter').value = '';
+      document.getElementById('search').value = '';
+      document.getElementById('sort').value = 'tier';
+      renderChips(); renderRows();
+    });
+
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.P05_DATA) { boot(); }
+    });
+  </script>
+</body>
+</html>

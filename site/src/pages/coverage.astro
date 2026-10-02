@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortByOrder } from '../lib/assets';
+
+const projects = sortByOrder(await getCollection('showcase'));
+
+// responsibility → projects claiming it
+const coverage = new Map<string, typeof projects>();
+for (const project of projects) {
+  for (const bullet of project.data.jd_bullets) {
+    const list = coverage.get(bullet) ?? [];
+    list.push(project);
+    coverage.set(bullet, list);
+  }
+}
+
+const rows = [...coverage.entries()].sort(([a], [b]) => a.localeCompare(b));
+---
+
+<BaseLayout
+  title="Job-ad coverage"
+  description="Every responsibility from the IT Support Officer and System Administrator job ads, mapped to the home-lab project that proves it."
+>
+  <h1>Job-ad coverage</h1>
+  <p>
+    Both job ads, responsibility by responsibility, mapped to the project that produces the
+    evidence. <span class="muted">A responsibility shows as covered once its project is Done.</span>
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Responsibility from the job ads</th>
+        <th scope="col">Proven by</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(([bullet, list]) => (
+        <tr>
+          <td>{bullet}</td>
+          <td>
+            {list.map((project) => (
+              <span style="margin-right:0.5rem;white-space:nowrap;">
+                <a href={`/projects/${project.data.id}/`}>{project.data.id.toUpperCase()}</a>
+                <span class="small muted">({project.data.status})</span>
+              </span>
+            ))}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <p class="small muted">
+    The full mapping, including research sources, is in <code>docs/plan/00-research-and-selection.md</code>.
+  </p>
+</BaseLayout>

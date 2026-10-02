@@ -1,0 +1,2 @@
+# P10 monthly KPI history template. Applies to projects/p10-governance. This is a shape, not data: the collector writes a dated snapshot to ../reports/ and appends to a real history file. rag is one of green, amber, red or not-measured.
+period,kpi_id,kpi_name,value,unit,rag,target,source,as_of,notes

@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p5Title p5Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p5Title">Halden P5 risk-based vulnerability prioritisation funnel</title>
+  <desc id="p5Desc">Scanner findings flow through deduplication and risk scoring using CISA KEV, FIRST EPSS, asset exposure and criticality into a tiered P0 to P4 work list, which becomes tickets, patched systems and verified closure. Data sources are on the left and human decision points are marked.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="40" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P5 risk-based vulnerability prioritisation</text>
+  <text x="40" y="63" font-size="13" fill="#475569">Isolated home lab · scanner targets lab ranges only (192.168.10.0/24, 192.168.20.0/24, 192.168.30.0/24) · domain ad.halden.internal</text>
+
+  <!-- ============ LEFT: data sources ============ -->
+  <text x="40" y="96" font-size="12.5" font-weight="700" fill="#0f766e">DATA SOURCES</text>
+
+  <g font-size="11.5">
+    <rect x="40" y="108" width="196" height="52" rx="7" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="52" y="128" font-size="12" font-weight="600" fill="#0f172a">Greenbone CE scanner</text>
+    <text x="52" y="146" fill="#64748b">weekly authenticated scan (LNX01)</text>
+
+    <rect x="40" y="170" width="196" height="50" rx="7" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="52" y="190" font-size="12" font-weight="600" fill="#0f172a">CISA KEV catalogue</text>
+    <text x="52" y="208" fill="#64748b">is it exploited in the wild?</text>
+
+    <rect x="40" y="230" width="196" height="50" rx="7" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="52" y="250" font-size="12" font-weight="600" fill="#0f172a">FIRST EPSS</text>
+    <text x="52" y="268" fill="#64748b">exploit probability, 0-1</text>
+
+    <rect x="40" y="290" width="196" height="50" rx="7" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="52" y="310" font-size="12" font-weight="600" fill="#0f172a">Asset CMDB (P9)</text>
+    <text x="52" y="328" fill="#64748b">exposure + criticality</text>
+
+    <rect x="40" y="350" width="196" height="50" rx="7" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="52" y="370" font-size="12" font-weight="600" fill="#0f172a">Vendor PSIRT advisories</text>
+    <text x="52" y="388" fill="#64748b">firmware and edge devices</text>
+  </g>
+
+  <!-- arrows into the pipeline -->
+  <g stroke="#0f766e" stroke-width="2" fill="none">
+    <path d="M236 134 H300"/>
+    <path d="M236 195 H300"/>
+    <path d="M236 255 H300"/>
+    <path d="M236 315 H300"/>
+    <path d="M236 375 H300"/>
+  </g>
+  <g fill="#0f766e">
+    <polygon points="300,134 292,130 292,138"/>
+    <polygon points="300,195 292,191 292,199"/>
+    <polygon points="300,255 292,251 292,259"/>
+    <polygon points="300,315 292,311 292,319"/>
+    <polygon points="300,375 292,371 292,379"/>
+  </g>
+
+  <!-- ============ MIDDLE: the funnel ============ -->
+  <rect x="306" y="108" width="560" height="372" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+
+  <!-- stage 1: raw findings (widest band) -->
+  <polygon points="330,128 842,128 812,184 360,184" fill="#e2e8f0" stroke="#94a3b8"/>
+  <text x="586" y="152" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Scanner findings (raw)</text>
+  <text x="586" y="172" font-size="11.5" fill="#475569" text-anchor="middle">everything the scanner reports — a workload, not a plan</text>
+
+  <polygon points="586,184 586,206 580,206 580,184" fill="#94a3b8"/>
+  <polygon points="586,206 578,198 594,198" fill="#0f766e"/>
+
+  <!-- stage 2: deduplicated -->
+  <polygon points="370,210 802,210 776,262 396,262" fill="#cbd5e1" stroke="#94a3b8"/>
+  <text x="586" y="232" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Deduplicated</text>
+  <text x="586" y="251" font-size="11.5" fill="#475569" text-anchor="middle">host + CVE + service + port = one task, not two</text>
+
+  <line x1="586" y1="262" x2="586" y2="286" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="586,286 578,278 594,278" fill="#0f766e"/>
+
+  <!-- stage 3: risk-scored -->
+  <polygon points="404,290 768,290 744,342 428,342" fill="#99f6e4" stroke="#0f766e"/>
+  <text x="586" y="312" font-size="13" font-weight="700" fill="#134e4a" text-anchor="middle">Risk-scored</text>
+  <text x="586" y="331" font-size="11.5" fill="#134e4a" text-anchor="middle">KEV 40 · EPSS 25 · exposure 15 · CVSS 12 · criticality 8 · ransomware 5</text>
+
+  <line x1="586" y1="342" x2="586" y2="366" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="586,366 578,358 594,358" fill="#0f766e"/>
+
+  <!-- stage 4: tiered work list (four bands) -->
+  <g>
+    <rect x="330" y="370" width="88" height="96" rx="6" fill="#fee2e2" stroke="#b91c1c"/>
+    <text x="374" y="396" font-size="15" font-weight="800" fill="#b91c1c" text-anchor="middle">P0</text>
+    <text x="374" y="416" font-size="10.5" fill="#7f1d1d" text-anchor="middle">Emergency</text>
+    <text x="374" y="434" font-size="10.5" fill="#7f1d1d" text-anchor="middle">KEV + exposed</text>
+    <text x="374" y="452" font-size="10.5" fill="#7f1d1d" text-anchor="middle">target 3 days</text>
+
+    <rect x="426" y="382" width="88" height="84" rx="6" fill="#ffedd5" stroke="#c2410c"/>
+    <text x="470" y="408" font-size="15" font-weight="800" fill="#c2410c" text-anchor="middle">P1</text>
+    <text x="470" y="428" font-size="10.5" fill="#7c2d12" text-anchor="middle">Critical</text>
+    <text x="470" y="446" font-size="10.5" fill="#7c2d12" text-anchor="middle">KEV or EPSS 0.5</text>
+
+    <rect x="522" y="394" width="88" height="72" rx="6" fill="#fef9c3" stroke="#a16207"/>
+    <text x="566" y="420" font-size="15" font-weight="800" fill="#a16207" text-anchor="middle">P2</text>
+    <text x="566" y="440" font-size="10.5" fill="#713f12" text-anchor="middle">High · 30 days</text>
+
+    <rect x="618" y="404" width="88" height="62" rx="6" fill="#e0f2fe" stroke="#0e7490"/>
+    <text x="662" y="430" font-size="15" font-weight="800" fill="#0e7490" text-anchor="middle">P3</text>
+    <text x="662" y="450" font-size="10.5" fill="#155e75" text-anchor="middle">Medium · 60 days</text>
+
+    <rect x="714" y="414" width="88" height="52" rx="6" fill="#f1f5f9" stroke="#475569"/>
+    <text x="758" y="438" font-size="15" font-weight="800" fill="#475569" text-anchor="middle">P4</text>
+    <text x="758" y="457" font-size="10.5" fill="#334155" text-anchor="middle">Low · next cycle</text>
+  </g>
+  <text x="586" y="482" font-size="11" fill="#64748b" text-anchor="middle">tier = when (rule order) · score 0-100 = order within the tier</text>
+
+  <!-- human decision pointer into the funnel -->
+  <rect x="884" y="120" width="276" height="52" rx="7" fill="#fffbeb" stroke="#d97706"/>
+  <text x="898" y="140" font-size="11.5" font-weight="700" fill="#92400e">HUMAN DECISION — pilot gate</text>
+  <text x="898" y="158" font-size="10.5" fill="#92400e">broader patch rings are approved only when the pilot is healthy</text>
+  <line x1="884" y1="146" x2="866" y2="146" stroke="#d97706" stroke-width="2"/>
+  <polygon points="866,146 874,142 874,150" fill="#d97706"/>
+
+  <!-- ============ RIGHT: outcomes ============ -->
+  <text x="884" y="200" font-size="12.5" font-weight="700" fill="#0f766e">OUTCOMES</text>
+
+  <g font-size="11.5">
+    <rect x="884" y="212" width="276" height="52" rx="7" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+    <text x="896" y="232" font-size="12" font-weight="700" fill="#0f766e">Ranked work list</text>
+    <text x="896" y="250" fill="#475569">prioritized-work-list.csv / .json</text>
+
+    <line x1="1022" y1="264" x2="1022" y2="284" stroke="#0f766e" stroke-width="2"/>
+    <polygon points="1022,284 1014,276 1030,276" fill="#0f766e"/>
+
+    <rect x="884" y="288" width="276" height="52" rx="7" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+    <text x="896" y="308" font-size="12" font-weight="700" fill="#0f766e">Service-desk tickets (P9)</text>
+    <text x="896" y="326" fill="#475569">P0/P1 only, with owner and due date</text>
+
+    <line x1="1022" y1="340" x2="1022" y2="360" stroke="#0f766e" stroke-width="2"/>
+    <polygon points="1022,360 1014,352 1030,352" fill="#0f766e"/>
+
+    <rect x="884" y="364" width="276" height="52" rx="7" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+    <text x="896" y="384" font-size="12" font-weight="700" fill="#0f766e">Patched / config changed</text>
+    <text x="896" y="402" fill="#475569">with a change record and a snapshot</text>
+
+    <line x1="1022" y1="416" x2="1022" y2="436" stroke="#0f766e" stroke-width="2"/>
+    <polygon points="1022,436 1014,428 1030,428" fill="#0f766e"/>
+
+    <rect x="884" y="440" width="276" height="52" rx="7" fill="#f0fdfa" stroke="#0f766e"/>
+    <text x="896" y="460" font-size="12" font-weight="700" fill="#0f766e">Verified closed (rescan)</text>
+    <text x="896" y="478" fill="#475569">ticket may now close · MTTR derived</text>
+  </g>
+
+  <!-- second human decision -->
+  <rect x="884" y="512" width="276" height="52" rx="7" fill="#fffbeb" stroke="#d97706"/>
+  <text x="898" y="532" font-size="11.5" font-weight="700" fill="#92400e">HUMAN DECISION — accept or fix</text>
+  <text x="898" y="550" font-size="10.5" fill="#92400e">management signs risk acceptance; IT records the control</text>
+
+  <!-- ============ Legend ============ -->
+  <rect x="40" y="440" width="820" height="46" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="56" y="460" font-size="11.5" font-weight="700" fill="#0f172a">Legend</text>
+  <g font-size="11">
+    <rect x="120" y="450" width="14" height="12" fill="#e2e8f0" stroke="#94a3b8"/><text x="140" y="461" fill="#334155">raw / deduplicated</text>
+    <rect x="272" y="450" width="14" height="12" fill="#99f6e4" stroke="#0f766e"/><text x="292" y="461" fill="#334155">risk-scored</text>
+    <rect x="392" y="450" width="14" height="12" fill="#fee2e2" stroke="#b91c1c"/><text x="412" y="461" fill="#334155">tier</text>
+    <rect x="462" y="450" width="14" height="12" fill="#fffbeb" stroke="#d97706"/><text x="482" y="461" fill="#334155">human decision</text>
+    <rect x="606" y="450" width="14" height="12" fill="#0f766e"/><text x="626" y="461" fill="#334155">data / process flow</text>
+    <text x="762" y="461" fill="#334155">MTTR = mean time to remediate, measured only</text>
+  </g>
+
+  <!-- ============ Footnote ============ -->
+  <rect x="40" y="500" width="820" height="146" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="56" y="522" font-size="12" font-weight="700" fill="#0f172a">Why the funnel matters</text>
+  <g font-size="11.5" fill="#334155">
+    <text x="56" y="544">A raw scanner report is a workload; the tiered work list is a plan. Only P0/P1 — the small share an attacker</text>
+    <text x="56" y="562">could actually use today — interrupts scheduled work. Everything else is batched into a cycle or accepted.</text>
+    <text x="56" y="586">The programme is implemented by scripts/05-prioritize.py (rules, scoring, unit tests) and demo/prioritizer.js</text>
+    <text x="56" y="604">(the same model running in a browser over a synthetic sample). Tickets are created for P0/P1 by</text>
+    <text x="56" y="622">scripts/06-create-tickets.sh; closure is verified by scripts/07-verify-closure.sh before a ticket may close.</text>
+  </g>
+
+  <text x="40" y="668" font-size="10.5" fill="#64748b">Footnote: Halden Distribution Ltd. is a fictional company. This diagram is a design, not measured evidence; no scan has been run and no figure here is a result. The bundled sample data used by the interactive demo is synthetic, and the scanner is scoped to the isolated lab ranges only.</text>
+  <text x="40" y="686" font-size="10.5" fill="#64748b">Model inspired by the risk-tier concept in CISA BOD 26-04 (June 2026); it is an independent adaptation, not a copy of, or a claim of compliance with, that directive.</text>
+</svg>

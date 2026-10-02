@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p8Title p8Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p8Title">Halden Distribution P8 backup and disaster-recovery data flow</title>
+  <desc id="p8Desc">A 3-2-1-1-0 backup data flow: production servers on the left are copied nightly to an on-site repository on BKP01, then copied to an offsite object store with immutability, then monthly to an offline encrypted disk; a weekly automated restore test verifies files and boots a virtual machine in an isolated sandbox, and a restore path rebuilds production to the targets agreed in the business impact analysis.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P8 backup, recovery and DR data flow</text>
+  <text x="40" y="66" font-size="13.5" fill="#475569">3-2-1-1-0 backups · on-site repository on BKP01 (not domain-joined) · immutable offsite copy · weekly verified restores · restore path back to production</text>
+
+  <!-- Production -->
+  <rect x="30" y="110" width="240" height="300" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="150" y="133" font-size="13.5" font-weight="700" fill="#0f172a" text-anchor="middle">Production</text>
+  <text x="150" y="151" font-size="11" fill="#64748b" text-anchor="middle">VLAN 10 SERVERS / VLAN 30 USERS</text>
+  <g font-size="11">
+    <rect x="42" y="162" width="216" height="34" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="52" y="183" font-weight="600" fill="#0f172a">DC01, DC02</text>
+    <text x="252" y="183" fill="#475569" text-anchor="end">AD · DNS · DHCP</text>
+    <rect x="42" y="202" width="216" height="34" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="52" y="223" font-weight="600" fill="#0f172a">FS01</text>
+    <text x="252" y="223" fill="#475569" text-anchor="end">Finance / Sales shares</text>
+    <rect x="42" y="242" width="216" height="34" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="52" y="263" font-weight="600" fill="#0f172a">LNX01</text>
+    <text x="252" y="263" fill="#475569" text-anchor="end">order app + database</text>
+    <rect x="42" y="282" width="216" height="34" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="52" y="303" font-weight="600" fill="#0f172a">OPS01</text>
+    <text x="252" y="303" fill="#475569" text-anchor="end">GLPI · Uptime Kuma</text>
+    <rect x="42" y="322" width="216" height="34" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="52" y="343" font-weight="600" fill="#0f172a">SIEM01</text>
+    <text x="252" y="343" fill="#475569" text-anchor="end">Wazuh manager</text>
+    <rect x="42" y="362" width="216" height="34" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="52" y="383" font-weight="600" fill="#0f172a">FW01, WS01</text>
+    <text x="252" y="383" fill="#475569" text-anchor="end">config + workstations</text>
+  </g>
+
+  <!-- Copy 1 -->
+  <line x1="270" y1="240" x2="330" y2="240" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="330,240 322,236 322,244" fill="#0f766e"/>
+  <text x="300" y="228" font-size="10.5" fill="#0f766e" text-anchor="middle">nightly</text>
+  <rect x="330" y="110" width="250" height="200" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="455" y="134" font-size="13.5" font-weight="700" fill="#0f766e" text-anchor="middle">Copy 1 — on-site repository</text>
+  <text x="455" y="151" font-size="11" fill="#334155" text-anchor="middle">BKP01 · 192.168.10.42 · MGMT VLAN 40 (P6)</text>
+  <g font-size="11" fill="#334155">
+    <text x="348" y="178">restic repository (or PBS datastore)</text>
+    <text x="348" y="198">VM-level (checkpoint/VSS) + file-level</text>
+    <text x="348" y="218">DC system state via wbadmin (AD-aware)</text>
+    <text x="348" y="238">repository encrypted at rest</text>
+    <text x="348" y="258">prune + verify jobs on a schedule</text>
+  </g>
+  <text x="348" y="284" font-size="11" font-weight="600" fill="#7c3aed">Not domain-joined: if AD falls, backups do not.</text>
+
+  <!-- Copy 2 -->
+  <line x1="580" y1="210" x2="640" y2="210" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="640,210 632,206 632,214" fill="#0f766e"/>
+  <text x="610" y="198" font-size="10.5" fill="#0f766e" text-anchor="middle">restic copy</text>
+  <rect x="640" y="110" width="240" height="200" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="760" y="134" font-size="13.5" font-weight="700" fill="#7c3aed" text-anchor="middle">Copy 2 — offsite object store</text>
+  <text x="760" y="151" font-size="11" fill="#334155" text-anchor="middle">MinIO S3 (lab) · B2 / Wasabi (prod)</text>
+  <g font-size="11" fill="#334155">
+    <text x="658" y="178">bucket backup-immutable</text>
+    <text x="658" y="198">Object Lock: COMPLIANCE 30 days</text>
+    <text x="658" y="218">versioning + lifecycle rule</text>
+    <text x="658" y="238">restic forget --keep-* --prune</text>
+    <text x="658" y="258">delete markers only while locked</text>
+  </g>
+  <text x="658" y="284" font-size="11" font-weight="600" fill="#7c3aed">Immutable: deletion refused, even for admins.</text>
+
+  <!-- Copy 3 -->
+  <line x1="880" y1="210" x2="940" y2="210" stroke="#b45309" stroke-width="2" stroke-dasharray="6 4"/>
+  <polygon points="940,210 932,206 932,214" fill="#b45309"/>
+  <text x="910" y="198" font-size="10.5" fill="#b45309" text-anchor="middle">monthly</text>
+  <rect x="940" y="110" width="230" height="200" rx="8" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+  <text x="1055" y="134" font-size="13.5" font-weight="700" fill="#b45309" text-anchor="middle">Copy 3 — offline copy</text>
+  <text x="1055" y="151" font-size="11" fill="#334155" text-anchor="middle">air gap</text>
+  <g font-size="11" fill="#334155">
+    <text x="958" y="178">encrypted USB (LUKS / VeraCrypt)</text>
+    <text x="958" y="198">latest repository + latest VM</text>
+    <text x="958" y="218">disconnected, stored off-site</text>
+    <text x="958" y="238">rotation log with dates</text>
+    <text x="958" y="258">unreachable from the network</text>
+  </g>
+  <text x="958" y="284" font-size="11" font-weight="600" fill="#b45309">Offline: nothing on the wire can reach it.</text>
+
+  <!-- Verification -->
+  <rect x="330" y="330" width="560" height="80" rx="8" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="348" y="354" font-size="13" font-weight="700" fill="#134e4a">Verification — weekly automated restore test (Test-BackupRestore)</text>
+  <g font-size="11" fill="#134e4a">
+    <text x="348" y="376">20 random files restored and SHA-256 compared · restic check --read-data-subset=5% · one VM restored into</text>
+    <text x="348" y="394">sandbox VLAN 99 (no uplink) and a service health check run · JSON + HTML report · push to Uptime Kuma (P9) · 12-week history</text>
+  </g>
+
+  <!-- Restore path back to production -->
+  <line x1="330" y1="386" x2="278" y2="386" stroke="#0f766e" stroke-width="2" stroke-dasharray="7 5"/>
+  <polygon points="270,386 280,381 280,391" fill="#0f766e"/>
+  <text x="304" y="424" font-size="10.5" fill="#0f766e" text-anchor="middle">restore / DR rebuild → RTO targets from the BIA</text>
+
+  <!-- 3-2-1-1-0 legend -->
+  <rect x="30" y="440" width="1140" height="92" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="48" y="464" font-size="13" font-weight="700" fill="#0f172a">The 3-2-1-1-0 rule for Halden</text>
+  <g text-anchor="middle">
+    <rect x="45" y="474" width="210" height="46" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+    <text x="150" y="494" font-size="12" font-weight="700" fill="#0f172a">3 copies</text>
+    <text x="150" y="511" font-size="10.5" fill="#475569">production + on-site + offsite</text>
+
+    <rect x="270" y="474" width="210" height="46" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+    <text x="375" y="494" font-size="12" font-weight="700" fill="#0f172a">2 media</text>
+    <text x="375" y="511" font-size="10.5" fill="#475569">disk repository + object/USB</text>
+
+    <rect x="495" y="474" width="210" height="46" rx="6" fill="#f8fafc" stroke="#94a3b8"/>
+    <text x="600" y="494" font-size="12" font-weight="700" fill="#0f172a">1 offsite</text>
+    <text x="600" y="511" font-size="10.5" fill="#475569">object store outside the LAN</text>
+
+    <rect x="720" y="474" width="210" height="46" rx="6" fill="#f8fafc" stroke="#7c3aed"/>
+    <text x="825" y="494" font-size="12" font-weight="700" fill="#7c3aed">1 immutable / offline</text>
+    <text x="825" y="511" font-size="10.5" fill="#475569">Object Lock + rotated USB</text>
+
+    <rect x="945" y="474" width="210" height="46" rx="6" fill="#f8fafc" stroke="#0f766e"/>
+    <text x="1050" y="494" font-size="12" font-weight="700" fill="#0f766e">0 errors on verified restore</text>
+    <text x="1050" y="511" font-size="10.5" fill="#475569">restore tested every week</text>
+  </g>
+
+  <!-- Notes -->
+  <rect x="30" y="548" width="555" height="108" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="48" y="570" font-size="12.5" font-weight="700" fill="#0f172a">Why BKP01 is not domain-joined</text>
+  <g font-size="11.5" fill="#334155">
+    <text x="48" y="592">Domain Admin hands out the keys to everything on the domain. If the domain is compromised,</text>
+    <text x="48" y="610">a joined backup server is compromised too. BKP01 keeps its own local credentials, sits in the</text>
+    <text x="48" y="628">MGMT VLAN and is reachable only on the backup ports — so the last line of defence survives.</text>
+  </g>
+
+  <rect x="610" y="548" width="560" height="108" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="628" y="570" font-size="12.5" font-weight="700" fill="#0f172a">Targets, not achievements</text>
+  <g font-size="11.5" fill="#334155">
+    <text x="628" y="592">The RTO/RPO figures in the BIA are targets agreed with the business. Actual recovery times are</text>
+    <text x="628" y="610">filled in only after a timed drill has been run. Halden Distribution Ltd. is a fictional company;</text>
+    <text x="628" y="628">the configurations are real and every measured number comes from a real run in this lab.</text>
+  </g>
+
+  <text x="30" y="684" font-size="11" fill="#64748b">Home lab · isolated private switch, never the home network · backup repository passphrases and object-store keys are held outside the repository and escrowed offline · every RTO/RPO is a target until a drill measures it.</text>
+</svg>

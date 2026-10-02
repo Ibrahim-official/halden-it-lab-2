@@ -1,0 +1,69 @@
+# P6 segmentation test plan - TEMPLATE (fill-in file, deliberately empty of results).
+#
+# What this is: the defined list of connections the contract says must be allowed and must be
+# blocked. Each row is one attempted connection from a host in one zone to a destination.
+#
+# How it is used: scripts/09-Test-Segmentation.sh --zone <ZONE> reads this file, attempts every row
+# whose source_zone matches the zone it is told it is running from, and writes its own results CSV
+# (it does NOT write back into this file). This file stays the plan; the results are evidence.
+#
+# The 'expected' column is the contract from configs/p06-zone-rule-matrix.csv. 'blocked' passes when
+# the port is closed, filtered or unreachable. 'open' passes only when the port is genuinely open.
+#
+# Every destination is a 192.168.x lab address: the suite refuses a plan containing anything else,
+# so it can never scan the home network or the internet (AGENTS.md R1).
+#
+# STATUS: designed, NOT RUN. No 'actual' or 'pass' column exists here on purpose - results live in
+# evidence/, and nothing in this repository claims a result that has not been measured (AGENTS.md R2).
+#
+# Columns: test_id,source_zone,source_host,destination,port/service,expected
+# source_host is the example host these rows are designed to run from; use --zone at run time.
+
+test_id,source_zone,source_host,destination,port/service,expected
+U-01,USERS-HQ,ws01,192.168.10.10,53/dns,open
+U-02,USERS-HQ,ws01,192.168.10.10,88/kerberos,open
+U-03,USERS-HQ,ws01,192.168.10.10,389/ldap,open
+U-04,USERS-HQ,ws01,192.168.10.10,445/smb,open
+U-05,USERS-HQ,ws01,192.168.10.20,445/smb,open
+U-06,USERS-HQ,ws01,192.168.10.40,443/https,open
+U-07,USERS-HQ,ws01,192.168.40.10,3389/rdp,blocked
+U-08,USERS-HQ,ws01,192.168.40.10,445/smb,blocked
+U-09,USERS-HQ,ws01,192.168.50.10,445/smb,blocked
+U-10,USERS-HQ,ws01,192.168.60.10,445/smb,blocked
+U-11,USERS-HQ,ws01,192.168.10.43,443/https,blocked
+W-01,WAREHOUSE,wh01,192.168.10.10,53/dns,open
+W-02,WAREHOUSE,wh01,192.168.10.10,389/ldap,open
+W-03,WAREHOUSE,wh01,192.168.10.20,445/smb,open
+W-04,WAREHOUSE,wh01,192.168.10.40,443/https,open
+W-05,WAREHOUSE,wh01,192.168.40.10,3389/rdp,blocked
+W-06,WAREHOUSE,wh01,192.168.30.100,3389/rdp,blocked
+W-07,WAREHOUSE,wh01,192.168.60.10,445/smb,blocked
+W-08,WAREHOUSE,wh01,192.168.10.43,443/https,blocked
+M-01,MGMT,ws02,192.168.10.10,3389/rdp,open
+M-02,MGMT,ws02,192.168.10.20,445/smb,open
+M-03,MGMT,ws02,192.168.10.40,443/https,open
+M-04,MGMT,ws02,192.168.10.42,22/ssh,open
+G-01,GUEST,guesta,192.168.10.10,445/smb,blocked
+G-02,GUEST,guesta,192.168.10.10,53/dns,blocked
+G-03,GUEST,guesta,192.168.10.20,445/smb,blocked
+G-04,GUEST,guesta,192.168.10.30,22/ssh,blocked
+G-05,GUEST,guesta,192.168.10.40,443/https,blocked
+G-06,GUEST,guesta,192.168.40.10,3389/rdp,blocked
+G-07,GUEST,guesta,192.168.10.1,443/https,blocked
+G-08,GUEST,guesta,192.168.10.43,443/https,blocked
+I-01,IOT,iot01,192.168.10.20,445/smb,open
+I-02,IOT,iot01,192.168.10.10,53/dns,open
+I-03,IOT,iot01,192.168.10.10,445/smb,blocked
+I-04,IOT,iot01,192.168.10.10,389/ldap,blocked
+I-05,IOT,iot01,192.168.10.30,22/ssh,blocked
+I-06,IOT,iot01,192.168.10.40,443/https,blocked
+I-07,IOT,iot01,192.168.40.10,3389/rdp,blocked
+I-08,IOT,iot01,192.168.10.20,3389/rdp,blocked
+I-09,IOT,iot01,192.168.10.43,443/https,blocked
+V-01,VPN-USERS,vpn-client-01,192.168.10.10,53/dns,open
+V-02,VPN-USERS,vpn-client-01,192.168.10.20,445/smb,open
+V-03,VPN-USERS,vpn-client-01,192.168.10.40,443/https,open
+V-04,VPN-USERS,vpn-client-01,192.168.40.10,3389/rdp,blocked
+V-05,VPN-USERS,vpn-client-01,192.168.40.10,445/smb,blocked
+V-06,VPN-USERS,vpn-client-01,192.168.50.10,445/smb,blocked
+V-07,VPN-USERS,vpn-client-01,192.168.10.43,443/https,blocked

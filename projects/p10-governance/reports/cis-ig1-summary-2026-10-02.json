@@ -1,0 +1,120 @@
+{
+  "as_of": "2026-10-02",
+  "halden_is_fictional": true,
+  "safeguard_count": 56,
+  "expected_safeguard_count": 56,
+  "scored_before": 0,
+  "scored_after": 0,
+  "percent_implemented_before": null,
+  "percent_implemented_after": null,
+  "percent_implemented_note": "Computed from scored safeguards only (sum of 0-3 scores / (3 x scored)). None means nothing has been scored yet: the assessment has not been run.",
+  "controls": {
+    "1": {
+      "control_name": "Inventory and Control of Enterprise Assets",
+      "safeguards": 2,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "2": {
+      "control_name": "Inventory and Control of Software Assets",
+      "safeguards": 3,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "3": {
+      "control_name": "Data Protection",
+      "safeguards": 6,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "4": {
+      "control_name": "Secure Configuration of Enterprise Assets and Software",
+      "safeguards": 7,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "5": {
+      "control_name": "Account Management",
+      "safeguards": 4,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "6": {
+      "control_name": "Access Control Management",
+      "safeguards": 5,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "7": {
+      "control_name": "Continuous Vulnerability Management",
+      "safeguards": 4,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "8": {
+      "control_name": "Audit Log Management",
+      "safeguards": 3,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "9": {
+      "control_name": "Email and Web Browser Protections",
+      "safeguards": 2,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "10": {
+      "control_name": "Malware Defenses",
+      "safeguards": 3,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "11": {
+      "control_name": "Data Recovery",
+      "safeguards": 4,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "12": {
+      "control_name": "Network Infrastructure Management",
+      "safeguards": 1,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "14": {
+      "control_name": "Security Awareness and Skills Training",
+      "safeguards": 8,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "15": {
+      "control_name": "Service Provider Management",
+      "safeguards": 1,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    },
+    "17": {
+      "control_name": "Incident Response Management",
+      "safeguards": 3,
+      "scored_after": 0,
+      "percent_before": null,
+      "percent_after": null
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

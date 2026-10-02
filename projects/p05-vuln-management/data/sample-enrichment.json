@@ -1,0 +1,92 @@
+{
+  "schema": "p05-kev-epss-sample/1",
+  "synthetic": true,
+  "note": "Synthetic KEV/EPSS stand-in for the offline sample. Real values come from the CISA KEV catalogue and the FIRST EPSS API via scripts/05-prioritize.py fetch-feeds.",
+  "cves": {
+    "CVE-2016-2183": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.05
+    },
+    "CVE-2017-0144": {
+      "kev": true,
+      "ransomware": true,
+      "epss": 0.94
+    },
+    "CVE-2018-15473": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.02
+    },
+    "CVE-2019-0708": {
+      "kev": true,
+      "ransomware": false,
+      "epss": 0.72
+    },
+    "CVE-2020-1472": {
+      "kev": true,
+      "ransomware": true,
+      "epss": 0.9
+    },
+    "CVE-2021-44228": {
+      "kev": true,
+      "ransomware": true,
+      "epss": 0.97
+    },
+    "CVE-2022-0778": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.08
+    },
+    "CVE-2022-30190": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.3
+    },
+    "CVE-2022-37969": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.25
+    },
+    "CVE-2023-21768": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.2
+    },
+    "CVE-2023-23397": {
+      "kev": true,
+      "ransomware": false,
+      "epss": 0.8
+    },
+    "CVE-2023-38408": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.55
+    },
+    "CVE-2023-38802": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.09
+    },
+    "CVE-2023-46604": {
+      "kev": true,
+      "ransomware": true,
+      "epss": 0.62
+    },
+    "CVE-2023-4911": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.35
+    },
+    "CVE-2024-38063": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.55
+    },
+    "CVE-2024-6387": {
+      "kev": false,
+      "ransomware": false,
+      "epss": 0.42
+    }
+  }
+}

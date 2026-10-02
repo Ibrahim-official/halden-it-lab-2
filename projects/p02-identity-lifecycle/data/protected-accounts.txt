@@ -1,0 +1,15 @@
+# Protected accounts — the JML engine must never disable or modify these (Halden lab only).
+# Applies to: 01-Invoke-HaldenJML.ps1 and the access-review export in projects/p02-identity-lifecycle.
+# One account name per line (sAMAccountName), '#' starts a comment, blank lines are ignored.
+# These are not people: service identities, the two cloud break-glass accounts, the built-in
+# administrator, the replication account, and the computer accounts of the core servers.
+svc-dhcpdns
+gmsa-jml
+bg-breakglass-1
+bg-breakglass-2
+administrator
+krbtgt
+DC01$
+DC02$
+FS01$
+LNX01$

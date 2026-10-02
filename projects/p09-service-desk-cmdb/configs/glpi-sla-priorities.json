@@ -1,0 +1,91 @@
+{
+  "_comment": "Halden Distribution Ltd. — P9 priority matrix and SLA definitions. Applies to OPS01 GLPI (Setup -> Service levels, priority, business hours calendar and business rules) and to business/p09-sla-policy.md. TTO = time to own, TTR = time to resolve, both in BUSINESS hours on the calendar below. DESIGNED targets only; nothing here has been measured yet.",
+  "version": "1.0",
+  "calendar": {
+    "name": "Halden Business Hours",
+    "timezone": "Asia/Karachi",
+    "days": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+    "start": "08:00",
+    "end": "18:00",
+    "holidays": ["2026-12-25", "2026-12-26"]
+  },
+  "priorities": [
+    {
+      "code": "P1",
+      "name": "Critical",
+      "impact": "High",
+      "urgency": "High",
+      "example": "Whole site down, ransomware, payroll-day failure",
+      "tto_business_minutes": 15,
+      "ttr_business_minutes": 240,
+      "escalate_at_percent": 75
+    },
+    {
+      "code": "P2",
+      "name": "High",
+      "impact": "High",
+      "urgency": "Medium",
+      "example": "A department cannot work, VPN down for all remote users",
+      "tto_business_minutes": 60,
+      "ttr_business_minutes": 480,
+      "escalate_at_percent": 75
+    },
+    {
+      "code": "P3",
+      "name": "Medium",
+      "impact": "Medium",
+      "urgency": "Medium",
+      "example": "One user cannot work, a workaround exists",
+      "tto_business_minutes": 240,
+      "ttr_business_minutes": 960,
+      "escalate_at_percent": 75
+    },
+    {
+      "code": "P4",
+      "name": "Low",
+      "impact": "Low",
+      "urgency": "Low",
+      "example": "Service request or a cosmetic issue",
+      "tto_business_minutes": 480,
+      "ttr_business_minutes": 2400,
+      "escalate_at_percent": 75
+    }
+  ],
+  "business_rules": [
+    {
+      "id": "BR-001",
+      "when": "Category is Security",
+      "then": "Assign to group L2-SysAdmin with priority P2",
+      "reason": "Security reports must always reach L2, never sit in the L1 queue."
+    },
+    {
+      "id": "BR-002",
+      "when": "Requester department is Finance and it is the last working day of the month (payroll)",
+      "then": "Increase urgency to High",
+      "reason": "A payroll-day failure is treated as P1 even if it looks like a single-user fault."
+    },
+    {
+      "id": "BR-003",
+      "when": "TTR reaches 75% of the SLA for the priority",
+      "then": "Notify group L2-SysAdmin and set status to Escalated",
+      "reason": "Early warning before the SLA is breached."
+    },
+    {
+      "id": "BR-004",
+      "when": "Source is the Wazuh integration and severity is High",
+      "then": "Open a ticket in category Security with priority P2, assigned to L2-SysAdmin",
+      "reason": "Every high alert gets an owner (P7)."
+    },
+    {
+      "id": "BR-005",
+      "when": "Source is the backup heartbeat and the monitor is in a failed state",
+      "then": "Open a ticket in category Backup with priority P2",
+      "reason": "A failed restore test must not be silent (P8)."
+    }
+  ],
+  "groups": [
+    { "name": "L1-ServiceDesk", "profile": "Technician", "ad_group": "G_IT_ServiceDesk" },
+    { "name": "L2-SysAdmin", "profile": "Technician", "ad_group": "G_IT_SysAdmin" },
+    { "name": "L3-Vendors", "profile": "Technician (restricted)", "ad_group": "G_IT_Vendor" }
+  ]
+}

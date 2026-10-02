@@ -1,0 +1,18 @@
+# P6 OPNsense firewall aliases - readable names used by the rule set on FW01.
+# Applies to: FW01. Aliases keep the rules readable and make a future subnet change one edit
+# instead of dozens. Read by scripts/01-Apply-OpnSenseNetworks.sh.
+# No credentials belong in this file.
+alias_name,type,contents,notes
+DCs,host,"192.168.10.10 192.168.10.11",Domain controllers (DC01, DC02) - Tier 0
+FileServers,host,"192.168.10.20",FS01 file services
+AppServers,host,"192.168.10.30 192.168.10.40 192.168.10.41",LNX01, OPS01, SIEM01
+SERVERS_NET,network,192.168.10.0/24,Server LAN
+WAREHOUSE_NET,network,192.168.20.0/24,Warehouse site 2
+USERS_NET,network,192.168.30.0/24,Staff workstations
+MGMT_NET,network,192.168.40.0/24,Management zone (PAW and infrastructure)
+GUEST_NET,network,192.168.50.0/24,Guest Wi-Fi
+IOT_NET,network,192.168.60.0/24,Printers CCTV and scanners
+VPN_NET,network,192.168.70.0/24,Road-warrior VPN pool
+RFC1918,network,"192.168.10.0/24 192.168.20.0/24 192.168.30.0/24 192.168.40.0/24 192.168.50.0/24 192.168.60.0/24 192.168.70.0/24",All lab private ranges
+AD_PORTS,port,"53 88 135 389 445 464 636 3268 3269 49152:65535",Ports a domain client needs from its DCs and file server
+EGRESS_BLOCK_PORTS,port,"53 853 445 3389",Ports blocked or redirected on the way out to the internet

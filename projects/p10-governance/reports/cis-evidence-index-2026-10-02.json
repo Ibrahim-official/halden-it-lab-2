@@ -1,0 +1,672 @@
+{
+  "as_of": "2026-10-02",
+  "halden_is_fictional": true,
+  "safeguards": 56,
+  "evidence_present": 16,
+  "evidence_expected_but_missing": 40,
+  "note": "This indexes the repository, not the lab. An artifact 'present' means the file the evidence map names exists in the repo today; it does not by itself mean the control is fully implemented.",
+  "by_source_project": {
+    "P9": {
+      "expected": 7,
+      "present": 1
+    },
+    "P1": {
+      "expected": 7,
+      "present": 5
+    },
+    "P4": {
+      "expected": 8,
+      "present": 1
+    },
+    "P10": {
+      "expected": 7,
+      "present": 7
+    },
+    "P6": {
+      "expected": 5,
+      "present": 1
+    },
+    "P3": {
+      "expected": 4,
+      "present": 3
+    },
+    "P2": {
+      "expected": 5,
+      "present": 1
+    },
+    "P5": {
+      "expected": 4,
+      "present": 1
+    },
+    "P7": {
+      "expected": 5,
+      "present": 0
+    },
+    "P8": {
+      "expected": 4,
+      "present": 1
+    },
+    "roadmap": {
+      "expected": 8,
+      "present": 0
+    }
+  },
+  "rows": [
+    {
+      "safeguard_id": "1.1",
+      "control_id": "1",
+      "title": "Establish and Maintain Detailed Enterprise Asset Inventory",
+      "expected_evidence": "GLPI asset inventory (P9) reconciled with a network scan and the DHCP/AD computer objects",
+      "source_projects": "P9;P1",
+      "artifact_path": "projects/p09-service-desk-cmdb/evidence/public/p09-ph2-reconciliation-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "1.2",
+      "control_id": "1",
+      "title": "Address Unauthorized Assets",
+      "expected_evidence": "GLPI reconciliation run showing 0 unknown devices and the process note for quarantine",
+      "source_projects": "P9",
+      "artifact_path": "projects/p09-service-desk-cmdb/evidence/public/p09-ph2-reconciliation-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "2.1",
+      "control_id": "2",
+      "title": "Establish and Maintain a Software Inventory",
+      "expected_evidence": "GLPI software inventory export with publisher and version",
+      "source_projects": "P9",
+      "artifact_path": "projects/p09-service-desk-cmdb/evidence/public/p09-ph2-software-inventory-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "2.2",
+      "control_id": "2",
+      "title": "Ensure Authorized Software is Currently Supported",
+      "expected_evidence": "Windows 11 readiness report listing unsupported Windows 10 devices and the ESU/exception decision",
+      "source_projects": "P4",
+      "artifact_path": "projects/p04-endpoint-hardening/evidence/public/p04-ph1-win11-readiness-report.pdf",
+      "artifact_kind": "pdf",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "2.3",
+      "control_id": "2",
+      "title": "Address Unauthorized Software",
+      "expected_evidence": "GLPI software inventory with the unauthorised-software review column",
+      "source_projects": "P9",
+      "artifact_path": "projects/p09-service-desk-cmdb/evidence/public/p09-ph2-software-inventory-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "3.1",
+      "control_id": "3",
+      "title": "Establish and Maintain a Data Management Process",
+      "expected_evidence": "Data Protection section of the P10 policy pack (owner review date and exceptions process)",
+      "source_projects": "P10",
+      "artifact_path": "projects/p10-governance/business/p10-policy-pack.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "3.2",
+      "control_id": "3",
+      "title": "Establish and Maintain a Data Inventory",
+      "expected_evidence": "GLPI asset/data inventory plus the permissions matrix showing Finance and HR data owners",
+      "source_projects": "P9;P1",
+      "artifact_path": "projects/p09-service-desk-cmdb/evidence/public/p09-ph2-asset-inventory-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "3.3",
+      "control_id": "3",
+      "title": "Configure Data Access Control Lists",
+      "expected_evidence": "AGDLP permission matrix and the PowerShell ACL audit reporting 0 violations",
+      "source_projects": "P1",
+      "artifact_path": "projects/p01-core-infrastructure/business/p01-permission-matrix.csv",
+      "artifact_kind": "csv",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "3.4",
+      "control_id": "3",
+      "title": "Enforce Data Retention",
+      "expected_evidence": "Retention schedule in the P10 policy pack (Finance and HR retention periods)",
+      "source_projects": "P10",
+      "artifact_path": "projects/p10-governance/business/p10-policy-pack.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "3.5",
+      "control_id": "3",
+      "title": "Securely Dispose of Data",
+      "expected_evidence": "Disposal and leaver-data-handling section of the P10 policy pack",
+      "source_projects": "P10",
+      "artifact_path": "projects/p10-governance/business/p10-policy-pack.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "3.6",
+      "control_id": "3",
+      "title": "Encrypt Data on End-User Devices",
+      "expected_evidence": "BitLocker escrow proof - recovery key stored in AD and a successful recovery test",
+      "source_projects": "P4",
+      "artifact_path": "projects/p04-endpoint-hardening/evidence/public/p04-ph3-bitlocker-escrow-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "4.1",
+      "control_id": "4",
+      "title": "Establish and Maintain a Secure Configuration Process",
+      "expected_evidence": "P1 GPO baseline plus the as-built document describing the build standard",
+      "source_projects": "P1",
+      "artifact_path": "projects/p01-core-infrastructure/docs/as-built.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "4.2",
+      "control_id": "4",
+      "title": "Establish and Maintain a Secure Configuration Process for Network Infrastructure",
+      "expected_evidence": "P6 firewall rule matrix and the network standard in the P10 policy pack",
+      "source_projects": "P6;P10",
+      "artifact_path": "projects/p10-governance/business/p10-policy-pack.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "4.3",
+      "control_id": "4",
+      "title": "Configure Automatic Session Locking on Enterprise Assets",
+      "expected_evidence": "Desktop standards GPO (secure screen saver 600s) evidenced by gpresult on WS01",
+      "source_projects": "P1;P4",
+      "artifact_path": "projects/p01-core-infrastructure/docs/as-built.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "4.4",
+      "control_id": "4",
+      "title": "Implement and Manage a Firewall on Servers",
+      "expected_evidence": "Segmentation test results showing server ports filtered by the firewall",
+      "source_projects": "P6",
+      "artifact_path": "projects/p06-network-segmentation/evidence/public/p06-ph3-segmentation-results.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "4.5",
+      "control_id": "4",
+      "title": "Implement and Manage a Firewall on End-User Devices",
+      "expected_evidence": "Host firewall baseline in the P4 security baseline and the compliance report",
+      "source_projects": "P4",
+      "artifact_path": "projects/p04-endpoint-hardening/evidence/public/p04-ph2-asr-block-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "4.6",
+      "control_id": "4",
+      "title": "Securely Manage Enterprise Assets and Software",
+      "expected_evidence": "P9 config-as-code (GPO and firewall configs versioned in Git) with the container compose file",
+      "source_projects": "P9",
+      "artifact_path": "projects/p09-service-desk-cmdb/configs/docker-compose.yml",
+      "artifact_kind": "yml",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "4.7",
+      "control_id": "4",
+      "title": "Manage Default Accounts on Enterprise Assets and Software",
+      "expected_evidence": "Windows LAPS GPO settings and the disabled built-in administrator account",
+      "source_projects": "P3",
+      "artifact_path": "projects/p03-ad-security/configs/p03-laps-gpo-settings.conf",
+      "artifact_kind": "conf",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "5.1",
+      "control_id": "5",
+      "title": "Establish and Maintain an Inventory of Accounts",
+      "expected_evidence": "P2 account inventory and the quarterly access review report",
+      "source_projects": "P2",
+      "artifact_path": "projects/p02-identity-lifecycle/evidence/public/p02-ph1-account-inventory-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "5.2",
+      "control_id": "5",
+      "title": "Use Unique Passwords",
+      "expected_evidence": "Domain password and lockout GPO (14 character minimum) from the P1 baseline",
+      "source_projects": "P1",
+      "artifact_path": "projects/p01-core-infrastructure/docs/as-built.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "5.3",
+      "control_id": "5",
+      "title": "Disable Dormant Accounts",
+      "expected_evidence": "P2 dormant-account hygiene report (0 stale enabled accounts targeted)",
+      "source_projects": "P2",
+      "artifact_path": "projects/p02-identity-lifecycle/evidence/public/p02-ph4-dormant-accounts-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "5.4",
+      "control_id": "5",
+      "title": "Restrict Administrator Privileges to Dedicated Administrator Accounts",
+      "expected_evidence": "P3 privileged access tiering model (Tier 0/1/2) with dedicated adm- accounts",
+      "source_projects": "P3",
+      "artifact_path": "projects/p03-ad-security/configs/p03-tiering-model.csv",
+      "artifact_kind": "csv",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "6.1",
+      "control_id": "6",
+      "title": "Establish an Access Granting Process",
+      "expected_evidence": "P1 runbook \"Add a new Halden user\" plus the P2 joiner automation",
+      "source_projects": "P1;P2",
+      "artifact_path": "projects/p01-core-infrastructure/docs/runbooks/add-a-new-user.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "6.2",
+      "control_id": "6",
+      "title": "Establish an Access Revoking Process",
+      "expected_evidence": "P2 leaver run: account disabled moved to Disabled OU and sessions revoked",
+      "source_projects": "P2",
+      "artifact_path": "projects/p02-identity-lifecycle/evidence/public/p02-ph3-leaver-revocation-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "6.3",
+      "control_id": "6",
+      "title": "Require MFA for Externally-Exposed Applications",
+      "expected_evidence": "P2 MFA coverage report (Conditional Access enforced for all users)",
+      "source_projects": "P2",
+      "artifact_path": "projects/p02-identity-lifecycle/evidence/public/p02-ph5-mfa-coverage-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "6.4",
+      "control_id": "6",
+      "title": "Require MFA for Remote Network Access",
+      "expected_evidence": "P6 VPN MFA prompt and the RADIUS/NPS decision note",
+      "source_projects": "P6",
+      "artifact_path": "projects/p06-network-segmentation/evidence/public/p06-ph5-vpn-mfa-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "6.5",
+      "control_id": "6",
+      "title": "Require MFA for Administrative Access",
+      "expected_evidence": "P3 privileged access standard and the MFA-enforced admin sign-in proof",
+      "source_projects": "P3",
+      "artifact_path": "projects/p03-ad-security/evidence/public/p03-ph5-laps-access-denied-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "7.1",
+      "control_id": "7",
+      "title": "Establish and Maintain a Vulnerability Management Process",
+      "expected_evidence": "Vulnerability Management section of the P10 policy pack",
+      "source_projects": "P10",
+      "artifact_path": "projects/p10-governance/business/p10-policy-pack.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "7.2",
+      "control_id": "7",
+      "title": "Establish and Maintain a Remediation Process",
+      "expected_evidence": "P3 remediation priority rules and the P5 tiering decision record",
+      "source_projects": "P3;P5",
+      "artifact_path": "projects/p03-ad-security/configs/p03-remediation-priority-rules.json",
+      "artifact_kind": "json",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "7.3",
+      "control_id": "7",
+      "title": "Perform Automated Operating System Patch Management",
+      "expected_evidence": "P5 WSUS ring patch compliance report (target 95% within 14 days)",
+      "source_projects": "P5",
+      "artifact_path": "projects/p05-vuln-management/evidence/public/p05-ph4-patch-compliance-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "7.4",
+      "control_id": "7",
+      "title": "Perform Automated Application Patch Management",
+      "expected_evidence": "P5 application patch coverage from the same ring compliance report",
+      "source_projects": "P5",
+      "artifact_path": "projects/p05-vuln-management/evidence/public/p05-ph4-patch-compliance-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "8.1",
+      "control_id": "8",
+      "title": "Establish and Maintain an Audit Log Management Process",
+      "expected_evidence": "Logging and Monitoring section of the P10 policy pack",
+      "source_projects": "P10",
+      "artifact_path": "projects/p10-governance/business/p10-policy-pack.md",
+      "artifact_kind": "md",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "8.2",
+      "control_id": "8",
+      "title": "Collect Audit Logs",
+      "expected_evidence": "P7 Wazuh agents reporting and the enabled security audit policy",
+      "source_projects": "P7",
+      "artifact_path": "projects/p07-siem-incident-response/evidence/public/p07-ph2-wazuh-agents-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "8.3",
+      "control_id": "8",
+      "title": "Ensure Adequate Audit Log Storage",
+      "expected_evidence": "P7 Wazuh retention and index storage proof (90 days)",
+      "source_projects": "P7",
+      "artifact_path": "projects/p07-siem-incident-response/evidence/public/p07-ph3-log-retention-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "9.1",
+      "control_id": "9",
+      "title": "Ensure Use of Only Fully Supported Browsers and Email Clients",
+      "expected_evidence": "P4 supported-browser baseline in the compliance report",
+      "source_projects": "P4",
+      "artifact_path": "projects/p04-endpoint-hardening/evidence/public/p04-ph1-browser-support-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "9.2",
+      "control_id": "9",
+      "title": "Use DNS Filtering Services",
+      "expected_evidence": "P6 DNS filtering (AdGuard Home/Quad9) client configuration proof",
+      "source_projects": "P6",
+      "artifact_path": "projects/p06-network-segmentation/evidence/public/p06-ph7-dns-filtering-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "10.1",
+      "control_id": "10",
+      "title": "Deploy and Maintain Anti-Malware Software",
+      "expected_evidence": "P4 Microsoft Defender status across the fleet in the compliance report",
+      "source_projects": "P4",
+      "artifact_path": "projects/p04-endpoint-hardening/evidence/public/p04-ph2-defender-status-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "10.2",
+      "control_id": "10",
+      "title": "Configure Automatic Anti-Malware Signature Updates",
+      "expected_evidence": "Defender signature update policy and last-update proof",
+      "source_projects": "P4",
+      "artifact_path": "projects/p04-endpoint-hardening/evidence/public/p04-ph2-defender-status-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "10.3",
+      "control_id": "10",
+      "title": "Disable Autorun and Autoplay for Removable Media",
+      "expected_evidence": "P4 baseline policy disabling autorun and autoplay",
+      "source_projects": "P4",
+      "artifact_path": "projects/p04-endpoint-hardening/evidence/public/p04-ph2-autorun-disabled-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "11.1",
+      "control_id": "11",
+      "title": "Establish and Maintain a Data Recovery Process",
+      "expected_evidence": "P8 backup and DR design plus the Backup and Recovery section of the policy pack",
+      "source_projects": "P8;P10",
+      "artifact_path": "projects/p08-backup-dr/docs/diagrams/p08-architecture.svg",
+      "artifact_kind": "svg",
+      "state": "present",
+      "exists": true
+    },
+    {
+      "safeguard_id": "11.2",
+      "control_id": "11",
+      "title": "Perform Automated Backups",
+      "expected_evidence": "P8 weekly automated restore-test history",
+      "source_projects": "P8",
+      "artifact_path": "projects/p08-backup-dr/evidence/public/p08-ph3-restore-test-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "11.3",
+      "control_id": "11",
+      "title": "Protect Recovery Data",
+      "expected_evidence": "P8 repository encryption and immutability proof",
+      "source_projects": "P8",
+      "artifact_path": "projects/p08-backup-dr/evidence/public/p08-ph4-immutability-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "11.4",
+      "control_id": "11",
+      "title": "Establish and Maintain an Isolated Instance of Recovery Data",
+      "expected_evidence": "P8 immutability deletion-refused proof for the isolated offsite copy",
+      "source_projects": "P8",
+      "artifact_path": "projects/p08-backup-dr/evidence/public/p08-ph4-immutability-result.png",
+      "artifact_kind": "png",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "12.1",
+      "control_id": "12",
+      "title": "Ensure Network Infrastructure is Up-to-Date",
+      "expected_evidence": "P5 firmware patching record for FW01/FW02 and the support review",
+      "source_projects": "P5;P6",
+      "artifact_path": "projects/p05-vuln-management/evidence/public/p05-ph6-firmware-patch-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.1",
+      "control_id": "14",
+      "title": "Establish and Maintain a Security Awareness Program",
+      "expected_evidence": "Gap: no awareness programme exists yet - tracked in the P10 90-day roadmap",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.2",
+      "control_id": "14",
+      "title": "Train Workforce Members to Recognize Social Engineering Attacks",
+      "expected_evidence": "Gap - future phishing simulation and training register (roadmap item)",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.3",
+      "control_id": "14",
+      "title": "Train Workforce Members on Authentication Best Practices",
+      "expected_evidence": "Gap - future training register (roadmap item)",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.4",
+      "control_id": "14",
+      "title": "Train Workforce on Data Handling Best Practices",
+      "expected_evidence": "Gap - future training register (roadmap item)",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.5",
+      "control_id": "14",
+      "title": "Train Workforce Members on Causes of Unintentional Data Exposure",
+      "expected_evidence": "Gap - future training register (roadmap item)",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.6",
+      "control_id": "14",
+      "title": "Train Workforce Members on Recognizing and Reporting Security Incidents",
+      "expected_evidence": "Gap - future training register (roadmap item)",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.7",
+      "control_id": "14",
+      "title": "Train Workforce on How to Identify and Report if Their Enterprise Assets are Missing Security Updates",
+      "expected_evidence": "Gap - future training register (roadmap item)",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "14.8",
+      "control_id": "14",
+      "title": "Train Workforce on the Dangers of Connecting to and Transmitting Enterprise Data Over Insecure Networks",
+      "expected_evidence": "Gap - future training register (roadmap item)",
+      "source_projects": "roadmap",
+      "artifact_path": "projects/p10-governance/evidence/public/p10-ph5-awareness-training-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "15.1",
+      "control_id": "15",
+      "title": "Establish and Maintain an Inventory of Service Providers",
+      "expected_evidence": "P9 vendor and licence register with renewal alerts",
+      "source_projects": "P9",
+      "artifact_path": "projects/p09-service-desk-cmdb/evidence/public/p09-ph6-vendor-register-result.csv",
+      "artifact_kind": "csv-report",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "17.1",
+      "control_id": "17",
+      "title": "Designate Personnel to Manage Incident Handling",
+      "expected_evidence": "P7 incident response roles and the tabletop exercise record",
+      "source_projects": "P7",
+      "artifact_path": "projects/p07-siem-incident-response/evidence/public/p07-ph6-ir-roles-result.md",
+      "artifact_kind": "md",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "17.2",
+      "control_id": "17",
+      "title": "Establish and Maintain Contact Information for Reporting Security Incidents",
+      "expected_evidence": "P7 incident contact list (internal vendors insurer and authorities)",
+      "source_projects": "P7",
+      "artifact_path": "projects/p07-siem-incident-response/evidence/public/p07-ph6-ir-contact-list-result.md",
+      "artifact_kind": "md",
+      "state": "expected - not present",
+      "exists": false
+    },
+    {
+      "safeguard_id": "17.3",
+      "control_id": "17",
+      "title": "Establish and Maintain an Enterprise Process for Reporting Incidents",
+      "expected_evidence": "P7 incident reporting process plus the ransomware tabletop report",
+      "source_projects": "P7",
+      "artifact_path": "projects/p07-siem-incident-response/evidence/public/p07-ph7-tabletop-report.pdf",
+      "artifact_kind": "pdf",
+      "state": "expected - not present",
+      "exists": false
+    }
+  ]
+}

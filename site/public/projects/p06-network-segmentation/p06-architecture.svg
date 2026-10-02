@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p6Title p6Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p6Title">Halden Distribution P6 network segmentation, VPN and Wi-Fi architecture</title>
+  <desc id="p6Desc">Six firewall-enforced VLAN zones (SERVERS, WAREHOUSE, USERS-HQ, MGMT, GUEST and IOT) behind HQ firewall FW01 on an OPNsense trunk, joined to a warehouse firewall FW02 by a WireGuard site-to-site tunnel. A remote-access VPN path runs from the internet through certificate authentication and a second factor to the user and management zones, and two Wi-Fi SSIDs separate certificate-based corporate devices from an isolated guest network. The rule matrix is summarised, with deny-by-default and the management zone reachable only from itself.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="40" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P6 zone architecture, remote access and Wi-Fi</text>
+  <text x="40" y="63" font-size="13.5" fill="#475569">Isolated home lab · deny-by-default between zones · rule matrix as CSV and Markdown · every flow below is a documented exception</text>
+
+  <!-- Internet path -->
+  <rect x="40" y="92" width="200" height="62" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="140" y="118" font-size="13.5" font-weight="600" fill="#0f172a" text-anchor="middle">Internet / home LAN</text>
+  <text x="140" y="138" font-size="11.5" fill="#64748b" text-anchor="middle">never touched by the lab</text>
+
+  <rect x="272" y="92" width="210" height="62" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="377" y="118" font-size="13.5" font-weight="600" fill="#0f172a" text-anchor="middle">Hyper-V Default Switch</text>
+  <text x="377" y="138" font-size="11.5" fill="#64748b" text-anchor="middle">NAT — WAN side of FW01 only</text>
+
+  <line x1="240" y1="123" x2="272" y2="123" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="272,123 264,119 264,127" fill="#0f766e"/>
+  <line x1="482" y1="123" x2="514" y2="123" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="514,123 506,119 506,127" fill="#0f766e"/>
+
+  <!-- FW01 -->
+  <rect x="514" y="82" width="256" height="86" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2.5"/>
+  <text x="642" y="108" font-size="14.5" font-weight="700" fill="#0f766e" text-anchor="middle">FW01 — OPNsense (HQ)</text>
+  <text x="642" y="130" font-size="11.5" fill="#334155" text-anchor="middle">802.1Q trunk · every zone gateway</text>
+  <text x="642" y="148" font-size="11.5" fill="#64748b" text-anchor="middle">rule set · DHCP relay · OpenVPN · WireGuard</text>
+
+  <!-- VPN path -->
+  <line x1="770" y1="108" x2="836" y2="108" stroke="#b45309" stroke-width="2" stroke-dasharray="6 4"/>
+  <polygon points="836,108 828,104 828,112" fill="#b45309"/>
+  <rect x="836" y="82" width="326" height="86" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="2"/>
+  <text x="999" y="105" font-size="13" font-weight="700" fill="#92400e" text-anchor="middle">Remote-access VPN with MFA</text>
+  <text x="999" y="126" font-size="11.5" fill="#78350f" text-anchor="middle">certificate per device → NPS/RADIUS on FS01</text>
+  <text x="999" y="144" font-size="11.5" fill="#78350f" text-anchor="middle">AD group G_VPN_Users + Authenticator push / TOTP</text>
+  <text x="999" y="161" font-size="11.5" fill="#78350f" text-anchor="middle">tunnel 192.168.70.0/24 · user parity, MGMT denied</text>
+
+  <!-- WireGuard to FW02 -->
+  <rect x="930" y="196" width="232" height="66" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="1046" y="220" font-size="13" font-weight="700" fill="#0f766e" text-anchor="middle">FW02 — OPNsense (Warehouse)</text>
+  <text x="1046" y="240" font-size="11.5" fill="#334155" text-anchor="middle">VLAN 20 · 192.168.20.1</text>
+  <line x1="770" y1="229" x2="930" y2="229" stroke="#0f766e" stroke-width="3"/>
+  <text x="850" y="222" font-size="11" fill="#0f766e" text-anchor="middle">WireGuard S2S · tunnel 10.99.0.0/30</text>
+  <text x="850" y="245" font-size="10.5" fill="#64748b" text-anchor="middle">UDP 51820 · allowed IPs restricted to the remote LAN</text>
+
+  <!-- trunk bus -->
+  <line x1="642" y1="168" x2="642" y2="288" stroke="#0f766e" stroke-width="2"/>
+  <line x1="40" y1="288" x2="1160" y2="288" stroke="#0f766e" stroke-width="3"/>
+  <text x="44" y="280" font-size="12.5" font-weight="600" fill="#0f766e">VLAN-aware trunk (802.1Q) — one tagged interface per zone below</text>
+
+  <!-- zone boxes -->
+  <g stroke="#94a3b8" fill="#ffffff">
+    <rect x="40" y="316" width="170" height="118" rx="8"/>
+    <rect x="226" y="316" width="170" height="118" rx="8"/>
+    <rect x="412" y="316" width="170" height="118" rx="8"/>
+    <rect x="598" y="316" width="170" height="118" rx="8"/>
+    <rect x="784" y="316" width="170" height="118" rx="8"/>
+    <rect x="970" y="316" width="190" height="118" rx="8"/>
+  </g>
+  <g stroke="#0f766e" stroke-width="2">
+    <line x1="125" y1="288" x2="125" y2="316"/>
+    <line x1="311" y1="288" x2="311" y2="316"/>
+    <line x1="497" y1="288" x2="497" y2="316"/>
+    <line x1="683" y1="288" x2="683" y2="316"/>
+    <line x1="869" y1="288" x2="869" y2="316"/>
+    <line x1="1065" y1="288" x2="1065" y2="316"/>
+  </g>
+
+  <g text-anchor="middle">
+    <text x="125" y="340" font-size="14" font-weight="700" fill="#0f172a">VLAN 10 · SERVERS</text>
+    <text x="125" y="360" font-size="11" fill="#0f766e">192.168.10.0/24</text>
+    <text x="125" y="380" font-size="11" fill="#334155">DCs · FS01 (NPS) · LNX01</text>
+    <text x="125" y="397" font-size="11" fill="#334155">OPS01 · SIEM01 · CA01</text>
+    <text x="125" y="418" font-size="10.5" fill="#64748b">static · Tier 0</text>
+
+    <text x="311" y="340" font-size="14" font-weight="700" fill="#0f172a">VLAN 20 · WAREHOUSE</text>
+    <text x="311" y="360" font-size="11" fill="#0f766e">192.168.20.0/24</text>
+    <text x="311" y="380" font-size="11" fill="#334155">site 2 clients and scanners</text>
+    <text x="311" y="397" font-size="11" fill="#334155">behind FW02</text>
+    <text x="311" y="418" font-size="10.5" fill="#64748b">DHCP via relay</text>
+
+    <text x="497" y="340" font-size="14" font-weight="700" fill="#0f172a">VLAN 30 · USERS-HQ</text>
+    <text x="497" y="360" font-size="11" fill="#0f766e">192.168.30.0/24</text>
+    <text x="497" y="380" font-size="11" fill="#334155">staff workstations</text>
+    <text x="497" y="397" font-size="11" fill="#334155">and laptops</text>
+    <text x="497" y="418" font-size="10.5" fill="#64748b">DHCP via relay</text>
+
+    <text x="683" y="340" font-size="14" font-weight="700" fill="#0f172a">VLAN 40 · MGMT</text>
+    <text x="683" y="360" font-size="11" fill="#0f766e">192.168.40.0/24</text>
+    <text x="683" y="380" font-size="11" fill="#334155">PAW (WS02) · hypervisor</text>
+    <text x="683" y="397" font-size="11" fill="#334155">switch/AP management · BKP01</text>
+    <text x="683" y="418" font-size="10.5" fill="#64748b">static · reachable only from itself</text>
+
+    <text x="869" y="340" font-size="14" font-weight="700" fill="#0f172a">VLAN 50 · GUEST</text>
+    <text x="869" y="360" font-size="11" fill="#0f766e">192.168.50.0/24</text>
+    <text x="869" y="380" font-size="11" fill="#334155">visitor devices</text>
+    <text x="869" y="397" font-size="11" fill="#334155">internet only</text>
+    <text x="869" y="418" font-size="10.5" fill="#64748b">client isolation · vouchers</text>
+
+    <text x="1065" y="340" font-size="14" font-weight="700" fill="#0f172a">VLAN 60 · IOT</text>
+    <text x="1065" y="360" font-size="11" fill="#0f766e">192.168.60.0/24</text>
+    <text x="1065" y="380" font-size="11" fill="#334155">printers · CCTV DVR</text>
+    <text x="1065" y="397" font-size="11" fill="#334155">warehouse scanners</text>
+    <text x="1065" y="418" font-size="10.5" fill="#64748b">one allowed path: FS01 SMB</text>
+  </g>
+
+  <!-- Wi-Fi panel -->
+  <rect x="40" y="458" width="352" height="164" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="58" y="482" font-size="13" font-weight="700" fill="#0f172a">Wi-Fi — certificate-based, no shared password</text>
+  <rect x="58" y="494" width="316" height="46" rx="6" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="70" y="513" font-size="11.5" font-weight="600" fill="#134e4a">Halden-Corp · 802.1X / EAP-TLS · VLAN 30</text>
+  <text x="70" y="531" font-size="10.5" fill="#134e4a">certificate from the internal CA · NPS checks the device</text>
+  <rect x="58" y="548" width="316" height="46" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="70" y="567" font-size="11.5" font-weight="600" fill="#0f172a">Halden-Guest · voucher portal · VLAN 50</text>
+  <text x="70" y="585" font-size="10.5" fill="#334155">client isolation · cannot reach any company system</text>
+  <text x="58" y="613" font-size="10.5" fill="#64748b">PKI: CA01 Enterprise Root CA → autoenrolled device certificates.</text>
+
+  <!-- Rule matrix panel -->
+  <rect x="410" y="458" width="540" height="164" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="428" y="482" font-size="13" font-weight="700" fill="#0f172a">Rule matrix summary — deny by default, first match wins</text>
+  <g font-size="11.5" fill="#334155">
+    <text x="428" y="506">allow  USERS-HQ → SERVERS   DNS 53, Kerberos 88, LDAP/GC, SMB 445, RPC 135/49152–65535</text>
+    <text x="428" y="526">allow  USERS-HQ / VPN-USERS → FS01 SMB 445, OPS01 HTTPS 443, internet 80/443</text>
+    <text x="428" y="546">allow  WAREHOUSE → DCs and FS01 across the tunnel      allow  IOT → FS01 SMB (scan-to-folder)</text>
+    <text x="428" y="566">allow  MGMT → any internal (administration from the PAW only)</text>
+    <text x="428" y="586" font-weight="600" fill="#991b1b">deny   GUEST → any internal        deny any → MGMT        deny VPN-USERS → MGMT</text>
+    <text x="428" y="606" font-weight="600" fill="#991b1b">deny   DNS to non-DCs (53/853)     deny SMB/RDP to the internet     deny + log everything else</text>
+  </g>
+
+  <!-- Legend and footnote -->
+  <rect x="970" y="458" width="190" height="164" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="988" y="482" font-size="13" font-weight="700" fill="#0f172a">Legend</text>
+  <line x1="988" y1="506" x2="1028" y2="506" stroke="#0f766e" stroke-width="3"/>
+  <text x="1036" y="510" font-size="11" fill="#334155">allowed / routed</text>
+  <line x1="988" y1="532" x2="1028" y2="532" stroke="#b45309" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="1036" y="536" font-size="11" fill="#334155">VPN with MFA</text>
+  <rect x="988" y="550" width="40" height="16" rx="3" fill="#ffffff" stroke="#991b1b" stroke-width="1.5"/>
+  <text x="1036" y="563" font-size="11" fill="#334155">deny + log</text>
+  <rect x="988" y="578" width="40" height="16" rx="3" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="1036" y="591" font-size="11" fill="#334155">trust boundary</text>
+
+  <text x="40" y="646" font-size="11.5" fill="#64748b">Lab note: Halden Distribution Ltd. is a fictional company. The lab is isolated — it never exposes a service to the internet, and no wide-area address is recorded anywhere in this project.</text>
+  <text x="40" y="666" font-size="11.5" fill="#64748b">The network WAN side is the hypervisor's default NAT switch. Every flow in this diagram is a deliberate, documented exception to a default deny; the full matrix is in configs/p06-zone-rule-matrix.csv.</text>
+  <text x="40" y="686" font-size="11.5" fill="#64748b">Design shown; verification is the automated segmentation test suite run from a host in each zone. Results are published only once measured.</text>
+</svg>

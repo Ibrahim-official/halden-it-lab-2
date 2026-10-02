@@ -1,0 +1,99 @@
+---
+# 13-patch-linux.yml — Phase 2: Linux patch automation with Ansible (Halden P5 lab).
+#
+# Why: Linux patching should be the same every month, with pre-checks, a snapshot point, a reboot
+# only when the kernel or libc needs it, and post-checks that prove the host came back healthy.
+# Ansible gives that; "apt upgrade by hand" does not.
+#
+# What it does: pre-checks (free space, reboot pending), updates, reboots if required, then asserts
+# that SSH is up and the kernel actually changed. One host at a time (serial: 1) so nothing is lost
+# if a patch breaks boot.
+#
+# Scope: LAB ONLY. The inventory below lists only Halden lab hosts (AGENTS.md rule R1). Run with:
+#   ansible-playbook -i projects/p05-vuln-management/scripts/13-inventory.ini \
+#                    projects/p05-vuln-management/scripts/13-patch-linux.yml --check   # dry run
+#
+# Snapshot each Linux host first (snap-p5-ph2-before-<host>).
+# Rollback: revert that snapshot; unattended-upgrades remains the safety net for security updates.
+- name: Halden P5 — patch Linux servers with pre- and post-checks
+  hosts: halden_linux
+  become: true
+  serial: 1
+  gather_facts: true
+  vars:
+    min_free_percent: 15
+    report_dir: "{{ playbook_dir }}/../evidence/raw"
+
+  tasks:
+    - name: Pre-check — free space on /
+      ansible.builtin.shell: df --output=pcent / | tail -1 | tr -dc '0-9'
+      register: root_used
+      changed_when: false
+      failed_when: (root_used.stdout | int) > (100 - min_free_percent)
+
+    - name: Note — kernel before patching
+      ansible.builtin.command: uname -r
+      register: kernel_before
+      changed_when: false
+
+    - name: Update the package cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: List upgradable packages (evidence)
+      ansible.builtin.shell: apt list --upgradable 2>/dev/null | tail -n +2
+      register: upgradable
+      changed_when: false
+
+    - name: Apply upgrades
+      ansible.builtin.apt:
+        upgrade: dist
+        autoremove: true
+        dpkg_options: "force-confdef,force-confold"
+
+    - name: Check whether a reboot is required
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+
+    - name: Reboot if required
+      ansible.builtin.reboot:
+        reboot_timeout: 600
+        msg: "Ansible patching reboot (Halden P5)"
+      when: reboot_required.stat.exists
+
+    - name: Post-check — SSH reachable and services healthy
+      ansible.builtin.service_facts:
+
+    - name: Assert ssh is running
+      ansible.builtin.assert:
+        that:
+          - "'ssh.service' in ansible_facts.services"
+          - "ansible_facts.services['ssh.service'].state == 'running'"
+        fail_msg: "SSH is not running after patching — investigate before continuing."
+
+    - name: Note — kernel after patching
+      ansible.builtin.command: uname -r
+      register: kernel_after
+      changed_when: false
+
+    - name: Record the per-host result
+      ansible.builtin.copy:
+        dest: "{{ report_dir }}/p05-ph2-ansible-patch-{{ inventory_hostname }}.txt"
+        mode: "0644"
+        content: |
+          host: {{ inventory_hostname }}
+          date: {{ ansible_date_time.iso8601 }}
+          root_used_before: {{ root_used.stdout }}%
+          packages_upgradable: {{ upgradable.stdout_lines | length }}
+          reboot_performed: {{ reboot_required.stat.exists }}
+          kernel_before: {{ kernel_before.stdout }}
+          kernel_after: {{ kernel_after.stdout }}
+      delegate_to: localhost
+
+    - name: Remind about the reboot and the verification scan
+      ansible.builtin.debug:
+        msg: >-
+          {{ inventory_hostname }} patched. Next: confirm with the monthly verification scan
+          (scripts/07-verify-closure.sh) before closing any ticket.

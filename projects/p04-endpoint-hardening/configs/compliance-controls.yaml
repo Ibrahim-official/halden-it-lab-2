@@ -1,0 +1,107 @@
+# Endpoint compliance control mapping - P4 Phase 5
+#
+# WHAT IT IS
+#   The mapping between the nine endpoint checks the compliance report runs, the business control
+#   each one stands for, and the evidence a reader can look at. This is what makes the "% compliant"
+#   figure meaningful to a manager: every percent maps back to a named control.
+#
+# WHERE IT APPLIES
+#   Domain: ad.halden.internal  ·  Produced by: scripts/06-Get-EndpointCompliance.ps1
+#   Output: reports/endpoint-compliance-<date>.html (traffic lights) and .csv (Power BI / P10)
+#
+# SYNTHETIC / HONESTY NOTE
+#   Every "pass condition" below is evaluated on a real client. The overall percentage is plain
+#   arithmetic over the checks that actually ran. A check that could not run is reported as
+#   "not checked" (amber) and is excluded from the percentage rather than counted as a pass.
+#
+# CHANGE CONTROL
+#   Changing a pass condition changes what the business is told is compliant. Any change here needs
+#   a change record (see business/p04-change-record.md).
+
+report:
+  script: "scripts/06-Get-EndpointCompliance.ps1"
+  scheduled: "daily, from a management server (P9 CMDB or the P5 patch server, whichever exists first)"
+  outputs:
+    html: "reports/endpoint-compliance-<date>.html"
+    csv: "reports/endpoint-compliance-<date>.csv"
+  overall_metric: "passed checks / checks that ran, as a percentage"
+  not_checked_handling: "reported as amber and excluded from the percentage"
+
+controls:
+  - id: "C1"
+    check: "OS build"
+    pass_condition: "Build number at or above the supported Windows 11 release (default minimum 22631)"
+    business_control: "Devices run a supported, still-patched operating system"
+    why_it_matters: "An unsupported build receives no security fixes, whatever else is configured on it."
+    evidence: "linux patch-age column in the compliance CSV; README results table"
+    maps_to: "CIS Controls IG1 (secure configuration); P5 patch compliance"
+
+  - id: "C2"
+    check: "BitLocker"
+    pass_condition: "OS volume protection On and 100% encrypted"
+    business_control: "A lost or stolen laptop does not become a data breach"
+    why_it_matters: "Sales laptops leave the building daily; without encryption, a stolen device is a reportable incident."
+    evidence: "Get-BitLockerVolume output; the escrow CSV; Business 'device standard' section"
+    maps_to: "CIS Controls IG1 (data protection); internal key-escrow audit"
+
+  - id: "C3"
+    check: "Defender"
+    pass_condition: "Real-time protection on, signatures under 24 hours old, quick scan within 7 days"
+    business_control: "Malware protection is running and current on every device"
+    why_it_matters: "An antivirus that cannot update, or has not scanned, is protection on paper only."
+    evidence: "Get-MpComputerStatus output; compliance CSV"
+    maps_to: "CIS Controls IG1 (malware defences)"
+
+  - id: "C4"
+    check: "ASR rules"
+    pass_condition: "Zero rules in audit mode and at least 16 rules blocking"
+    business_control: "Known attacker techniques on endpoints are blocked, not just logged"
+    why_it_matters: "Rules left in audit mode log an attack and let it succeed; the block mode is the control."
+    evidence: "ASR state CSV from scripts/02 and 03; compliance CSV"
+    maps_to: "CIS Controls IG1 (exploit protection); P4 acceptance tests"
+
+  - id: "C5"
+    check: "Firewall"
+    pass_condition: "Firewall enabled on all three profiles (domain, private, public)"
+    business_control: "Endpoint inbound access is denied by default"
+    why_it_matters: "An off profile is a machine listening for anyone on the same network."
+    evidence: "Get-NetFirewallProfile output; compliance CSV"
+    maps_to: "CIS Controls IG1 (network defences); P6 dependency"
+
+  - id: "C6"
+    check: "Local admins"
+    pass_condition: "Local Administrators contains only the approved accounts and groups"
+    business_control: "Least privilege on the endpoint; no standard user can install or disable controls"
+    why_it_matters: "A local admin is a one-step path to disabling every other control on this list."
+    evidence: "Administrators membership before/after CSV; compliance CSV"
+    maps_to: "CIS Controls IG1 (privileged access); P3 tiering"
+
+  - id: "C7"
+    check: "LAPS"
+    pass_condition: "Managed local administrator password set within 31 days (checked via the update time only)"
+    business_control: "Local administrator passwords are unique per device and rotate"
+    why_it_matters: "One shared local admin password means one leaked password opens every machine."
+    evidence: "LAPS status CSV (no password values); compliance CSV"
+    maps_to: "CIS Controls IG1 (privileged access); P3 LAPS deployment"
+
+  - id: "C8"
+    check: "Pending reboot"
+    pass_condition: "No pending reboot"
+    business_control: "Hardening and patches are actually in effect, not waiting on a restart"
+    why_it_matters: "A pending reboot can leave an approved control inactive while the report says otherwise."
+    evidence: "compliance CSV pending-reboot column"
+    maps_to: "CIS Controls IG1 (secure configuration)"
+
+  - id: "C9"
+    check: "Last patch"
+    pass_condition: "A patch installed within the last 35 days"
+    business_control: "Devices are being patched on a schedule"
+    why_it_matters: "This is the link into P5; the readiness report and the patch programme must agree."
+    evidence: "compliance CSV last-patch column; P5 hand-off"
+    maps_to: "CIS Controls IG1 (continuous vulnerability management); P5"
+
+not_checked:
+  description: >
+    A check that cannot run (for example the LAPS cmdlet is absent before P3 is finished) is shown
+    as amber "not checked" and excluded from the percentage. It is never silently counted as a pass,
+    because that would overstate how compliant the fleet is.

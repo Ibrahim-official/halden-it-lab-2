@@ -1,0 +1,42 @@
+{
+  "_comment": "Halden Distribution Ltd. — P9 BookStack documentation hub structure. Applies to OPS01 (BookStack container) and to scripts/10-Seed-BookStack.sh, which creates these shelves and books idempotently through the BookStack API. Every page uses the page template below with an Owner and a review date; a monthly script lists pages whose review date has passed. Secrets (passwords, keys, tokens) are NEVER stored in the wiki — they live in the password manager.",
+  "version": "1.0",
+  "page_template_fields": ["Purpose", "Scope", "Owner", "Last reviewed", "Next review", "Content", "Related pages"],
+  "review_default_months": 6,
+  "shelves": [
+    {
+      "name": "Infrastructure",
+      "books": ["AD & Identity", "Servers", "Network", "Backup & DR", "Monitoring"]
+    },
+    {
+      "name": "Security",
+      "books": ["Standards", "Assessments", "Incident Response"]
+    },
+    {
+      "name": "Runbooks",
+      "books": ["Daily / Weekly / Monthly checks", "Break-fix", "Disaster Recovery"]
+    },
+    {
+      "name": "Policies",
+      "books": ["IT Policy Pack (P10)"]
+    },
+    {
+      "name": "Vendors",
+      "books": ["Contact sheets (no secrets)"]
+    }
+  ],
+  "seed_pages": [
+    { "shelf": "Infrastructure", "book": "AD & Identity", "title": "As-built: core infrastructure (P1)", "owner": "IT", "source": "projects/p01-core-infrastructure/docs/as-built.md" },
+    { "shelf": "Infrastructure", "book": "Network", "title": "As-built: network segmentation and VPN (P6)", "owner": "IT", "source": "projects/p06-network-segmentation" },
+    { "shelf": "Infrastructure", "book": "Backup & DR", "title": "As-built: backup and disaster recovery (P8)", "owner": "IT", "source": "projects/p08-backup-dr" },
+    { "shelf": "Runbooks", "book": "Daily / Weekly / Monthly checks", "title": "Operational checklists", "owner": "IT Service Desk", "source": "projects/p09-service-desk-cmdb/docs/00-design.md" },
+    { "shelf": "Runbooks", "book": "Break-fix", "title": "Bring the OPS01 stack up", "owner": "IT Service Desk", "source": "projects/p09-service-desk-cmdb/docs/runbooks/bring-up-the-stack.md" },
+    { "shelf": "Vendors", "book": "Contact sheets (no secrets)", "title": "Vendor contact sheet", "owner": "IT", "source": "projects/p09-service-desk-cmdb/business/p09-vendor-management.md" }
+  ],
+  "operational_checklists": {
+    "daily": ["Backup job status (P8)", "Wazuh High alerts (P7)", "Uptime Kuma all green", "Ticket queue: unassigned and breached"],
+    "weekly": ["Restore-test result", "Patch compliance", "Asset reconciliation (scripts/02-Test-AssetReconciliation.ps1)", "AD health (dcdiag, repadmin)"],
+    "monthly": ["PingCastle score", "Vulnerability dashboard (P5)", "Stale accounts (P2)", "Licence usage vs seats", "Documentation review dates", "KPI report (P10)"],
+    "quarterly": ["Access reviews (P2)", "Firewall rule review (P6)", "DR test (P8)", "Vendor and contract review"]
+  }
+}

@@ -1,0 +1,8 @@
+system,rto_target_h,actual_h,rpo_target_h,actual_data_loss_h,pass,notes_fix
+DC01 (AD/DNS/DHCP),2,,24,,,
+FS01 (Finance/Sales),4,,1,,,
+LNX01 (order app and database),4,,1,,,
+OPS01 (GLPI/BookStack),24,,24,,,
+SIEM01 (Wazuh),24,,24,,,
+Workstations (re-image),72,,n/a,,,
+Full recovery to service (per tier),,,,,

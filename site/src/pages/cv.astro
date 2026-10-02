@@ -1,0 +1,190 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortByOrder } from '../lib/assets';
+
+const cvEntry = await getEntry('cv', 'cv');
+const cv = cvEntry!.data;
+const projects = sortByOrder(await getCollection('showcase'));
+
+// Only projects whose bullets are curated for the CV appear here (cv.yaml → projects_on_cv).
+const cvProjects = cv.projects_on_cv
+  .map((id) => projects.find((p) => p.data.id === id))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p) && (p!.data.status === 'done' || p!.data.cv_bullets.length > 0));
+
+// The private phone number is only included for local private builds:
+//   CV_PHONE="+92 3XX XXXXXXX" npm run build && npm run build:cv
+const phone = process.env.CV_PHONE ?? '';
+---
+
+<BaseLayout title="CV" description={`CV of ${cv.name} — IT Support and junior System Administration.`}>
+  <div class="print-hide" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;align-items:center;">
+    <p class="small muted" style="margin:0;">
+      This page is the CV source of truth; the PDF is generated from it during deployment.
+    </p>
+    <span>
+      <a class="btn" href="/cv/Muhammad-Ibrahim-Akmal-CV.pdf">Download PDF</a>
+    </span>
+  </div>
+
+  <article class="cv">
+    <header style="border-bottom:2px solid var(--accent);padding-bottom:0.6rem;margin-bottom:1rem;">
+      <h1 style="margin-bottom:0.1em;">{cv.name}</h1>
+      <p style="margin:0;font-size:1.05rem;">{cv.headline}</p>
+      <p class="small" style="margin:0.3em 0 0;">
+        {cv.location} · <a href={`mailto:${cv.links.email}`}>{cv.links.email}</a>
+        {phone && <> · {phone}</>}
+        {cv.links.linkedin && <> · <a href={cv.links.linkedin}>LinkedIn</a></>}
+        {cv.links.github && <> · <a href={cv.links.github}>GitHub</a></>}
+      </p>
+    </header>
+
+    <section>
+      <h2>Professional summary</h2>
+      <p>{cv.summary}</p>
+    </section>
+
+    <section>
+      <h2>Technical skills</h2>
+      <ul>
+        {cv.skills.map((group) => (
+          <li>
+            <strong>{group.group}:</strong>{' '}
+            {group.items.length > 0 ? group.items.join(', ') : <em class="muted">added as projects complete</em>}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {cv.projects_on_cv.length > 0 && (
+      <p class="small muted print-hide">
+        Ten documented home-lab projects (P1–P10) back these skills; the CV lists the three closest to
+        this role, and the full portfolio site covers all ten with evidence.
+      </p>
+    )}
+
+    <section>
+      <h2>Professional experience</h2>
+      {cv.experience.map((job) => (
+        <div>
+          <h3 style="margin-bottom:0;">
+            {job.role} — {job.org}
+            <span class="muted small" style="font-weight:400;"> {job.place} · {job.start} – {job.end ?? 'Present'}</span>
+          </h3>
+          <ul>
+            {job.bullets.map((bullet) => <li>{bullet}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    {cvProjects.length > 0 && (
+      <section>
+        <h2>Projects / home lab</h2>
+        {cvProjects.map((project) => (
+          <div>
+            <h3 style="margin-bottom:0;">
+              {project.data.title}
+              <span class="muted small print-hide" style="font-weight:400;"> · <a href={`/projects/${project.data.id}/`}>case study</a></span>
+            </h3>
+            <ul>
+              {project.data.cv_bullets.map((bullet, index) => (
+                <li class={index > 1 ? 'print-hide' : ''}>{bullet}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+    )}
+
+    <section>
+      <h2>Education</h2>
+      {cv.education.map((edu) => (
+        <div>
+          <h3 style="margin-bottom:0;">{edu.degree} — {edu.org}</h3>
+          <p class="small" style="margin-top:0;">
+            {edu.start} – {edu.end}
+            {edu.notes && <><br />{edu.notes}</>}
+            {edu.fyp && <><br />Final Year Project: {edu.fyp}</>}
+          </p>
+        </div>
+      ))}
+    </section>
+
+    {cv.certifications.length > 0 && (
+      <section>
+        <h2>Certifications &amp; learning</h2>
+        <ul>
+          {cv.certifications.map((cert) => <li>{cert}</li>)}
+        </ul>
+      </section>
+    )}
+  </article>
+
+  <style>
+    .cv h2 {
+      border-bottom: none;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 1.3em 0 0.3em;
+    }
+
+    @media print {
+      :global(.site-header),
+      :global(.site-footer),
+      .print-hide {
+        display: none !important;
+      }
+
+      /* Tightened so the CV stays on one page as the project list grows (AGENTS.md 5.5). */
+      :global(body) {
+        font-size: 8.6pt;
+        line-height: 1.26;
+      }
+
+      :global(main) {
+        padding: 0;
+        min-height: auto;
+      }
+
+      :global(h1) {
+        font-size: 15.5pt;
+      }
+
+      .cv h2 {
+        font-size: 9.2pt;
+        margin: 0.6em 0 0.15em;
+      }
+
+      .cv h3 {
+        font-size: 9.6pt;
+        margin: 0.3em 0 0.05em;
+      }
+
+      .cv p,
+      .cv ul {
+        margin: 0.1em 0;
+      }
+
+      .cv li {
+        margin: 0.02em 0;
+      }
+
+      .cv header {
+        padding-bottom: 0.35rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      @page {
+        size: A4;
+        margin: 9mm 11mm;
+      }
+    }
+  </style>
+</BaseLayout>

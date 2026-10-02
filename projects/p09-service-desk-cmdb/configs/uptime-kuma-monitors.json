@@ -1,0 +1,19 @@
+{
+  "_comment": "Halden Distribution Ltd. — P9 Uptime Kuma monitor definitions. Applies to OPS01 (Kuma container, https://kuma.halden.internal). Uptime Kuma is installed in P9 specifically so P8 gets a backup heartbeat: a PUSH monitor that the backup job calls after a successful restore test. Tokens are NOT stored here — they are created in the Kuma UI and the push URL is kept in the git-ignored .env / password manager. Targets are lab-internal only.",
+  "version": "1.0",
+  "monitor_defaults": {
+    "interval_seconds": 60,
+    "retries": 2,
+    "notification": "email-to-team-placeholder (configured in the UI; no credentials in the repo)"
+  },
+  "monitors": [
+    { "name": "DC01 - LDAP/LDAPS", "type": "tcp", "hostname": "dc01.ad.halden.internal", "port": 636, "group": "Infrastructure" },
+    { "name": "DC02 - LDAP/LDAPS", "type": "tcp", "hostname": "dc02.ad.halden.internal", "port": 636, "group": "Infrastructure" },
+    { "name": "FS01 - SMB", "type": "tcp", "hostname": "fs01.ad.halden.internal", "port": 445, "group": "Infrastructure" },
+    { "name": "GLPI - HTTPS", "type": "http", "url": "https://glpi.halden.internal", "keyword": "GLPI", "group": "Service desk" },
+    { "name": "BookStack - HTTPS", "type": "http", "url": "https://bookstack.halden.internal", "group": "Documentation" },
+    { "name": "GLPI - database", "type": "tcp", "hostname": "glpi-db", "port": 3306, "group": "Service desk" },
+    { "name": "FW01 - HTTPS admin", "type": "http", "url": "https://192.168.10.1", "accepted_statuscodes": ["200-399"], "group": "Network" },
+    { "name": "Backup heartbeat - P8 weekly restore test", "type": "push", "push_token_ref": "KUMA_HEARTBEAT_TOKEN", "schedule": "expected every Sunday 03:00 after the P8 restore test", "group": "Backup", "purpose": "A PUSH monitor that the P8 restore-test job pings on success; a missed ping raises an alert and, via the GLPI integration, a P2 Backup ticket (business rule BR-005)." }
+  ]
+}

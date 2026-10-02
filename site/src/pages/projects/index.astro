@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { sortByOrder } from '../../lib/assets';
+
+const projects = sortByOrder(await getCollection('showcase'));
+const allSkills = [...new Set(projects.flatMap((p) => p.data.skills))].sort();
+const roles = [
+  { id: 'all', label: 'All projects' },
+  { id: 'it-support', label: 'IT Support' },
+  { id: 'sysadmin', label: 'System Administration' },
+];
+---
+
+<BaseLayout title="Projects" description="Ten home-lab projects in build order: AD, identity, security, patching, networking, monitoring, backup/DR, ITSM and governance.">
+  <h1>Projects</h1>
+  <p>
+    Ten projects, one simulated company. The order is the tailored build order from the roadmap,
+    not the numeric order — each project uses what the earlier ones created.
+  </p>
+
+  <div class="filters" aria-label="Filter projects">
+    {roles.map((role, index) => (
+      <button type="button" data-role={role.id} aria-pressed={index === 0 ? 'true' : 'false'}>
+        {role.label}
+      </button>
+    ))}
+    <label class="small muted" for="skill-filter">Skill:</label>
+    <select id="skill-filter">
+      <option value="all">all skills</option>
+      {allSkills.map((skill) => <option value={skill}>{skill}</option>)}
+    </select>
+  </div>
+
+  <div class="grid-cards" id="project-grid">
+    {projects.map((p) => (
+      <div
+        class="project-item"
+        data-roles={p.data.roles.join(' ')}
+        data-skills={p.data.skills.join('|')}
+      >
+        <ProjectCard project={p} />
+      </div>
+    ))}
+  </div>
+
+  <p class="small muted" id="filter-empty" hidden>No projects match that filter.</p>
+
+  <script>
+    const roleButtons = [...document.querySelectorAll<HTMLButtonElement>('.filters button[data-role]')];
+    const skillSelect = document.querySelector<HTMLSelectElement>('#skill-filter');
+    const items = [...document.querySelectorAll<HTMLElement>('.project-item')];
+    const empty = document.querySelector<HTMLElement>('#filter-empty');
+
+    let activeRole = 'all';
+    let activeSkill = 'all';
+
+    function apply() {
+      let visible = 0;
+      for (const item of items) {
+        const roles = (item.dataset.roles ?? '').split(' ');
+        const skills = (item.dataset.skills ?? '').split('|');
+        const roleOk = activeRole === 'all' || roles.includes(activeRole);
+        const skillOk = activeSkill === 'all' || skills.includes(activeSkill);
+        const show = roleOk && skillOk;
+        item.hidden = !show;
+        if (show) visible += 1;
+      }
+      if (empty) empty.hidden = visible > 0;
+    }
+
+    for (const button of roleButtons) {
+      button.addEventListener('click', () => {
+        activeRole = button.dataset.role ?? 'all';
+        for (const b of roleButtons) b.setAttribute('aria-pressed', String(b === button));
+        apply();
+      });
+    }
+
+    skillSelect?.addEventListener('change', () => {
+      activeSkill = skillSelect.value;
+      apply();
+    });
+  </script>
+</BaseLayout>

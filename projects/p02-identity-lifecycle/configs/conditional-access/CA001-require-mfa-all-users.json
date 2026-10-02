@@ -1,0 +1,19 @@
+{
+  "_comment": "CA001 - Require MFA for all users. Applies to: the Halden Microsoft Entra ID tenant (P2, lab only). Excludes the two monitored break-glass accounts, which must always be able to sign in with a password alone. Deployed by projects/p02-identity-lifecycle/scripts/07-New-ConditionalAccessPolicies.ps1, report-only first. The token __BREAKGLASS_UPNS__ is replaced at deploy time with the real break-glass UPNs passed to the script; no tenant values are stored in this repository.",
+  "displayName": "CA001 - Require MFA - All users",
+  "state": "enabledForReportingButNotEnforced",
+  "conditions": {
+    "users": {
+      "includeUsers": ["All"],
+      "excludeUsers": ["__BREAKGLASS_UPNS__"]
+    },
+    "applications": {
+      "includeApplications": ["All"]
+    },
+    "clientAppTypes": ["all"]
+  },
+  "grantControls": {
+    "operator": "OR",
+    "builtInControls": ["mfa"]
+  }
+}

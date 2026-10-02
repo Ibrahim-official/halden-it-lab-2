@@ -1,0 +1,22 @@
+{
+  "_comment": "CA002 - Block legacy authentication. Applies to: the Halden Microsoft Entra ID tenant (P2, lab only). Legacy protocols (IMAP/POP/SMTP AUTH, Exchange ActiveSync and other clients) cannot present MFA and are a common credential-abuse path, so they are blocked rather than challenged. Deployed by 07-New-ConditionalAccessPolicies.ps1, report-only first. Token __BREAKGLASS_UPNS__ is replaced at deploy time.",
+  "displayName": "CA002 - Block legacy authentication",
+  "state": "enabledForReportingButNotEnforced",
+  "conditions": {
+    "users": {
+      "includeUsers": ["All"],
+      "excludeUsers": ["__BREAKGLASS_UPNS__"]
+    },
+    "applications": {
+      "includeApplications": ["All"]
+    },
+    "clientAppTypes": [
+      "exchangeActiveSync",
+      "other"
+    ]
+  },
+  "grantControls": {
+    "operator": "OR",
+    "builtInControls": ["block"]
+  }
+}

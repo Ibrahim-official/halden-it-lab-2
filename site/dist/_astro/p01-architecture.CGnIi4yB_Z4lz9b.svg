@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="p1Title p1Desc" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <title id="p1Title">Halden Distribution P1 logical architecture</title>
+  <desc id="p1Desc">Two domain controllers, a file server, an AD-joined Ubuntu server and two Windows 11 workstations behind an OPNsense gateway on a private lab network, with the least-privilege AGDLP group model shown alongside.</desc>
+
+  <rect width="1200" height="700" fill="#f8fafc"/>
+
+  <text x="40" y="42" font-size="22" font-weight="700" fill="#0f172a">Halden Distribution Ltd — P1 logical architecture</text>
+  <text x="40" y="66" font-size="13.5" fill="#475569">Isolated home lab · flat LAN 192.168.10.0/24 in P1 · VLAN segmentation added in P6 · domain ad.halden.internal</text>
+
+  <!-- Internet / NAT path -->
+  <rect x="40" y="98" width="196" height="66" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="138" y="124" font-size="13.5" font-weight="600" fill="#0f172a" text-anchor="middle">Home LAN / Internet</text>
+  <text x="138" y="144" font-size="11.5" fill="#64748b" text-anchor="middle">never touched by the lab</text>
+
+  <line x1="236" y1="131" x2="292" y2="131" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="292,131 284,127 284,135" fill="#0f766e"/>
+
+  <rect x="292" y="98" width="204" height="66" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="394" y="124" font-size="13.5" font-weight="600" fill="#0f172a" text-anchor="middle">Hyper-V Default Switch</text>
+  <text x="394" y="144" font-size="11.5" fill="#64748b" text-anchor="middle">NAT — WAN side of FW01 only</text>
+
+  <line x1="496" y1="131" x2="552" y2="131" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="552,131 544,127 544,135" fill="#0f766e"/>
+
+  <rect x="552" y="88" width="240" height="86" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+  <text x="672" y="114" font-size="14" font-weight="700" fill="#0f766e" text-anchor="middle">FW01 — OPNsense</text>
+  <text x="672" y="136" font-size="11.5" fill="#334155" text-anchor="middle">192.168.10.1 · default gateway</text>
+  <text x="672" y="154" font-size="11.5" fill="#64748b" text-anchor="middle">DHCP relay + zones added in P6</text>
+
+  <!-- Private switch bus -->
+  <line x1="672" y1="174" x2="672" y2="222" stroke="#0f766e" stroke-width="2"/>
+  <line x1="60" y1="222" x2="1140" y2="222" stroke="#0f766e" stroke-width="3"/>
+  <text x="64" y="214" font-size="12.5" font-weight="600" fill="#0f766e">Halden-LAN — private Hyper-V switch — 192.168.10.0/24</text>
+
+  <!-- VM boxes -->
+  <g stroke="#94a3b8" fill="#ffffff">
+    <rect x="60" y="252" width="170" height="92" rx="8"/>
+    <rect x="242" y="252" width="170" height="92" rx="8"/>
+    <rect x="424" y="252" width="170" height="92" rx="8"/>
+    <rect x="606" y="252" width="170" height="92" rx="8"/>
+    <rect x="788" y="252" width="170" height="92" rx="8"/>
+    <rect x="970" y="252" width="170" height="92" rx="8"/>
+  </g>
+  <g stroke="#0f766e" stroke-width="2">
+    <line x1="145" y1="222" x2="145" y2="252"/>
+    <line x1="327" y1="222" x2="327" y2="252"/>
+    <line x1="509" y1="222" x2="509" y2="252"/>
+    <line x1="691" y1="222" x2="691" y2="252"/>
+    <line x1="873" y1="222" x2="873" y2="252"/>
+    <line x1="1055" y1="222" x2="1055" y2="252"/>
+  </g>
+
+  <g text-anchor="middle">
+    <text x="145" y="278" font-size="15" font-weight="700" fill="#0f172a">DC01</text>
+    <text x="145" y="299" font-size="11.5" fill="#334155">DC · DNS · DHCP primary</text>
+    <text x="145" y="317" font-size="11.5" fill="#475569">PDC emulator · time source</text>
+    <text x="145" y="334" font-size="11.5" fill="#0f766e">192.168.10.10</text>
+
+    <text x="327" y="278" font-size="15" font-weight="700" fill="#0f172a">DC02</text>
+    <text x="327" y="299" font-size="11.5" fill="#334155">DC · DNS · DHCP partner</text>
+    <text x="327" y="317" font-size="11.5" fill="#475569">global catalog · failover 50/50</text>
+    <text x="327" y="334" font-size="11.5" fill="#0f766e">192.168.10.11</text>
+
+    <text x="509" y="278" font-size="15" font-weight="700" fill="#0f172a">FS01</text>
+    <text x="509" y="299" font-size="11.5" fill="#334155">file services · DFS-N</text>
+    <text x="509" y="317" font-size="11.5" fill="#475569">ABE · FSRM · shadow copies</text>
+    <text x="509" y="334" font-size="11.5" fill="#0f766e">192.168.10.20</text>
+
+    <text x="691" y="278" font-size="15" font-weight="700" fill="#0f172a">LNX01</text>
+    <text x="691" y="299" font-size="11.5" fill="#334155">Ubuntu Server 24.04</text>
+    <text x="691" y="317" font-size="11.5" fill="#475569">AD-joined (realmd/SSSD)</text>
+    <text x="691" y="334" font-size="11.5" fill="#0f766e">192.168.10.30</text>
+
+    <text x="873" y="278" font-size="15" font-weight="700" fill="#0f172a">WS01</text>
+    <text x="873" y="299" font-size="11.5" fill="#334155">Windows 11 Enterprise</text>
+    <text x="873" y="317" font-size="11.5" fill="#475569">Group Policy test client</text>
+    <text x="873" y="334" font-size="11.5" fill="#0f766e">DHCP 192.168.10.100–200</text>
+
+    <text x="1055" y="278" font-size="15" font-weight="700" fill="#0f172a">WS02</text>
+    <text x="1055" y="299" font-size="11.5" fill="#334155">Windows 11 Enterprise</text>
+    <text x="1055" y="317" font-size="11.5" fill="#475569">second client / PAW (P3)</text>
+    <text x="1055" y="334" font-size="11.5" fill="#0f766e">DHCP</text>
+  </g>
+
+  <!-- Panels -->
+  <rect x="40" y="386" width="690" height="222" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="60" y="412" font-size="13" font-weight="700" fill="#0f172a">What each Tier 0 role is responsible for</text>
+  <g font-size="12" fill="#334155">
+    <text x="60" y="438">Kerberos authentication, LDAP, DNS name resolution, DHCP leases — if these fail, nothing works.</text>
+    <text x="60" y="462">Two DCs with AD-integrated DNS + a DHCP failover pair: authentication, name resolution and</text>
+    <text x="60" y="482">address allocation survive one server being powered off (verified by test, not assumed).</text>
+    <text x="60" y="510">Sites and subnets: HQ 192.168.10.0/24 and WAREHOUSE 192.168.20.0/24 are created now so the</text>
+    <text x="60" y="530">P6 segmentation work has a site to attach to. Clients pick the closest DC.</text>
+    <text x="60" y="558">Rebuildable: every object in this diagram is created by the numbered scripts in scripts/, which</text>
+    <text x="60" y="578">are idempotent and logged, so the whole build can be repeated or restored on purpose.</text>
+  </g>
+
+  <rect x="760" y="386" width="380" height="222" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="780" y="412" font-size="13" font-weight="700" fill="#0f172a">Least privilege by construction (AGDLP)</text>
+  <g font-size="12" fill="#334155">
+    <text x="780" y="438">Accounts → G_ (Global role) → DL_ (Domain Local</text>
+    <text x="780" y="458">resource) → Permission on the ACL.</text>
+  </g>
+  <rect x="780" y="474" width="340" height="44" rx="6" fill="#f0fdfa" stroke="#0f766e"/>
+  <text x="950" y="494" font-size="11.5" fill="#134e4a" text-anchor="middle">ACLs contain only DL_ groups, SYSTEM</text>
+  <text x="950" y="510" font-size="11.5" fill="#134e4a" text-anchor="middle">and Administrators — audit target: 0 violations</text>
+  <g font-size="12" fill="#334155">
+    <text x="780" y="542">A department change becomes one group edit;</text>
+    <text x="780" y="562">audits read group names, not thousands of ACEs.</text>
+    <text x="780" y="586">The OU tree mirrors the org chart (Management,</text>
+    <text x="780" y="604">Finance, HR, Sales, Operations, IT).</text>
+  </g>
+
+  <text x="40" y="646" font-size="11.5" fill="#64748b">Hyper-V on Windows 11 Pro (HOST01, 16 GB host RAM). VMs use dynamic memory — DC01/DC02/FS01 1–2 GB, LNX01 0.5–1 GB, WS01/WS02 2–4 GB. VMs are powered off when not in use.</text>
+  <text x="40" y="666" font-size="11.5" fill="#64748b">Lab note: Halden Distribution Ltd. is a fictional company. The configurations are real and every figure published on the site comes from a real run in this lab.</text>
+</svg>

@@ -1,0 +1,10 @@
+EmployeeID,First,Last,Department,Title,ManagerID,Status,StartDate,EndDate,Office
+1001,Anum,Hussain,Management,Managing Director,,Active,2015-12-09,,HQ
+1003,Salman,Rana,Management,Finance Director,1001,Active,2023-02-19,,HQ
+1007,Laiba,Qureshi,Operations,Dispatcher,1038,Active,2022-10-09,,Warehouse
+1014,Anum,Dar,HR,HR Manager,1001,Active,2020-10-07,,HQ
+1038,Anum,Rauf,Operations,Operations Manager,1001,Active,2024-04-05,,Warehouse
+1042,Mahnoor,Malik,Operations,Stock Controller,1038,Leaver,2016-12-16,2026-10-02,Warehouse
+1082,Amna,Anwar,IT,Systems Administrator,1081,Active,2019-10-26,,HQ
+1085,Mina,Hussain,IT,IT Support Officer,1081,Active,2016-12-18,,HQ
+1086,Nadia,Sheikh,Sales,Sales Executive,1018,Active,2026-10-07,,HQ

@@ -1,0 +1,19 @@
+# Halden Distribution Ltd. — P7 escalation and on-call matrix
+# Applies to: all staff and IT · Project: P7 · Companion to business/p07-ir-plan.md
+# Fictional contacts for the fictional company. Real contact details live in the owner's password
+# manager and are NEVER committed to this repository (AGENTS.md R3).
+severity,first_responder,escalate_to,when,informs,channel
+SEV1 — critical,On-call IT (analyst),Incident Lead (IT Manager),Immediately on declaration; do not wait for full diagnosis,Managing Director within 15 min,"Phone push + Telegram; then bridge call"
+SEV1 — critical,Incident Lead,Managing Director + external IR retainer,Within 30 min if containment is not certain or data is encrypted,Legal/insurer as advised,"Phone; written summary within 1 hour"
+SEV2 — high,On-call IT (analyst),IT Manager,Within 1 hour if the account/host is not contained,Affected department head,"Telegram + email; GLPI ticket"
+SEV3 — medium,Service Desk (L1),IT analyst (L2),Same business day,IT only,"GLPI ticket; daily digest"
+Tabletop / exercise,Security owner (owner of this project),MD + department heads,Scheduled,Same attendees as a real SEV1,Meeting invite; facilitation pack
+# External contacts (fictional placeholders — the real values are kept out of the repository):
+#   IR retainer ......... CyberShield Forensics (24x7 hotline, in the password manager)
+#   Insurer ............. Halden Cyber Policy, incident line
+#   Legal ............... Halden retained counsel
+#   Regulator ........... Pakistan: PECA 2016 and any sector regulator (e.g. SBP for banks);
+#                         check the status of the Personal Data Protection Bill. EU customers: 72h under GDPR.
+#   Police / cyber ...... National CERT (PKCERT) reporting channel
+# Communication templates (hold message, staff notice, customer notice, press line) are in
+# business/p07-ir-plan.md §6. Approval blocks there are visibly unsigned.

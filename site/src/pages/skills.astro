@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import { sortByOrder } from '../lib/assets';
+
+const projects = sortByOrder(await getCollection('showcase'));
+
+// skill → projects that prove it
+const skillMap = new Map<string, typeof projects>();
+for (const project of projects) {
+  for (const skill of project.data.skills) {
+    const list = skillMap.get(skill) ?? [];
+    list.push(project);
+    skillMap.set(skill, list);
+  }
+}
+
+const skills = [...skillMap.entries()].sort(([a], [b]) => a.localeCompare(b));
+---
+
+<BaseLayout title="Skills" description="Every skill on this site links to the home-lab project that proves it.">
+  <h1>Skills — each one linked to the project that proves it</h1>
+  <p>
+    A skill only appears here because a project is building it, with evidence and a write-up on the
+    project page. No unsupported keywords.
+  </p>
+
+  <ul style="list-style:none;padding-left:0;">
+    {skills.map(([skill, list]) => (
+      <li style="border-bottom:1px solid var(--border);padding:0.6rem 0;">
+        <strong>{skill}</strong>{' '}
+        <span class="muted small">— proven by:</span>{' '}
+        {list.map((project) => (
+          <span style="margin-right:0.5rem;">
+            <a href={`/projects/${project.data.id}/`}>{project.data.id.toUpperCase()}</a>
+            <StatusBadge status={project.data.status} />
+          </span>
+        ))}
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

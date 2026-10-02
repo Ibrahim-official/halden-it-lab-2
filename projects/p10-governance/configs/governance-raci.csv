@@ -1,0 +1,15 @@
+# P10 RACI for IT governance. Applies to projects/p10-governance. A = accountable (one per row), R = responsible, C = consulted, I = informed. "Management" and department heads are the fictional Halden business roles; the lab owner plays the IT roles.
+activity,management_md,department_heads,it_lead,service_desk,all_staff
+Approve the IT policy pack (annual),A,C,R,I,I
+Own a business risk on the risk register,A,R,C,C,I
+Raise and risk-assess a change,C,C,R,I,I
+Approve a high-risk or Tier 0 change,A,C,R,C,I
+Approve a standard change once (catalogue),I,C,A,R,I
+Run the weekly CAB,I,C,R,R,I
+Score the CIS IG1 self-assessment,C,C,A,R,I
+Own an action from a project review,A,R,R,R,C
+Acknowledge and follow the Acceptable Use Policy,I,R,C,I,R
+Report a suspected security incident,C,C,R,R,R
+Produce the monthly IT report,I,C,R,C,I
+Review the monthly IT report and decide,A,R,C,I,I
+Keep the asset and change records accurate,I,C,A,R,C

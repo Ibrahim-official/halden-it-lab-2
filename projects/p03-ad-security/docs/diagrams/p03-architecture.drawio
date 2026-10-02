@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" agent="halden-it-lab" version="24.7.17">
+  <diagram id="p3-architecture" name="P3 tier model and assessment loop">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Halden Distribution Ltd — P3 privileged access and assessment loop&#10;Isolated home lab · domain ad.halden.internal · lab-only assessment with free tools (PingCastle, Purple Knight, BloodHound CE, Windows LAPS)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t0" value="Tier 0 — domain and identity&#10;DCs · AD · Entra Connect (P2) · PKI · DC backups" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#c2410c;strokeWidth=2;fontSize=12;fontStyle=1;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="360" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="dcs" value="DC01 / DC02&#10;192.168.10.10/.11" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c2410c;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="158" width="150" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="paw" value="WS02 — PAW&#10;Tier 0 logons only (P6 isolates it)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c2410c;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="230" y="158" width="150" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="t0acct" value="adm-t0-* accounts · G_Tier0_Admins&#10;Protected Users · not delegable · FGPP (20 chars, lockout 5)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c2410c;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="230" width="320" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="t0deny" value="Deny logon to Tier 1 servers and every workstation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="302" width="320" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="t1" value="Tier 1 — member servers&#10;FS01 (files) · LNX01 (app) · CA01 (P6)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;strokeWidth=2;fontSize=12;fontStyle=1;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="420" y="90" width="330" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="servers" value="FS01 · LNX01 · CA01&#10;192.168.10.20 / .30 / .43" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1d4ed8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="158" width="290" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="t1acct" value="adm-t1-* accounts · G_Tier1_Admins&#10;Read LAPS passwords for servers only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1d4ed8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="230" width="290" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="t1deny" value="Deny logon to DCs and workstations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#1d4ed8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="302" width="290" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" value="Tier 2 — workstations and support&#10;WS01 · WS02 (user side) · helpdesk work on user objects" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#15803d;strokeWidth=2;fontSize=12;fontStyle=1;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="770" y="90" width="390" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="ws" value="WS01 — Windows 11 Enterprise&#10;unique LAPS password, rotated every 30 days" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#15803d;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="790" y="158" width="350" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="t2acct" value="adm-t2-* accounts · G_Tier2_Helpdesk&#10;Reset password + unlock by delegation on user OUs only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#15803d;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="790" y="230" width="350" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="t2deny" value="Deny logon to DCs and member servers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#15803d;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="790" y="302" width="350" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="admins" value="Where admin accounts live: the _Admin OU&#10;&#10;_Admin\Tier0\Accounts and \Groups → adm-t0-*, G_Tier0_Admins&#10;_Admin\Tier1\Accounts and \Groups → adm-t1-*, G_Tier1_Admins&#10;_Admin\Tier2\Accounts and \Groups → adm-t2-*, G_Tier2_Helpdesk&#10;_Admin\PAW\Devices → WS02, the Tier 0 privileged access workstation&#10;Every IT person keeps a separate daily-use account with no admin rights." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="386" width="530" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="loop" value="The loop: assess → remediate → detect → verify&#10;&#10;1. Assess — PingCastle healthcheck, Purple Knight, BloodHound CE&#10;2. Remediate — tiering, Windows LAPS, gMSA, legacy-protocol hardening&#10;3. Detect — NTLM audit events (8004), Kerberos RC4 tickets (4769), LAPS backup (10018)&#10;4. Verify — re-run the tools and the verification script; every finding gets a source&#10;5. Review — monthly privileged-access review; residual risk gets an owner and a date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0f766e;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="386" width="560" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="scope" value="Legend and honest scope&#10;&#10;Halden Distribution Ltd. is a fictional company; the domain, hosts and accounts are the owner's isolated lab.&#10;Weaknesses were seeded deliberately so the assessment has something to find; this is an authorised lab exercise." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="562" width="530" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="foot" value="Footnotes&#10;&#10;No score, path count or coverage figure is shown on this diagram: none has been measured yet.&#10;Every published number will come from a real run in the lab, cited to a file in evidence/public/." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;fontSize=11;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="562" width="560" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="Assessment tooling is free and open (PingCastle basic, Purple Knight, BloodHound Community Edition, Windows LAPS). It is run only against the lab domain, with the owner's written authorisation, and the raw output stays out of the published repository.&#10;Diagram is descriptive, not a measurement. Controls are shown as designed; verification results are added to the project README after the lab run." style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="40" y="652" width="1130" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

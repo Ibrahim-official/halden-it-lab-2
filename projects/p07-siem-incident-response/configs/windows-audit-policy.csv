@@ -1,0 +1,50 @@
+# Halden Distribution Ltd. — P7 Windows advanced audit policy (designed)
+# Applies to: DC01, DC02, FS01 (SERVER profile) and WS01, WS02 (WORKSTATION profile)
+# Deployed by: scripts/05-Set-WindowsAuditPolicy.ps1 (and, for scale, a GPO reading this list)
+# Project: P7 — "DC - Audit Policy - v1" / "WKS - Audit Policy - v1"
+#
+# WHAT THIS IS
+#   The audit subcategories that make the P7 detections possible. Without command-line process
+#   auditing and PowerShell script-block logging, most endpoint detections literally cannot see
+#   anything (plan §9). The Security log is enlarged so the record survives long enough to
+#   investigate (a cleared or rolled-over log is an incident of its own — D8).
+#
+# Columns: subcategory,guid,setting,profiles,why
+#   setting: Success / Failure / Success and Failure / No Auditing
+#   profiles: which host profiles this row applies to (SERVER and/or WORKSTATION)
+subcategory,guid,setting,profiles,why
+Credential Validation,{0CCE923F-69AE-11D9-BED3-505054503030},Success and Failure,SERVER;WORKSTATION,"Detects logon and credential abuse (4624/4625) — the base for D4, D10"
+Kerberos Authentication Service,{0CCE9242-69AE-11D9-BED3-505054503030},Success and Failure,SERVER,"Kerberos TGT activity — base for D3 (AS-REP roasting)"
+Kerberos Service Ticket Operations,{0CCE9240-69AE-11D9-BED3-505054503030},Success and Failure,SERVER,"Service ticket requests — base for D2 (Kerberoasting, RC4 4769)"
+Security Group Management,{0CCE9237-69AE-11D9-BED3-505054503030},Success,SERVER,"Group membership changes — base for D1 (privileged group add)"
+User Account Management,{0CCE9235-69AE-11D9-BED3-505054503030},Success and Failure,SERVER;WORKSTATION,"Account create/enable/delete — base for joiner/leaver anomalies"
+Computer Account Management,{0CCE9236-69AE-11D9-BED3-505054503030},Success,SERVER,"Rogue computer accounts"
+Directory Service Access,{0CCE923B-69AE-11D9-BED3-505054503030},Success,SERVER,"Replication rights (4662) — base for D11 (DCSync)"
+Directory Service Changes,{0CCE923C-69AE-11D9-BED3-505054503030},Success,SERVER,"Object changes in AD — supports the P10 change log"
+Logon,{0CCE9215-69AE-11D9-BED3-505054503030},Success and Failure,SERVER;WORKSTATION,"Interactive logons (4624) — base for D10 (Tier 0 / break-glass)"
+Logoff,{0CCE9216-69AE-11D9-BED3-505054503030},Success,SERVER;WORKSTATION,"Session end — completes the timeline"
+Account Lockout,{0CCE9217-69AE-11D9-BED3-505054503030},Failure,SERVER;WORKSTATION,"Lockout bursts — supports D4 (spraying) investigation"
+Special Logon,{0CCE921B-69AE-11D9-BED3-505054503030},Success,SERVER;WORKSTATION,"Elevated/administrative logons — base for D10"
+Other Logon/Logoff Events,{0CCE921C-69AE-11D9-BED3-505054503030},Success and Failure,SERVER;WORKSTATION,"Disconnects, reconnects, RDP — helps build the session timeline"
+Process Creation,{0CCE922B-69AE-11D9-BED3-505054503030},Success,SERVER;WORKSTATION,"Process start events; requires the command-line policy below to be useful"
+Process Termination,{0CCE922C-69AE-11D9-BED3-505054503030},Success,SERVER;WORKSTATION,"Process end; pairs with creation for a clean timeline"
+Audit Policy Change,{0CCE922F-69AE-11D9-BED3-505054503030},Success,SERVER;WORKSTATION,"Someone turning auditing off is itself an event (defence evasion)"
+Authentication Policy Change,{0CCE9230-69AE-11D9-BED3-505054503030},Success,SERVER,"Domain policy changes"
+Authorization Policy Change,{0CCE9231-69AE-11D9-BED3-505054503030},Success,SERVER,"Privilege assignment changes"
+Sensitive Privilege Use,{0CCE9228-69AE-11D9-BED3-505054503030},Success,SERVER;WORKSTATION,"Debug/backup privileges — often used to read protected files"
+File Share,{0CCE9224-69AE-11D9-BED3-505054503030},Success,SERVER,"Share access at a coarse level"
+Detailed File Share,{0CCE9244-69AE-11D9-BED3-505054503030},Failure,FS01,"Sensitive-share access failures only (high volume — enabled on FS01 alone)"
+Filtering Platform Connection,{0CCE9226-69AE-11D9-BED3-505054503030},Success,SERVER;WORKSTATION,"Allowed network connections; supports lateral-movement analysis"
+Audit System Integrity,{0CCE9212-69AE-11D9-BED3-505054503030},Success,SERVER,"Driver and system integrity events"
+Other System Events,{0CCE9214-69AE-11D9-BED3-505054503030},Success,SERVER,"Backup and restore activity"
+# --- Policy settings that are not audit subcategories but are required for the detections ---
+# SETTING (registry/policy)                                                        APPLIES TO
+# Include command line in process creation events = Enabled                          All Windows
+#   HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit\ProcessCreationIncludeCmdLine_Enabled = 1
+# PowerShell Script Block Logging (4104) = Enabled                                    All Windows
+#   HKLM\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockLogging = 1
+# PowerShell Module Logging = Enabled                                                 All Windows
+# Security/System log size >= 1 GB (DCs and FS01), >= 512 MB (workstations)           All Windows
+#   wevtutil sl Security /ms:1073741824
+# Disable "turn off audit policy subcategory settings override" = OFF (GPO)           All Windows
+#   Force subcategory override = Enabled so these granular settings win

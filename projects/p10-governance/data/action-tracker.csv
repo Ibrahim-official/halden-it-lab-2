@@ -1,0 +1,2 @@
+# P10 consolidated action tracker (empty on purpose until real actions exist). Applies to projects/p10-governance. One row per action from any project review, finding, drill or tabletop.
+action_id,source_project,description,owner,due_date,status,closed_date,on_time,notes

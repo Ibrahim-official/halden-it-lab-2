@@ -1,0 +1,19 @@
+technique_id,technique_name,tactic,rule_id,detection,data_source,runbook
+T1133,External Remote Services,Initial Access,100113,D12 remote-access (VPN) logon anomaly,OPNsense OpenVPN/WireGuard syslog,suspicious-logon
+T1059.001,Command and Scripting Interpreter: PowerShell,Execution,100106,D6 encoded / download-cradle PowerShell,"Sysmon 1, PowerShell 4104",ransomware-pre-encryption
+T1053.005,Scheduled Task/Job: Scheduled Task,Execution,100110,D9b scheduled task created,Security 4698,ransomware-pre-encryption
+T1204.002,User Execution: Malicious File,Execution,100114,D13 Defender / ASR blocked an action,Defender Operational 1116/1117/1121/1123,ransomware-pre-encryption
+T1098,Account Manipulation,Persistence,100100,D1 privileged group membership change,Security 4728/4732/4756,privileged-group-change
+T1543.003,Create or Modify System Process: Windows Service,Persistence,100109,D9 new Windows service installed,System 7045,ransomware-pre-encryption
+T1078,Valid Accounts,Persistence,100111,D10 Tier 0 / break-glass interactive logon,Security 4624,privileged-group-change
+T1070.001,Indicator Removal: Clear Windows Event Logs,Defense Evasion,100108,D8 security event log cleared,Security 1102,privileged-group-change
+T1003.001,OS Credential Dumping: LSASS Memory,Credential Access,100104,D5 LSASS credential access,Sysmon 10,ransomware-pre-encryption
+T1003.006,OS Credential Dumping: DCSync,Credential Access,100105,D11 DCSync attempt,Security 4662,privileged-group-change
+T1110.003,Brute Force: Password Spraying,Credential Access,100112,D4 password spraying,Security 4625/4771,suspicious-logon
+T1558.003,Steal or Forge Kerberos Tickets: Kerberoasting,Credential Access,100102,D2 Kerberoasting (RC4 service ticket),Security 4769,suspicious-logon
+T1558.004,Steal or Forge Kerberos Tickets: AS-REP Roasting,Credential Access,100103,D3 AS-REP roasting,Security 4768,suspicious-logon
+T1490,Inhibit System Recovery,Impact,100107,D7 shadow copy / recovery deletion,Sysmon 1,ransomware-pre-encryption
+# Availability detections are NOT attacker behaviour and are deliberately not mapped to ATT&CK.
+# They are listed here as comments so the count in the README and the heat map stay consistent.
+# availability,backup job failed,availability,100115,D14 backup job failed,Backup host syslog / Uptime Kuma heartbeat,incident-response
+# availability,agent stopped reporting,availability,100116,D15 Wazuh agent stopped reporting,Wazuh internal rule 503,restore-wazuh-component

@@ -1,0 +1,11 @@
+host,role,os,exposure,criticality,owner,zone,notes
+FW01,"HQ firewall, VPN endpoint and DHCP relay",OPNsense,internet,3,IT,edge,Compromise here is a perimeter breach; firmware is a vendor-advisory item
+DC01,"Domain controller, DNS, DHCP primary, PDC emulator",Windows Server 2025,internal,3,IT,servers,Tier 0: authentication and name resolution for the whole company
+DC02,"Domain controller, DNS, DHCP failover partner",Windows Server 2025,internal,3,IT,servers,Tier 0: keeps logons working if DC01 is down
+FS01,"File server (DFS-N, FSRM, shadow copies)",Windows Server 2025,internal,3,IT,servers,Departmental and home data
+LNX01,Linux application server and vulnerability scanner,Ubuntu Server 24.04,internet,2,IT,servers,Publishes the internal app; infection here can reach the servers
+WS01,User workstation (policy and compliance test client),Windows 11 Enterprise,internal,1,Sales,users,Supports one user; rebuildable from the image
+WS02,Admin workstation (Tier 0 PAW),Windows 11 Enterprise,internal,2,IT,users,Privileged access workstation from P3
+OPS01,"Tools host (GLPI, BookStack, Uptime Kuma)",Ubuntu Server 24.04,internal,1,IT,servers,Service desk and documentation; no business data of its own
+SIEM01,Security monitoring (Wazuh manager and indexer),Ubuntu Server 24.04,internal,2,IT,servers,Detection and log retention
+BKP01,Backup repository,Ubuntu Server 24.04,internal,3,IT,servers,Last line of defence; never domain-joined

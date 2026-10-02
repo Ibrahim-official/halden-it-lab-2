@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>IT Governance Capstone: CIS IG1 Scorecard, Change Control, Policy Pack and Management Reporting | Muhammad Ibrahim Akmal — IT Support &amp; Systems</title><meta name="description" content="CIS IG1 scorecard, ITIL-style change management and the monthly report management actually reads"><link rel="canonical" href="https://ibrahim-official.github.io/projects/p10/"><meta property="og:title" content="IT Governance Capstone: CIS IG1 Scorecard, Change Control, Policy Pack and Management Reporting | Muhammad Ibrahim Akmal — IT Support &amp; Systems"><meta property="og:description" content="CIS IG1 scorecard, ITIL-style change management and the monthly report management actually reads"><meta property="og:type" content="website"><meta property="og:url" content="https://ibrahim-official.github.io/projects/p10/"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b5cad'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E"><script>(() => {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.dataset.theme = saved;
+  } catch {}
+})();</script><link rel="stylesheet" href="/_astro/BaseLayout.BJfqiH4_.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container"><a class="brand" href="/">Halden<span>IT</span>Lab</a><nav class="main-nav" aria-label="Main"><a href="/">Home</a><a href="/projects" aria-current="page">Projects</a><a href="/skills">Skills</a><a href="/coverage">Job-ad coverage</a><a href="/lab">The lab</a><a href="/cv">CV</a><a href="/contact">Contact</a></nav><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌓</button></div></header><main id="main" class="container"><p class="small"><a href="/projects/">← All projects</a></p><header><p><span class="small muted">#10 in build order · </span><span class="badge badge-in-progress">in progress</span><span class="small muted"> · started 2 Oct 2026</span></p><h1>IT Governance Capstone: CIS IG1 Scorecard, Change Control, Policy Pack and Management Reporting</h1><p style="font-size:1.1rem;">CIS IG1 scorecard, ITIL-style change management and the monthly report management actually reads</p><p><span class="tag">System Administration</span><span class="tag">IT Support</span><span class="tag">CIS Controls v8.1 IG1</span><span class="tag">Change Management</span><span class="tag">ITIL</span><span class="tag">IT Policy Writing</span><span class="tag">Risk Register</span><span class="tag">KPI Reporting</span><span class="tag">NIST CSF 2.0</span><span class="tag">Python automation</span><span class="tag">PowerShell</span><span class="tag">Bash</span></p></header><img src="/projects/p10-governance/p10-architecture.svg" alt="IT Governance Capstone: CIS IG1 Scorecard, Change Control, Policy Pack and Management Reporting — hero diagram"><section class="stack"><p class="problem-statement">This project is being built now. Finished phases appear here as they are completed.</p><h2 id="the-problem">The problem</h2>
+<p>Nine good technical projects are worthless if management still cannot answer four questions: are we
+secure, are we getting better, what does IT need money for, and what changed last week — and who
+approved it? At Halden, IT work happened but was invisible; changes were made on a Friday afternoon
+without telling anyone; and there were no written policies, which the cyber-insurance renewal
+questionnaire now asks for. CIS describes <strong>IG1 (56 safeguards)</strong> as essential cyber hygiene and an
+emerging minimum standard for every enterprise — a natural baseline for a business this size, and one
+Halden had no way to measure itself against (<code>docs/plan/00-research-and-selection.md</code>).</p>
+<h2 id="what-i-built">What I built</h2>
+<ul>
+<li><strong>A CIS Controls v8.1 IG1 self-assessment</strong> across all <strong>56</strong> safeguards in 15 controls, scored
+before and after, where “fully implemented” <strong>requires a named evidence source</strong> — the assessment
+tool refuses the score otherwise.</li>
+<li><strong>An evidence map</strong> that traces every safeguard to the artifact from P1–P9 that will evidence it,
+plus an indexer that reports which of those artifacts exist today (16 of 56 at the time of writing —
+expected, because the lab has not been executed).</li>
+<li><strong>ITIL-style change management</strong>: standard, normal and emergency types, a risk-classified RFC, a
+CAB agenda generated from the register, a change calendar with freeze periods, and a mandatory
+retrospective for emergency changes. A change with no rollback plan cannot be approved.</li>
+<li><strong>A ten-policy IT policy pack</strong> a small company could actually adopt: 1–2 pages each, plain English,
+with an owner, a version, a review date, an acknowledgement process and an exceptions register.</li>
+<li><strong>A 27-KPI governance pipeline</strong> that separates <em>repository-derived</em> KPIs — genuine, reproducible
+measurements of this repository — from <em>lab-measured</em> KPIs, which report as “not measured” until the
+lab has run and are never estimated.</li>
+<li><strong>A monthly management report</strong> generated in Python that <strong>refuses to render</strong> if any evidence file
+it would cite is missing, so a report can never point at a source that does not exist.</li>
+<li><strong>A risk register and consolidated action tracker</strong>, with a documented scoring methodology and the
+rule that a business risk is owned by a business owner, never by IT.</li>
+<li><strong>A “State of IT” talk outline</strong> — 12 slides with speaker notes, a costed 90-day roadmap and a clear
+decision request, written for a non-technical audience.</li>
+<li><strong>Lab collection tooling</strong> — a read-only PowerShell collector for the Active Directory evidence, a
+bash pre-flight gate and an evidence collector, all lab-guarded and writing nothing back to the lab.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<p><img alt="P10 governance architecture" loading="lazy" decoding="async" width="1200" height="700" src="/_astro/p10-architecture.D4bcWlt4_Z4lz9b.svg"></p>
+<p>The loop is the point: business objectives set the controls; the nine projects supply evidence; the
+evidence is scored against CIS IG1; gaps become risks and roadmap items; change management controls how
+the environment changes; the KPI dashboard and monthly report turn results into a management decision;
+and management review feeds improvement back into the controls.</p>
+<p>The single rule that makes it honest is enforced in code rather than in a spreadsheet template:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># A safeguard is only "fully implemented and evidenced" when a named source backs it.</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 3</span><span style="color:#F97583"> and</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> (s.evidence_source </span><span style="color:#F97583">or</span><span style="color:#E1E4E8"> s.artifact_path):</span></span>
+<span class="line"><span style="color:#E1E4E8">    assessment.errors.append(</span></span>
+<span class="line"><span style="color:#F97583">        f</span><span style="color:#9ECBFF">"safeguard </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">s.safeguard_id</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> is scored 3 (</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">which</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">) but names no evidence source"</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span></code></pre>
+<p>That one check is why the scorecard can be trusted: producing an inflated number is harder than
+producing an honest one.</p>
+<h2 id="results">Results</h2>
+<p><strong>Not measured yet.</strong> The build kit (scripts, configs, runbooks, business artifacts and the governance
+diagrams) is complete, and lab execution is pending. I am deliberately not publishing numbers before
+they exist: the CIS IG1 before/after scorecard and every operational KPI are added here only from real
+lab runs, each with a file in <code>evidence/public/</code> as its source. The before/after chart is a clearly
+labelled <strong>empty template</strong> for the same reason.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CIS IG1 implementation, % evidenced (56 safeguards)</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Change success rate</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Emergency change share</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>Actions closed on time, %</td>
+<td>not measured</td>
+<td>not measured</td>
+<td>pending</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Repository-derived counts</strong> (a separate, reproducible class — measurements of this repository, not
+lab results; reproduce with <code>python3 projects/p10-governance/scripts/collect_kpis.py</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Repository-derived count</th>
+<th>Value at 2026-10-02</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CIS IG1 safeguards in the assessment input</td>
+<td>56</td>
+</tr>
+<tr>
+<td>Safeguards scored (before / after)</td>
+<td>0 / 0</td>
+</tr>
+<tr>
+<td>Safeguards whose expected evidence artifact exists today</td>
+<td>16 of 56</td>
+</tr>
+<tr>
+<td>Change records / awaiting approval</td>
+<td>1 / 1</td>
+</tr>
+<tr>
+<td>Policies registered / approved</td>
+<td>10 / 0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="business-side">Business side</h2>
+<p>The deliverables are the reason this project exists — a governance programme that produces no paperwork
+for management has not happened:</p>
+<ul>
+<li><strong>Executive summary (1 page)</strong> — IT at a glance for the board: what was built across the nine
+projects, in business language, with no invented metrics.</li>
+<li><strong>IT policy pack</strong> — ten short policies (information security, acceptable use, access control,
+privileged access, endpoint, patching, network, logging and incident response, backup, change and
+asset management), ready for management approval with a staff acknowledgement process and an
+exceptions register.</li>
+<li><strong>CIS IG1 self-assessment report</strong> — the structure, with the status column deliberately empty and an
+explanation of exactly how it will be filled and evidenced.</li>
+<li><strong>Monthly IT report</strong> — the real first edition, carrying only what the repository genuinely supports
+today, and stating plainly that the projects are awaiting lab execution.</li>
+<li><strong>CAB minutes</strong> — the agenda, decisions and actions for the change this programme represents, with
+decisions marked <em>pending</em> because no real approval has happened.</li>
+<li><strong>Risk register and methodology</strong> — how a risk is written, scored, owned and treated, with the
+register itself empty rather than filled with plausible-looking examples.</li>
+<li><strong>“State of IT” talk</strong> — a 12-slide outline with speaker notes and a costed 90-day roadmap, for the
+recorded management briefing.</li>
+</ul>
+<h2 id="what-i-learned--what-id-do-differently">What I learned / what I’d do differently</h2>
+<ul>
+<li><strong>Governance is what makes the other nine projects credible.</strong> Writing the rule “a score of 3 needs
+evidence” into the tooling changed how I think about every other project: a claim that cannot survive
+“where did that come from?” is not a result.</li>
+<li><strong>I would design the policy pack before the technical work next time.</strong> Several projects made
+decisions that a written access-control or endpoint standard would have settled in advance, and the
+policies were easier to write once I could point at real configurations.</li>
+<li><strong>The hardest judgement was what <em>not</em> to measure.</strong> A KPI nobody can act on is noise. Splitting the
+set into repository-derived and lab-measured was the most useful design decision here — it lets the
+report be truthful today instead of plausible tomorrow.</li>
+<li><strong>Leaving approval blocks unsigned is the harder, better choice.</strong> It was tempting to fill the CAB
+and policy approvals with a plausible signature; leaving them visibly empty, with the reason
+written down, is the artefact I would defend in an interview.</li>
+</ul>
+<blockquote>
+<p>Status: <strong>in progress</strong>. The build kit (scripts, configs, runbooks, business artifacts) is
+complete; lab execution runs phase by phase. Metrics, diagrams and evidence are published only
+from real runs (the Definition of Done is in <code>AGENTS.md</code>, Section 4.7), and progress is tracked
+in <code>PROGRESS.md</code>.</p>
+</blockquote>
+</section><section><h2>Business documents</h2><ul><li><a href="/projects/p10-governance/p10-cab-minutes.pdf">Cab Minutes</a></li><li><a href="/projects/p10-governance/p10-cis-ig1-assessment-report.pdf">Cis Ig1 Assessment Report</a></li><li><a href="/projects/p10-governance/p10-exec-summary.pdf">Exec Summary</a></li><li><a href="/projects/p10-governance/p10-monthly-it-report.pdf">Monthly It Report</a></li><li><a href="/projects/p10-governance/p10-policy-pack.pdf">Policy Pack</a></li><li><a href="/projects/p10-governance/p10-risk-register.pdf">Risk Register</a></li><li><a href="/projects/p10-governance/p10-state-of-it-talk.pdf">State Of It Talk</a></li></ul></section><section><h2>Repository</h2><p class="small">Code, sanitized configs and documents: <a href="https://github.com/ibrahim-official/halden-it-lab/tree/main/projects/p10-governance">projects/p10-governance/</a></p></section><p class="small muted problem-statement"><strong>Lab note:</strong> Home-lab project in an isolated, simulated 85-user company (Halden Distribution Ltd). The company and its approvals are fictional; the configurations, scripts and measurements are real. This page shows a complete build kit whose lab execution is still pending — the CIS IG1 scorecard and the operational KPIs are deliberately not published as numbers until they have actually been measured, and the before/after chart is a labelled empty template.</p></main><footer class="site-footer"><div class="container"><span>© 2026 Muhammad Ibrahim Akmal — home-lab portfolio. Simulated company, real configurations, real measurements.</span><span><a href="mailto:ibrahimofficialbusiness@gmail.com">Email</a> · <a href="https://www.linkedin.com/in/ibrahim-business" rel="me">LinkedIn</a> · <a href="https://github.com/ibrahim-official">GitHub</a></span></div></footer><script type="module">document.querySelector(`.theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=(e.dataset.theme??(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`))===`dark`?`light`:`dark`;e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}});</script></body></html>

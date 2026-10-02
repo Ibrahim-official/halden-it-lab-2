@@ -1,0 +1,88 @@
+# CV data — single source of truth for the home page, /cv and the generated CV PDF.
+# Do NOT put the phone number in this file: it is committed to a public repository.
+# The phone number belongs only in the CV PDF generated privately (see site/README.md).
+# Unresolved placeholders are blocked from deploying by the strict checks in the deploy
+# workflow until they are replaced with real values.
+
+name: "Muhammad Ibrahim Akmal"
+headline: "IT Support & Systems | Final-Year BSc Computer Science"
+location: "Lahore, Pakistan"
+
+links:
+  email: "ibrahimofficialbusiness@gmail.com"
+  linkedin: "https://www.linkedin.com/in/ibrahim-business"
+  github: "https://github.com/ibrahim-official"
+
+summary: >-
+  Final-year Computer Science student with hands-on experience in IT support, data systems and
+  process automation. At ChamStore I support non-technical staff with day-to-day computer issues,
+  maintain accurate records at scale, and build workflows and tracking systems that reduce manual
+  work. Comfortable with PHP/Laravel, SQL and Python, and I have built and documented a ten-project
+  home lab covering Windows Server and Active Directory, identity lifecycle and MFA, endpoint
+  hardening, vulnerability management, network segmentation, backup and disaster recovery, SIEM and
+  IT governance under CIS Controls v8 IG1. Looking for an IT Support Officer or junior System
+  Administrator role.
+
+skills:
+  - group: "IT Support"
+    items:
+      - hardware and software troubleshooting
+      - PC setup and configuration
+      - user support for non-technical staff
+      - Microsoft 365 apps
+      - documentation and presentations
+  - group: "Systems"
+    items:
+      - Windows Server 2025 (AD DS, DNS, DHCP, Group Policy)
+      - Active Directory design, OU structure and AGDLP least privilege
+      - file services (DFS-N, ABE, FSRM, shadow copies)
+      - identity lifecycle and access governance (joiner-mover-leaver)
+      - Microsoft Entra ID, Conditional Access and MFA
+      - Windows LAPS and privileged access tiering
+      - endpoint hardening (Microsoft security baselines, Defender ASR, BitLocker)
+      - patch and vulnerability management (WSUS, careful risk-based prioritisation)
+      - backup, recovery and disaster recovery (3-2-1-1-0, immutable copies)
+      - network segmentation, VPN and 802.1X Wi-Fi (OPNsense, NPS/RADIUS)
+      - SIEM and incident response (Wazuh, Sysmon, MITRE ATT&CK)
+      - IT service management and CMDB (GLPI, service catalogue, SLAs)
+      - Linux server administration (Ubuntu, AD integration with SSSD)
+      - CIS Controls v8 IG1 governance and change management
+      - PowerShell and Bash automation
+  - group: "Data & Reporting"
+    items:
+      - advanced Excel / Google Sheets
+      - data cleaning and auditing
+      - record management
+      - reporting for management
+  - group: "Programming & Databases"
+    items:
+      - PHP (Laravel)
+      - SQL / MySQL
+      - Python
+      - C++
+
+experience:
+  - role: "Data, Systems & IT Support"
+    org: "ChamStore"
+    place: "Lahore"
+    start: "2026-04"
+    end: null
+    bullets:
+      - "Provide day-to-day IT support to 25+ non-technical staff, including computer setup and configuration, hardware/software troubleshooting, and preparing documents and presentations."
+      - "Manage and maintain 10,000+ records across 6+ operational data sheets tracking daily operations, records and performance metrics."
+      - "Built automation workflows using Python scripts, Google Apps Script and Excel formulas that reduced manual data entry by about 7–10 hours per week and sped up reporting."
+      - "Audit datasets weekly, finding and correcting 10–50 duplicate entries and mismatches so management reports are accurate."
+      - "Designed standard tracking systems used by 5+ teams, so information is recorded and updated the same way across the business."
+
+projects_on_cv: [p01, p02, p09]   # which projects' cv_bullets appear on the CV (keep it to 1 page)
+
+education:
+  - degree: "BSc Computer Science"
+    org: "Virtual University of Pakistan"
+    start: "2023"
+    end: "Expected Oct 2027"
+    notes: "Relevant coursework: Computer Networks, Database Management Systems, Data Structures, Advanced Web Development"
+    fyp: "Exone AI (approval pending)"
+
+certifications:
+  - "Microsoft Learn: Windows Server Hybrid Administrator (AZ-800) learning path, in progress"
