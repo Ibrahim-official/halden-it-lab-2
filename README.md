@@ -15,7 +15,6 @@ synthetic device fleet) is labelled as synthetic wherever it appears.
 ## Projects (tailored build order)
 
 | # | Project | Anchor score | Build kit | Lab run |
-|---|---|---|---|
 |---|---|---|---|---|
 | 1 | [P1 — Core Infrastructure Build](projects/p01-core-infrastructure/) | 86 | ✅ complete | ⬜ pending |
 | 2 | [P2 — Identity Lifecycle & Access Governance](projects/p02-identity-lifecycle/) | 94 | ✅ complete | ⬜ pending |
